@@ -33,10 +33,10 @@ namespace ObjectFiller
         }
 
 
-        public static void SetNewFor<TTargetObject>(bool overrideSettings)
+        public static void SetNewFor<TTargetObject>(bool useDefaultSettings)
             where TTargetObject : class
         {
-            _typeToSetup[typeof(TTargetObject)] = overrideSettings ? new ObjectFillerSetup() : _mainSetup;
+            _typeToSetup[typeof(TTargetObject)] = useDefaultSettings ? new ObjectFillerSetup() : _mainSetup;
         }
 
         public static void SetMain(ObjectFillerSetup setup)

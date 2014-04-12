@@ -1,12 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using ObjectFiller.FillerPlugins;
-using ObjectFiller.FillerPlugins.DateTime;
-using ObjectFiller.FillerPlugins.Double;
-using ObjectFiller.FillerPlugins.String;
 
 namespace ObjectFiller
 {
@@ -215,9 +211,9 @@ namespace ObjectFiller
         /// </summary>
         /// <typeparam name="TNewType">Type for which the setup will be created</typeparam>
         /// <returns></returns>
-        public IFluentFillerApi<TNewType> SetupFor<TNewType>(bool overrideSettings = false) where TNewType : class
+        public IFluentFillerApi<TNewType> SetupFor<TNewType>(bool useDefaultSettings = false) where TNewType : class
         {
-            SetupManager.SetNewFor<TNewType>(overrideSettings);
+            SetupManager.SetNewFor<TNewType>(useDefaultSettings);
 
             return new ObjectFillerApi<TNewType>();
         }

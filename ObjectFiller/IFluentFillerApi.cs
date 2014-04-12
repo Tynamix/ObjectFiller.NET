@@ -118,7 +118,7 @@ namespace ObjectFiller
         /// </summary>
         /// <typeparam name="TNewType">Type for which the setup will be created</typeparam>
         /// <returns></returns>
-        IFluentFillerApi<TNewType> SetupFor<TNewType>(bool overrideSettings = false) where TNewType : class;
+        IFluentFillerApi<TNewType> SetupFor<TNewType>(bool useDefaultSettings = false) where TNewType : class;
 
     }
 }
