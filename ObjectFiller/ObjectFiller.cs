@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -9,14 +8,6 @@ namespace ObjectFiller
 {
     public class ObjectFiller<T> where T : class
     {
-        private T _objectToFill;
-
-        public ObjectFiller(T objectToFill)
-            : this()
-        {
-            _objectToFill = objectToFill;
-        }
-
         public ObjectFiller()
         {
             SetupManager.Clear();
@@ -49,23 +40,21 @@ namespace ObjectFiller
         /// </summary>
         public T Fill()
         {
-            try
-            {
-                if (_objectToFill == null)
-                {
-                    _objectToFill = (T)CreateInstanceOfType(typeof(T), SetupManager.GetFor<T>());
-                }
+            T objectToFill = (T)CreateInstanceOfType(typeof(T), SetupManager.GetFor<T>());
 
-                Fill(_objectToFill);
+            Fill(objectToFill);
 
+            return objectToFill;
+        }
 
-                return _objectToFill;
-            }
-            finally
-            {
-                _objectToFill = null;
-            }
+        /// <summary>
+        /// Fills your object instance. Call this after you finished your setup with the FluentAPI
+        /// </summary>
+        public T Fill(T instanceToFill)
+        {
+            FillInternal(instanceToFill);
 
+            return instanceToFill;
         }
 
 
@@ -106,7 +95,7 @@ namespace ObjectFiller
         }
 
 
-        private void Fill(object objectToFill)
+        private void FillInternal(object objectToFill)
         {
             var currentSetup = SetupManager.GetFor(objectToFill.GetType());
 
@@ -179,7 +168,7 @@ namespace ObjectFiller
         {
             object result = CreateInstanceOfType(type, currentSetup);
 
-            Fill(result);
+            FillInternal(result);
             return result;
         }
 
@@ -272,7 +261,7 @@ namespace ObjectFiller
                 MethodInfo genericMethod = method.MakeGenericMethod(new Type[] { interfaceType });
                 result = genericMethod.Invoke(setup.InterfaceMocker, null);
             }
-            Fill(result);
+            FillInternal(result);
             return result;
         }
 
