@@ -6,8 +6,16 @@ using System.Reflection;
 
 namespace ObjectFiller
 {
+    /// <summary>
+    /// The ObjectFiller.NET fills the public properties of your .NET object
+    /// with random data
+    /// </summary>
+    /// <typeparam name="T">Targettype of the object to fill</typeparam>
     public class ObjectFiller<T> where T : class
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ObjectFiller()
         {
             SetupManager.Clear();
@@ -64,7 +72,7 @@ namespace ObjectFiller
 
             if (type.GetConstructors().All(ctor => ctor.GetParameters().Length != 0))
             {
-                IEnumerable<ConstructorInfo> ctorInfos = null;
+                IEnumerable<ConstructorInfo> ctorInfos;
                 if ((ctorInfos = type.GetConstructors().Where(ctr => ctr.GetParameters().Length != 0)).Count() != 0)
                 {
                     foreach (ConstructorInfo ctorInfo in ctorInfos.OrderBy(x => x.GetParameters().Length))
@@ -150,17 +158,19 @@ namespace ObjectFiller
 
                 return dictionary;
             }
-            else if (TypeIsList(type))
+            
+            if (TypeIsList(type))
             {
                 IList list = GetFilledList(type, currentSetup);
                 return list;
             }
 
-            else if (type.IsInterface)
+            if (type.IsInterface)
             {
                 return GetInterfaceInstance(type, currentSetup);
             }
-            else if (TypeIsPoco(type))
+            
+            if (TypeIsPoco(type))
             {
                 return GetFilledPoco(type, currentSetup);
             }
@@ -263,7 +273,7 @@ namespace ObjectFiller
                 }
 
                 MethodInfo method = setup.InterfaceMocker.GetType().GetMethod("Create");
-                MethodInfo genericMethod = method.MakeGenericMethod(new Type[] { interfaceType });
+                MethodInfo genericMethod = method.MakeGenericMethod(new[] { interfaceType });
                 result = genericMethod.Invoke(setup.InterfaceMocker, null);
             }
             FillInternal(result);

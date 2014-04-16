@@ -6,13 +6,17 @@ using ObjectFiller.FillerPlugins;
 
 namespace ObjectFiller
 {
+    /// <summary>
+    /// Implementation of the <see cref="IFluentFillerApi{TTargetObject}"/>
+    /// </summary>
+    /// <typeparam name="TTargetObject">Type which will be configured for the ObjectFiller.NET</typeparam>
     public class ObjectFillerApi<TTargetObject> : IFluentFillerApi<TTargetObject>
         where TTargetObject : class
     {
         /// <summary>
         /// Sets the randomizer for the given type with a function delegate.
         /// This will then be the default way to generate data for the given <see cref="TTargetType"/>.
-        /// When you want to change the randomizer of a specific propery look at <seealso cref="IFluentFillerApi{TTargetObject}.RandomizerForProperty{TTargetObject,TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
+        /// When you want to change the randomizer of a specific propery look at <seealso cref="IFluentFillerApi{TTargetObject}.RandomizerForProperty{TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
         /// </summary>
         /// <typeparam name="TTargetType">Type for which the randomizer will be set. For example string, int, etc...</typeparam>
         /// <param name="randomizer">The randomizer delegate has the task to generate the random data for the given <see cref="TTargetType"/></param>
@@ -25,7 +29,7 @@ namespace ObjectFiller
         /// <summary>
         /// Sets the randomizer for the given type with a implementation of the <see cref="IRandomizerPlugin{T}"/>.
         /// This will then be the default way to generate data for the given <see cref="TTargetType"/>.
-        /// When you want to change the randomizer of a specific propery look at <seealso cref="IFluentFillerApi{TTargetObject}.RandomizerForProperty{TTargetObject,TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
+        /// When you want to change the randomizer of a specific propery look at <seealso cref="IFluentFillerApi{TTargetObject}.RandomizerForProperty{TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
         /// </summary>
         /// <typeparam name="TTargetType">Type for which the randomizer plugin will be set. For example string, int, etc...</typeparam>
         /// <param name="randomizerPlugin">The randomizer plugin has the task to generate random data for the given <see cref="TTargetType"/></param>
@@ -50,7 +54,7 @@ namespace ObjectFiller
         public IFluentFillerApi<TTargetObject> RandomizerForProperty<TTargetType>(Func<TTargetType> randomizer, Expression<Func<TTargetObject, TTargetType>> property,
     params Expression<Func<TTargetObject, TTargetType>>[] additionalProperties)
         {
-            var properties = new List<Expression<Func<TTargetObject, TTargetType>>>() { property };
+            var properties = new List<Expression<Func<TTargetObject, TTargetType>>> { property };
 
 
             if (additionalProperties.Length > 0)
@@ -104,7 +108,7 @@ namespace ObjectFiller
         public IFluentFillerApi<TTargetObject> IgnoreProperties(Expression<Func<TTargetObject, object>> propertyToIgnore, params  Expression<Func<TTargetObject, object>>[] additionalProperties)
         // where TTargetObject : class
         {
-            var propertiesToIgnore = new List<Expression<Func<TTargetObject, object>>>() { propertyToIgnore };
+            var propertiesToIgnore = new List<Expression<Func<TTargetObject, object>>> { propertyToIgnore };
             if (additionalProperties != null && additionalProperties.Length > 0)
             {
                 propertiesToIgnore.AddRange(additionalProperties);

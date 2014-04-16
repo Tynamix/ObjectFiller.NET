@@ -4,13 +4,17 @@ using ObjectFiller.FillerPlugins;
 
 namespace ObjectFiller
 {
+    /// <summary>
+    /// Interface for the fluent API of the ObjectFiller.NET.
+    /// </summary>
+    /// <typeparam name="TTargetObject">Type of the object which will be configured</typeparam>
     public interface IFluentFillerApi<TTargetObject>
         where TTargetObject : class
     {
         /// <summary>
         /// Sets the randomizer for the given type with a function delegate.
         /// This will then be the default way to generate data for the given <see cref="TTargetType"/>.
-        /// When you want to change the randomizer of a specific propery look at <seealso cref="RandomizerForProperty{TTargetPoco,TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetPoco,TTargetType}}[])"/>
+        /// When you want to change the randomizer of a specific propery look at <seealso cref="RandomizerForProperty{TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
         /// </summary>
         /// <typeparam name="TTargetType">Type for which the randomizer will be set. For example string, int, etc...</typeparam>
         /// <param name="randomizer">The randomizer delegate has the task to generate the random data for the given <see cref="TTargetType"/></param>
@@ -19,7 +23,7 @@ namespace ObjectFiller
         /// <summary>
         /// Sets the randomizer for the given type with a implementation of the <see cref="IRandomizerPlugin{T}"/>.
         /// This will then be the default way to generate data for the given <see cref="TTargetType"/>.
-        /// When you want to change the randomizer of a specific propery look at <seealso cref="RandomizerForProperty{TTargetPoco,TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetPoco,TTargetType}}[])"/>
+        /// When you want to change the randomizer of a specific propery look at <seealso cref="RandomizerForProperty{TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
         /// </summary>
         /// <typeparam name="TTargetType">Type for which the randomizer plugin will be set. For example string, int, etc...</typeparam>
         /// <param name="randomizerPlugin">The randomizer plugin has the task to generate random data for the given <see cref="TTargetType"/></param>

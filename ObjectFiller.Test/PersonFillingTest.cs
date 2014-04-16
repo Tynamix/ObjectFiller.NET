@@ -62,8 +62,8 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void GeneratePersonWithGivenSetOfNamesAndAges()
         {
-            List<string> names = new List<string>() { "Tom", "Maik", "John", "Leo" };
-            List<int> ages = new List<int>() { 10, 15, 18, 22, 26 };
+            List<string> names = new List<string> { "Tom", "Maik", "John", "Leo" };
+            List<int> ages = new List<int> { 10, 15, 18, 22, 26 };
 
             ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
             pFiller.Setup()
@@ -91,6 +91,11 @@ namespace ObjectFiller.Test
                 .IgnoreProperties(a => a.Street);
 
             var pF = pFiller.Fill();
+
+            Assert.IsNotNull(pF);
+            Assert.IsNotNull(pF.Address);
+            Assert.IsNull(pF.Address.Street);
+
         }
 
         [TestMethod]
