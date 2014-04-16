@@ -21,7 +21,7 @@ namespace ObjectFiller.Test
 
             Assert.IsNotNull(filledPerson.Address);
             Assert.IsNotNull(filledPerson.Addresses);
-            Assert.IsNotNull(filledPerson.BlaToBla);
+            Assert.IsNotNull(filledPerson.StringToIAddress);
             Assert.IsNotNull(filledPerson.SureNames);
 
         }
@@ -106,6 +106,7 @@ namespace ObjectFiller.Test
             Assert.AreEqual(1, p.Age);
             Assert.AreNotEqual(1, p.Address.HouseNumber);
         }
+
         [TestMethod]
         public void TestSetupForTypeWithoutOverrideSettings()
         {
@@ -118,6 +119,54 @@ namespace ObjectFiller.Test
             Person p = pFiller.Fill();
             Assert.AreEqual(1, p.Age);
             Assert.AreEqual(1, p.Address.HouseNumber);
+        }
+
+        [TestMethod]
+        public void TestIgnoreAllOfType()
+        {
+            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            pFiller.Setup()
+                .RegisterInterface<IAddress, Address>()
+                .IgnoreAllOfType<string>()
+                ;
+
+            Person p = pFiller.Fill();
+
+            Assert.IsNotNull(p);
+            Assert.IsNull(p.FirstName);
+            Assert.IsNotNull(p.Address);
+            Assert.IsNull(p.Address.City);
+        }
+
+        [TestMethod]
+        public void TestIgnoreAllOfComplexType()
+        {
+            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            pFiller.Setup()
+                .RegisterInterface<IAddress, Address>()
+                .IgnoreAllOfType<Address>()
+                .IgnoreAllOfType<IAddress>()
+                ;
+            Person p = pFiller.Fill();
+
+            Assert.IsNotNull(p);
+            Assert.IsNull(p.Address);
+        }
+
+        [TestMethod]
+        public void TestIgnoreAllOfTypeDictionary()
+        {
+            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            pFiller.Setup()
+                .RegisterInterface<IAddress, Address>()
+                .IgnoreAllOfType<Address>()
+                .IgnoreAllOfType<IAddress>()
+                .IgnoreAllOfType<Dictionary<string, IAddress>>();
+            Person p = pFiller.Fill();
+
+            Assert.IsNotNull(p);
+            Assert.IsNull(p.Address);
+            Assert.IsNull(p.StringToIAddress);
         }
     }
 }

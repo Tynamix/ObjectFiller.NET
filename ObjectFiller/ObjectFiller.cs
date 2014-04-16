@@ -111,6 +111,11 @@ namespace ObjectFiller
 
             foreach (PropertyInfo property in properties)
             {
+                if (currentSetup.TypesToIgnore.Contains(property.PropertyType))
+                {
+                    continue;
+                }
+
                 if (IgnoreProperty(property, currentSetup))
                 {
                     continue;

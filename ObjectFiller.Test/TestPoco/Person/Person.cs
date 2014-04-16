@@ -19,12 +19,12 @@ namespace ObjectFiller.Test.TestPoco.Person
 
         public string Title { get; set; }
 
-        public Dictionary<string, IAddress> BlaToBla { get; set; }
+        public Dictionary<string, IAddress> StringToIAddress { get; set; }
 
         public IList<IAddress> Addresses { get; set; }
 
         public ICollection<IAddress> AddressCollection { get; set; }
 
-        public Dictionary<string, List<Address>> SenselessDictionary { get; set; }
+        public Dictionary<string, List<Address>> StringToListOfAddress { get; set; }
     }
 }

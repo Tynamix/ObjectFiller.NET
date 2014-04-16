@@ -19,6 +19,7 @@ namespace ObjectFiller
             TypeToRandomFunc = new Dictionary<Type, Func<object>>();
             PropertyToRandomFunc = new Dictionary<PropertyInfo, Func<object>>();
             ProperiesToIgnore = new List<PropertyInfo>();
+            TypesToIgnore = new List<Type>();
 
             InterfaceToImplementation = new Dictionary<Type, Type>();
 
@@ -70,6 +71,11 @@ namespace ObjectFiller
         /// List with all properties which will be ignored while generating test data
         /// </summary>
         public List<PropertyInfo> ProperiesToIgnore { get; private set; }
+
+        /// <summary>
+        /// All types which will be ignored completly
+        /// </summary>
+        public List<Type> TypesToIgnore { get; private set; }
 
         /// <summary>
         /// Minimum count of list items which will be generated 
