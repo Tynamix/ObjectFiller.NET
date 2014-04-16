@@ -16,7 +16,7 @@ namespace ObjectFiller.Test
         public void TestFillPerson()
         {
             Person p = new Person();
-            ObjectFiller<Person> objectFiller = new ObjectFiller<Person>(p);
+            ObjectFiller<Person> objectFiller = new ObjectFiller<Person>();
             objectFiller.Setup()
                 .RegisterInterface<IAddress, Address>()
                 .RandomizerForType(new MnemonicStringPlugin(10))
@@ -26,11 +26,7 @@ namespace ObjectFiller.Test
                 .SetupFor<Address>()
                 .IgnoreProperties(a => a.City, a => a.Country);
 
-
-
-            Person pFilled = objectFiller.Fill();
-
-
+            Person pFilled = objectFiller.Fill(p);
         }
     }
 }
