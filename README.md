@@ -114,14 +114,38 @@ Its also really easy to write a plugin by yourself. I will show you that later.
         {
             ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
             pFiller.Setup()
-                .IgnoreProperties(p => p.LastName, p => p.Name);
+                .IgnoreProperties(p => p.LastName, p => p.Age);
 
             Person filledPerson = pFiller.Fill();
         }
     }
 ```
 
-With **```IgnoreProperties```** you can exclude properties to not generate random data for it. When we will now fill a person, all properties get filled except **```LastName```** and **```Name```**.
+With **```IgnoreProperties```** you can exclude properties to not generate random data for it. When we will now fill a person, all properties get filled except **```LastName```** and **```Age```**.
+
+```csharp
+    public class Person
+    {
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public int Age { get; set; }
+        public DateTime Birthday { get; set; }
+    }
+
+    public class HelloFiller
+    {
+        public void FillPerson()
+        {
+            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            pFiller.Setup()
+                .IgnoreAllOfType<string>();
+
+            Person filledPerson = pFiller.Fill();
+        }
+    }
+```
+
+With **```IgnoreAllOfType```** you can exclude all properties of a specific type. When we will now fill a person, all properties get filled except **```LastName```** and **```Name```** because they are of type **```string```**.
 
 ###Setup Subtypes
 
