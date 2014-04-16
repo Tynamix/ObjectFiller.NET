@@ -2,8 +2,8 @@ The **.NET ObjectFiller** fills the properties of your .NET objects with random 
 It has a very comfortable Fluent API.
 You are able to fill object instances or you just let them create for you. 
 It is possible to create instances of classes which have constructors with parameters.
-You can also fill properties which are a interface.
-The **.NET ObjectFiller** also supports Lists and Dictionaries.
+You can also fill properties which are derived by a interface.
+The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and Dictionaries.
 
 ##Where can i get it?
 Easy, you can find it at nuget! It's just one DLL!
@@ -16,9 +16,21 @@ Easy, you can find it at nuget! It's just one DLL!
 You can use the **.NET ObjectFiller** for generating test data for your **UnitTests** or for your **DesignViewModels** in WPF or for whatever you need some random testdata.
 I will show you some examples how you can work with it.
 
-##Can i extend the .NET ObjectFiller
+**The ObjectFiller.NET ...:**
+*   ...fill the public writable properties of your objects
+*   ...fills also all subobjects
+*   ...has a nice FluentAPI
+*   ...can handle constructor with parameters
+*   ...can handle IEnumerable<T> and all derivations
+*   ...can handle Interfaces
+*   ...cas handle Dictionaries
+*   ...is highly customizable
+*   ...has many nice plugins
+*   ...is very easy to extend
 
-The **.NET ObjectFiller** is very flexible and easy to extend. With the help of the **FluentAPI** you can configure and extend the ObjectFiller. In the examples i will show you how to do it.
+##Can i extend the .NET ObjectFiller?
+
+Of course! The **.NET ObjectFiller** is very flexible and easy to extend. With the help of the **FluentAPI** you can configure and extend the ObjectFiller. In the examples i will show you how to do it.
 
 ##Examples
 
