@@ -126,6 +126,20 @@ namespace ObjectFiller
             return this;
         }
 
+        /// <summary>
+        /// Ignore all properties of type <see cref="TTargetType"/> when generating Testdata 
+        /// </summary>
+        /// <typeparam name="TTargetType">Type which will be ignored</typeparam>
+        /// <example>
+        /// objectFiller.IgnoreAllOfType<string>();
+        /// </example>
+        public IFluentFillerApi<TTargetObject> IgnoreAllOfType<TTargetType>()
+        {
+            SetupManager.GetFor<TTargetObject>().TypesToIgnore.Add(typeof (TTargetType));
+
+            return this;
+        }
+
 
         /// <summary>
         /// Setup the maximum item count for lists. The ObjectFiller will not generate more listitems then this.

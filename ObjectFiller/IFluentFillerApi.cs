@@ -49,7 +49,7 @@ namespace ObjectFiller
         /// <param name="property">The target property which will be filled by the customm <see cref="randomizerPlugin"/>.</param>
         /// <param name="additionalProperties">Some more properties which should be also filled by the custom <see cref="randomizerPlugin"/></param>
         /// <example>
-        ///   objectFiller.Setup()..RandomizerForProperty<Person, string>(new MnemonicStringPlugin(1), person => person.FirstName, person => person.LastName)
+        ///   objectFiller.Setup().RandomizerForProperty<Person, string>(new MnemonicStringPlugin(1), person => person.FirstName, person => person.LastName)
         /// </example>
         IFluentFillerApi<TTargetObject> RandomizerForProperty<TTargetType>(IRandomizerPlugin<TTargetType> randomizerPlugin, Expression<Func<TTargetObject, TTargetType>> property, params Expression<Func<TTargetObject, TTargetType>>[] additionalProperties);
 
@@ -60,11 +60,17 @@ namespace ObjectFiller
         /// <typeparam name="TTargetObject">The type of object where the target properties to ignore are located</typeparam>
         /// <param name="propertyToIgnore">Targetproperty to ignore</param>
         /// <param name="additionalProperties">OPTIONAL: Additional Properties which will be also ignored</param>
-        IFluentFillerApi<TTargetObject> IgnoreProperties(
-            Expression<Func<TTargetObject, object>> propertyToIgnore,
-            params Expression<Func<TTargetObject, object>>[] additionalProperties);
-        //  where TTargetObject : class;
+        IFluentFillerApi<TTargetObject> IgnoreProperties(Expression<Func<TTargetObject, object>> propertyToIgnore, params Expression<Func<TTargetObject, object>>[] additionalProperties);
 
+        /// <summary>
+        /// Ignore all properties of type <see cref="TTargetType"/> when generating Testdata.
+        /// </summary>
+        /// <typeparam name="TTargetType">Type which will be ignored</typeparam>
+        /// <example>
+        /// objectFiller.IgnoreAllOfType<string>();
+        /// </example>
+        IFluentFillerApi<TTargetObject> IgnoreAllOfType<TTargetType>();
+            
         /// <summary>
         /// Setup the maximum item count for lists. The ObjectFiller will not generate more listitems then this.
         /// The default value is 25.
