@@ -39,6 +39,7 @@
     <Compile Include="FillerPlugins\DateTime\DateTimeRandomizer.cs" />
     <Compile Include="FillerPlugins\Double\DoubleMinMaxRandomizerPlugin.cs" />
     <Compile Include="FillerPlugins\IRandomizerPlugin.cs" />
+    <Compile Include="FillerPlugins\PatternGenerator.cs" />
     <Compile Include="FillerPlugins\RandomListItem.cs" />
     <Compile Include="FillerPlugins\String\MnemonicStringPlugin.cs" />
     <Compile Include="FillerPlugins\String\RealNamePlugin.cs" />
