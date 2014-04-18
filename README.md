@@ -403,6 +403,64 @@ The **```RandomListItem```** plugin is usefull when you want to setup a predefin
 
 In the example u can see that i set up four names. One of these will be the name of the **```Person```** object.
 
+###PatternGenerator Plugin
+
+The **```PatternGenerator```** can be used to created strings following a pattern.
+
+```csharp
+    public void FillPerson()
+    {
+        ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+        
+		pFiller.Setup()
+			.RegisterInterface<IAddress, Address>()
+			.SetupFor<Address>()
+			.RandomizerForProperty(new PatternGenerator("{A}{a:2-8}"), x => x.City)
+			.RandomizerForProperty(new PatternGenerator("CA {C:10000}"), x => x.PostalCode)
+			.RandomizerForProperty(new PatternGenerator("Main Street {C:100,10} NE"), x => x.Street);
+				
+        Person filledPerson = pFiller.Fill();
+    }
+```
+
+
+Address.City will become a string, starting with one upper-case char, followed by 2..8 lower-case chars.
+Address.PostalCode will start with the fixed value "CA ", followed by a number starting at 10000, incremented by 1 in the next address in the persons address list.
+The Main Street will include a number starting at 100, incremented by 10.
+
+The pattern generator can be extended, to allow combining built-in expressions and custom expressions within a pattern.
+
+```csharp
+    public class FrenchUnicodeExpressionGenerator : IExpressionGenerator<string>
+    {
+        public static IExpressionGenerator TryCreateInstance(string expression)
+        {
+ 			if (expression == "{U:fr}")
+				return new FrenchUnicodeExpressionGenerator();
+			else 
+				return null;
+       }
+       
+       public string GetValue()
+       {    
+            return "Bonjour";
+       }
+    }
+    
+    public void FillPerson()
+    {
+        PatterGenerator.ExpressionGeneratorFactories.Add(FrenchUnicodeExpressionGenerator.TryCreateInstance);
+    
+        ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+        
+		pFiller.Setup()
+			.RegisterInterface<IAddress, Address>()
+			.SetupFor<Address>()
+			.RandomizerForProperty(new PatternGenerator("{C}x {U:fr}"), x => x.Street);
+    }
+```
+
+
 ###Write your own plugin
 
 To write your own plugin is very easy.
