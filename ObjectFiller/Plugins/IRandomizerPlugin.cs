@@ -1,4 +1,4 @@
-﻿namespace ObjectFiller.FillerPlugins
+﻿namespace Tynamix.ObjectFiller.Plugins
 {
     /// <summary>
     /// Implement this interface to create a custom randomizer of type <see cref="T"/>

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using ObjectFiller.FillerPlugins;
+using Tynamix.ObjectFiller.Plugins;
 
-namespace ObjectFiller
+namespace Tynamix.ObjectFiller
 {
     /// <summary>
     /// Implementation of the <see cref="IFluentFillerApi{TTargetObject}"/>

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ObjectFiller.Properties;
+using Tynamix.ObjectFiller.Properties;
 
-namespace ObjectFiller.FillerPlugins.String
+namespace Tynamix.ObjectFiller.Plugins
 {
     public class RealNamePlugin : IRandomizerPlugin<string>
     {

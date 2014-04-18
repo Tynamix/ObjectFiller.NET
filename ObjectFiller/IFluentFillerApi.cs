@@ -1,8 +1,8 @@
 using System;
 using System.Linq.Expressions;
-using ObjectFiller.FillerPlugins;
+using Tynamix.ObjectFiller.Plugins;
 
-namespace ObjectFiller
+namespace Tynamix.ObjectFiller
 {
     /// <summary>
     /// Interface for the fluent API of the ObjectFiller.NET.

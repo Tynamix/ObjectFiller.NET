@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ObjectFiller.FillerPlugins.DateTime;
-using ObjectFiller.FillerPlugins.Double;
-using ObjectFiller.FillerPlugins.String;
+using Tynamix.ObjectFiller.Plugins;
 
-namespace ObjectFiller
+namespace Tynamix.ObjectFiller
 {
     public class ObjectFillerSetup
     {

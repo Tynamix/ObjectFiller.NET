@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 
-namespace ObjectFiller.FillerPlugins
+namespace Tynamix.ObjectFiller.Plugins
 {
     public class RandomListItem<T> : IRandomizerPlugin<T>
     {

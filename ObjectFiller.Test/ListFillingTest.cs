@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.ListTest;
+using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ObjectFiller
+namespace Tynamix.ObjectFiller
 {
     /// <summary>
     /// Responsible to get the right <see cref="ObjectFillerSetup"/> for a given type.

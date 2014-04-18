@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace ObjectFiller.FillerPlugins.Double
+namespace Tynamix.ObjectFiller.Plugins
 {
     public class DoubleMinMaxRandomizerPlugin : IRandomizerPlugin<double>, IRandomizerPlugin<double?>,IRandomizerPlugin<decimal>, IRandomizerPlugin<decimal?>
     {

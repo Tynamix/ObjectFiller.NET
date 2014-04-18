@@ -8,8 +8,8 @@
     <ProjectGuid>{5D35C338-2162-4D16-A27C-3A0E5E72635D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ObjectFiller</RootNamespace>
-    <AssemblyName>ObjectFiller</AssemblyName>
+    <RootNamespace>Tynamix.ObjectFiller</RootNamespace>
+    <AssemblyName>Tynamix.ObjectFiller</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -29,19 +29,20 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\ObjectFiller.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Tynamix.ObjectFiller.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FillerPlugins\DateTime\DateTimeRandomizer.cs" />
-    <Compile Include="FillerPlugins\Double\DoubleMinMaxRandomizerPlugin.cs" />
-    <Compile Include="FillerPlugins\IRandomizerPlugin.cs" />
-    <Compile Include="FillerPlugins\RandomListItem.cs" />
-    <Compile Include="FillerPlugins\String\MnemonicStringPlugin.cs" />
-    <Compile Include="FillerPlugins\String\RealNamePlugin.cs" />
+    <Compile Include="Plugins\DateTime\DateTimeRandomizer.cs" />
+    <Compile Include="Plugins\Double\DoubleMinMaxRandomizerPlugin.cs" />
+    <Compile Include="Plugins\IRandomizerPlugin.cs" />
+    <Compile Include="Plugins\PatternGenerator.cs" />
+    <Compile Include="Plugins\RandomListItem.cs" />
+    <Compile Include="Plugins\String\MnemonicStringPlugin.cs" />
+    <Compile Include="Plugins\String\RealNamePlugin.cs" />
     <Compile Include="IFluentFillerApi.cs" />
     <Compile Include="IInterfaceMocker.cs" />
     <Compile Include="ObjectFiller.cs" />

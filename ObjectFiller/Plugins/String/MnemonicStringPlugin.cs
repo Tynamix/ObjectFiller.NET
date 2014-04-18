@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ObjectFiller.FillerPlugins.String
+namespace Tynamix.ObjectFiller.Plugins
 {
     /// <summary>
     /// This randomizer plugin generates words which can be talked naturally.

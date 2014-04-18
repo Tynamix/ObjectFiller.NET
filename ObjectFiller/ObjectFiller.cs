@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace ObjectFiller
+namespace Tynamix.ObjectFiller
 {
     /// <summary>
     /// The ObjectFiller.NET fills the public properties of your .NET object

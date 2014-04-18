@@ -1,4 +1,4 @@
-namespace ObjectFiller
+namespace Tynamix.ObjectFiller
 {
     /// <summary>
     /// Implement this interface to use a mockingframework for instantiate your interfaces.

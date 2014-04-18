@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace ObjectFiller.FillerPlugins.DateTime
+namespace Tynamix.ObjectFiller.Plugins
 {
     public class DateTimeRandomizer : IRandomizerPlugin<System.DateTime>, IRandomizerPlugin<System.DateTime?>
     {

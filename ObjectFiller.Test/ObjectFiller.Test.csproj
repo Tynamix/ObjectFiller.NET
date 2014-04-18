@@ -63,12 +63,16 @@
     <Compile Include="TestPoco\Person\Address.cs" />
     <Compile Include="TestPoco\Person\IAddress.cs" />
     <Compile Include="TestPoco\Person\Person.cs" />
+    <Compile Include="PatternGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ObjectFiller\ObjectFiller.csproj">
       <Project>{5D35C338-2162-4D16-A27C-3A0E5E72635D}</Project>
       <Name>ObjectFiller</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Chris_readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

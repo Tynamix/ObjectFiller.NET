@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ObjectFiller.FillerPlugins;
-using ObjectFiller.FillerPlugins.String;
 using ObjectFiller.Test.TestPoco.Person;
+using Tynamix.ObjectFiller;
+using Tynamix.ObjectFiller.Plugins;
 
 namespace ObjectFiller.Test
 {
