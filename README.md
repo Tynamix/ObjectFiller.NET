@@ -1,3 +1,5 @@
+#ObjectFiller.NET
+<img align="left" src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/logo.png" alt="Logo" />
 The **.NET ObjectFiller** fills the properties of your .NET objects with random data!
 It has a very comfortable Fluent API.
 You are able to fill object instances or you just let them create for you. 
@@ -5,9 +7,31 @@ It is possible to create instances of classes which have constructors with param
 You can also fill properties which are derived by a interface.
 The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and Dictionaries.
 
+##Table of contents
+ - [Where can i get it?](#where-can-i-get-it)
+ - [For what do you need it?](#for-what-do-you-need-it)
+ - [Can i extend the .NET ObjectFiller?](#can-i-extend-the-net-objectfiller)
+ - [Examples](#examples)
+   - [Let's start easy](#lets-start-easy)
+   - [Let's use the fluent setup API](#lets-use-the-fluent-setup-api)
+   - [Ignore Properties](#ignore-properties)
+   - [Setup Subtypes](#setup-subtypes)
+   - [Fill objects with constructor arguments](#fill-objects-with-constructor-arguments)
+   - [Fill Interface-Properties](#fill-interface-properties)
+   - [Fill Lists and Dictionaries](#fill-lists-and-dictionaries)
+   - [Mix all up](#mix-all-up)
+ - [Available Plugins](#available-plugins)
+   - [Mix all up](#mix-all-up)
+   - [MnemonicStringPlugin](#mnemonicstringplugin)
+   - [RealNamePlugin](#realnameplugin)
+   - [RandomListItem - Plugin](#randomlistitem---plugin)
+   - [PatternGenerator Plugin](#patterngenerator-plugin)
+ - [Write your own plugin](#write-your-own-plugin)
+ - [Thank you](#thank-you-for-using-objectfillernet)
+   
+
 ##Where can i get it?
 Easy, you can find it at nuget! It's just one DLL!
-
 **Look here:** https://www.nuget.org/packages/Tynamix.ObjectFiller
 
 
@@ -30,7 +54,7 @@ I will show you some examples how you can work with it.
 
 ##Can i extend the .NET ObjectFiller?
 
-Of course! The **.NET ObjectFiller** is very flexible and easy to extend. With the help of the **FluentAPI** you can configure and extend the ObjectFiller. In the examples i will show you how to do it.
+Of course! The **.NET ObjectFiller** is very flexible and easy to extend. With the help of the **FluentAPI** you can configure and extend the ObjectFiller. You are also able to [write your own **Plugin**](#write-your-own-plugin)! In the examples i will show you how to do it. 
 
 ##Examples
 
