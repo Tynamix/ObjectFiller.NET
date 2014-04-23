@@ -24,8 +24,9 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [Mix all up](#mix-all-up)
    - [MnemonicStringPlugin](#mnemonicstringplugin)
    - [RealNamePlugin](#realnameplugin)
-   - [RandomListItem - Plugin](#randomlistitem---plugin)
+   - [RandomListItem Plugin](#randomlistitem---plugin)
    - [PatternGenerator Plugin](#patterngenerator-plugin)
+   - [Lorem Ipsum String Plugin](#lorem-ipsum-string-plugin)
  - [Write your own plugin](#write-your-own-plugin)
  - [Thank you](#thank-you-for-using-objectfillernet)
    
@@ -520,6 +521,32 @@ The pattern generator can be extended, to allow combining built-in expressions a
     }
 ```
 
+###Lorem Ipsum String Plugin
+
+The "Lorem Ipsum" plugin generates some random text which contains the famous "Lorem Ipsum" text. Read more about the Lorem Ipsum [here](http://en.wikipedia.org/wiki/Lorem_ipsum)
+
+```csharp
+    public class Person
+    {
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public int Age { get; set; }
+        public DateTime Birthday { get; set; }
+    }
+
+    public class HelloFiller
+    {
+        public void FillPerson()
+        {
+            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            pFiller.Setup()
+                .RandomizerForType(new LoremIpsumPlugin(500));
+
+            Person filledPerson = pFiller.Fill();
+        }
+    }
+```
+This example generates a Lorem Ipsum text with 500 words for all ```string``` properties of the person.
 
 ###Write your own plugin
 
