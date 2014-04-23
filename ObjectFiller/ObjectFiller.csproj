@@ -41,6 +41,7 @@
     <Compile Include="Plugins\IRandomizerPlugin.cs" />
     <Compile Include="Plugins\PatternGenerator.cs" />
     <Compile Include="Plugins\RandomListItem.cs" />
+    <Compile Include="Plugins\String\LoremIpsumPlugin.cs" />
     <Compile Include="Plugins\String\MnemonicStringPlugin.cs" />
     <Compile Include="Plugins\String\RealNamePlugin.cs" />
     <Compile Include="IFluentFillerApi.cs" />
