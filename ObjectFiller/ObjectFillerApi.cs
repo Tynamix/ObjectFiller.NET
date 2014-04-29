@@ -122,7 +122,7 @@ namespace Tynamix.ObjectFiller
                     PropertyInfo pInfo = body.Member as PropertyInfo;
                     if (pInfo != null)
                     {
-                        SetupManager.GetFor<TTargetObject>().ProperiesToIgnore.Add(pInfo);
+                        SetupManager.GetFor<TTargetObject>().PropertiesToIgnore.Add(pInfo);
                     }
                 }
             }
