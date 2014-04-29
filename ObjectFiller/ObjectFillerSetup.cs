@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Tynamix.ObjectFiller.Plugins;
@@ -16,7 +16,7 @@ namespace Tynamix.ObjectFiller
             DictionaryKeyMaxCount = 10;
             TypeToRandomFunc = new Dictionary<Type, Func<object>>();
             PropertyToRandomFunc = new Dictionary<PropertyInfo, Func<object>>();
-            ProperiesToIgnore = new List<PropertyInfo>();
+            PropertiesToIgnore = new List<PropertyInfo>();
             TypesToIgnore = new List<Type>();
 
             InterfaceToImplementation = new Dictionary<Type, Type>();
@@ -68,7 +68,7 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// List with all properties which will be ignored while generating test data
         /// </summary>
-        public List<PropertyInfo> ProperiesToIgnore { get; private set; }
+        public List<PropertyInfo> PropertiesToIgnore { get; private set; }
 
         /// <summary>
         /// All types which will be ignored completly
