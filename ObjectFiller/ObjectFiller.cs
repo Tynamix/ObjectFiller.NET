@@ -128,9 +128,10 @@ namespace Tynamix.ObjectFiller
                 {
                     continue;
                 }
-                if (currentSetup.PropertyToRandomFunc.ContainsKey(property))
+                if (ContainsProperty(currentSetup.PropertyToRandomFunc.Keys, property))
                 {
-                    property.SetValue(objectToFill, currentSetup.PropertyToRandomFunc[property](), null);
+                    PropertyInfo p = GetPropertyFromProperties(currentSetup.PropertyToRandomFunc.Keys, property).Single();
+                    property.SetValue(objectToFill, currentSetup.PropertyToRandomFunc[p](), null);
                     continue;
                 }
 
@@ -142,7 +143,17 @@ namespace Tynamix.ObjectFiller
 
         private bool IgnoreProperty(PropertyInfo property, ObjectFillerSetup currentSetup)
         {
-            return currentSetup.ProperiesToIgnore.Any(x => x.MetadataToken == property.MetadataToken && x.Module.Equals(property.Module));
+            return ContainsProperty(currentSetup.PropertiesToIgnore, property);
+        }
+
+        private bool ContainsProperty(IEnumerable<PropertyInfo> properties, PropertyInfo property)
+        {
+            return GetPropertyFromProperties(properties, property).Any();
+        }
+
+        private IEnumerable<PropertyInfo> GetPropertyFromProperties(IEnumerable<PropertyInfo> properties, PropertyInfo property)
+        {
+            return properties.Where(x => x.MetadataToken == property.MetadataToken && x.Module.Equals(property.Module));
         }
 
         private object GetFilledObject(Type type, ObjectFillerSetup currentSetup)
