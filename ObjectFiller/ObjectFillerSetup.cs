@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Tynamix.ObjectFiller.Plugins;
 
 namespace Tynamix.ObjectFiller
 {
@@ -9,7 +8,6 @@ namespace Tynamix.ObjectFiller
     {
         public ObjectFillerSetup()
         {
-            RndGenerator = new Random();
             ListMinCount = 1;
             ListMaxCount = 25;
             DictionaryKeyMinCount = 1;
@@ -26,29 +24,24 @@ namespace Tynamix.ObjectFiller
 
         private void SetDefaultRandomizer()
         {
-            var mnemonic = new MnemonicStringPlugin(20);
-            var doublePlugin = new DoubleMinMaxRandomizerPlugin();
-            var dateTimeRandomizer = new DateTimeRandomizer(new DateTime(1970, 1, 1));
+            var mnemonic = new MnemonicString(20);
+            var doublePlugin = new DoubleMinMax();
+            var dateTimeRandomizer = new DateTimeMinMax(new System.DateTime(1970, 1, 1));
             TypeToRandomFunc[typeof(string)] = mnemonic.GetValue;
-            TypeToRandomFunc[typeof(bool)] = () => RndGenerator.Next(0, 2) == 1;
-            TypeToRandomFunc[typeof(short)] = () => (short)RndGenerator.Next(-32767, 32767);
-            TypeToRandomFunc[typeof(int)] = () => RndGenerator.Next();
-            TypeToRandomFunc[typeof(int?)] = () => RndGenerator.Next();
-            TypeToRandomFunc[typeof(long)] = () => RndGenerator.Next();
-            TypeToRandomFunc[typeof(long?)] = () => RndGenerator.Next();
+            TypeToRandomFunc[typeof(bool)] = () => Random.Next(0, 2) == 1;
+            TypeToRandomFunc[typeof(short)] = () => (short)Random.Next(-32767, 32767);
+            TypeToRandomFunc[typeof(int)] = () => Random.Next();
+            TypeToRandomFunc[typeof(int?)] = () => Random.Next();
+            TypeToRandomFunc[typeof(long)] = () => Random.Next();
+            TypeToRandomFunc[typeof(long?)] = () => Random.Next();
             TypeToRandomFunc[typeof(double)] = () => doublePlugin.GetValue();
             TypeToRandomFunc[typeof(double?)] = () => doublePlugin.GetValue();
             TypeToRandomFunc[typeof(decimal)] = () => doublePlugin.GetValue();
             TypeToRandomFunc[typeof(Guid)] = () => Guid.NewGuid();
             TypeToRandomFunc[typeof(Guid?)] = () => Guid.NewGuid();
-            TypeToRandomFunc[typeof(DateTime)] = () => dateTimeRandomizer.GetValue();
-            TypeToRandomFunc[typeof(DateTime?)] = () => dateTimeRandomizer.GetValue();
+            TypeToRandomFunc[typeof(System.DateTime)] = () => dateTimeRandomizer.GetValue();
+            TypeToRandomFunc[typeof(System.DateTime?)] = () => dateTimeRandomizer.GetValue();
         }
-
-        /// <summary>
-        /// This is the random generator
-        /// </summary>
-        public Random RndGenerator { get; set; }
 
         /// <summary>
         /// Contains the Type to random data generator func

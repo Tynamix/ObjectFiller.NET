@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
-using Tynamix.ObjectFiller.Plugins;
 
 namespace ObjectFiller.Test
 {
@@ -13,7 +12,7 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillPerson()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
 
             pFiller.Setup().RegisterInterface<IAddress, Address>();
 
@@ -29,11 +28,11 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestNameListStringRandomizer()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
 
             pFiller.Setup().RegisterInterface<IAddress, Address>()
-                .RandomizerForProperty(new RealNamePlugin(true, false), p => p.FirstName)
-                .RandomizerForProperty(new RealNamePlugin(false, true), p => p.LastName);
+                .SetProperty(p => p.FirstName,new RealNames(true, false))
+                .SetProperty(p => p.LastName, new RealNames(false, true));
 
             Person filledPerson = pFiller.Fill();
 
@@ -45,11 +44,11 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFirstNameAsConstantLastNameAsRealName()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
 
             pFiller.Setup().RegisterInterface<IAddress, Address>()
-                .RandomizerForProperty(() => "John", p => p.FirstName)
-                .RandomizerForProperty(new RealNamePlugin(false, true), p => p.LastName);
+                .SetProperty(p => p.FirstName,() => "John")
+                .SetProperty(p => p.LastName, new RealNames(false, true));
 
             Person filledPerson = pFiller.Fill();
 
@@ -65,11 +64,11 @@ namespace ObjectFiller.Test
             List<string> names = new List<string> { "Tom", "Maik", "John", "Leo" };
             List<int> ages = new List<int> { 10, 15, 18, 22, 26 };
 
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .RegisterInterface<IAddress, Address>()
-                .RandomizerForProperty(new RandomListItem<string>(names), p => p.FirstName)
-                .RandomizerForProperty(new RandomListItem<int>(ages), p => p.Age);
+                .SetProperty(p => p.FirstName, new RandomListItem<string>(names))
+                .SetProperty(p => p.Age, new RandomListItem<int>(ages));
 
             var pF = pFiller.Fill();
 
@@ -81,14 +80,14 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void BigComplicated()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .RegisterInterface<IAddress, Address>()
-                .RandomizerForProperty(new RealNamePlugin(true, false), p => p.LastName, p => p.FirstName)
-                .RandomizerForProperty(() => new Random().Next(10, 32), p => p.Age)
-                .SetupFor<Address>()
-                .RandomizerForProperty(new MnemonicStringPlugin(1), a => a.City)
-                .IgnoreProperties(a => a.Street);
+                .SetProperty(p => p.LastName, new RealNames(true, false), p => p.FirstName)
+                .SetProperty(p => p.Age, () => new Random().Next(10, 32))
+                .For<Address>()
+                .SetProperty(a => a.City, new MnemonicString(1))
+                .Ignore(a => a.Street);
 
             var pF = pFiller.Fill();
 
@@ -101,11 +100,11 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestSetupForTypeOverrideSettings()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .RegisterInterface<IAddress, Address>()
-                .RandomizerForType<int>(() => 1)
-                .SetupFor<Address>(true);
+                .SetType<int>(() => 1)
+                .For<Address>(true);
 
             Person p = pFiller.Fill();
             Assert.AreEqual(1, p.Age);
@@ -115,11 +114,11 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestSetupForTypeWithoutOverrideSettings()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .RegisterInterface<IAddress, Address>()
-                .RandomizerForType<int>(() => 1)
-                .SetupFor<Address>();
+                .SetType<int>(() => 1)
+                .For<Address>();
 
             Person p = pFiller.Fill();
             Assert.AreEqual(1, p.Age);
@@ -129,10 +128,10 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestIgnoreAllOfType()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .RegisterInterface<IAddress, Address>()
-                .IgnoreAllOfType<string>()
+                .IgnoreAll<string>()
                 ;
 
             Person p = pFiller.Fill();
@@ -146,11 +145,11 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestIgnoreAllOfComplexType()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .RegisterInterface<IAddress, Address>()
-                .IgnoreAllOfType<Address>()
-                .IgnoreAllOfType<IAddress>()
+                .IgnoreAll<Address>()
+                .IgnoreAll<IAddress>()
                 ;
             Person p = pFiller.Fill();
 
@@ -161,12 +160,12 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestIgnoreAllOfTypeDictionary()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .RegisterInterface<IAddress, Address>()
-                .IgnoreAllOfType<Address>()
-                .IgnoreAllOfType<IAddress>()
-                .IgnoreAllOfType<Dictionary<string, IAddress>>();
+                .IgnoreAll<Address>()
+                .IgnoreAll<IAddress>()
+                .IgnoreAll<Dictionary<string, IAddress>>();
             Person p = pFiller.Fill();
 
             Assert.IsNotNull(p);

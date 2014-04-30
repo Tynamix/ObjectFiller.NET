@@ -11,18 +11,18 @@ namespace Tynamix.ObjectFiller
     /// with random data
     /// </summary>
     /// <typeparam name="T">Targettype of the object to fill</typeparam>
-    public class ObjectFiller<T> where T : class
+    public class Filler<T> where T : class
     {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ObjectFiller()
+        public Filler()
         {
             SetupManager.Clear();
         }
 
         /// <summary>
-        /// Call this to start the setup for the <see cref="ObjectFiller{T}"/>
+        /// Call this to start the setup for the <see cref="Filler{T}"/>
         /// </summary>
         /// <returns>Fluent API setup</returns>
         public IFluentFillerApi<T> Setup()
@@ -204,7 +204,7 @@ namespace Tynamix.ObjectFiller
             Type keyType = propertyType.GetGenericArguments()[0];
             Type valueType = propertyType.GetGenericArguments()[1];
 
-            int maxDictionaryItems = currentSetup.RndGenerator.Next(currentSetup.DictionaryKeyMinCount,
+            int maxDictionaryItems = Random.Next(currentSetup.DictionaryKeyMinCount,
                 currentSetup.DictionaryKeyMaxCount);
             for (int i = 0; i < maxDictionaryItems; i++)
             {
@@ -253,7 +253,7 @@ namespace Tynamix.ObjectFiller
             }
 
 
-            int maxListItems = currentSetup.RndGenerator.Next(currentSetup.ListMinCount, currentSetup.ListMaxCount);
+            int maxListItems = Random.Next(currentSetup.ListMinCount, currentSetup.ListMaxCount);
             for (int i = 0; i < maxListItems; i++)
             {
                 object listObject = GetFilledObject(genType, currentSetup);

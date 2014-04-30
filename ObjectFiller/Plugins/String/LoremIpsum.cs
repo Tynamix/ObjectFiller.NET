@@ -1,14 +1,14 @@
 ﻿using System;
 using Tynamix.ObjectFiller.Properties;
 
-namespace Tynamix.ObjectFiller.Plugins
+namespace Tynamix.ObjectFiller
 {
-    public class LoremIpsumPlugin : IRandomizerPlugin<string>
+    public class LoremIpsum : IRandomizerPlugin<string>
     {
         private readonly int _wordCount;
         private readonly string[] _loremIpsumWords;
 
-        public LoremIpsumPlugin(int wordCount)
+        public LoremIpsum(int wordCount)
         {
             _wordCount = wordCount;
             _loremIpsumWords = Resources.loremIpsum.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

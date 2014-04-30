@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Tynamix.ObjectFiller.Plugins
+namespace Tynamix.ObjectFiller
 {
 	/// <summary>
 	/// Creates values based on a pattern. <para/>
@@ -33,8 +33,6 @@ namespace Tynamix.ObjectFiller.Plugins
 	public class PatternGenerator : IRandomizerPlugin<string>
 	{
 		#region Fields
-
-		private static readonly Random _random = new Random();
 
 		// Static list of all known factories. 
 		// Will be used to create the concrete expression handlers per instance.
@@ -222,7 +220,6 @@ namespace Tynamix.ObjectFiller.Plugins
 				return null;
 			}
 
-			private static readonly Random _random = new Random();
 			private readonly string _expression;
 			private readonly char _charClass;
 			private readonly int _minCount;
@@ -239,7 +236,7 @@ namespace Tynamix.ObjectFiller.Plugins
 
 			public void AppendNextValue(StringBuilder sb)
 			{
-				var count = _random.Next(_minCount, _maxCount + 1);
+				var count = Random.Next(_minCount, _maxCount + 1);
 				for (int n = 0; n < count; n++)
 				{
 					sb.Append(NextChar(_charClass));
@@ -259,22 +256,22 @@ namespace Tynamix.ObjectFiller.Plugins
 
 			private static char NextUpperCaseChar()
 			{
-				return (char)_random.Next('A', 'Z' + 1);
+                return (char)Random.Next('A', 'Z' + 1);
 			}
 
 			private static char NextLowerCaseChar()
 			{
-				return (char)_random.Next('a', 'z' + 1);
+                return (char)Random.Next('a', 'z' + 1);
 			}
 
 			private static char NextDecimalDigit()
 			{
-				return (char)_random.Next('0', '9' + 1);
+                return (char)Random.Next('0', '9' + 1);
 			}
 
 			private static char NextHexDigit()
 			{
-				var c = (char)_random.Next('0', '9' + 6 + 1);
+                var c = (char)Random.Next('0', '9' + 6 + 1);
 				return (char)((c > '9') ? (c + 7) : c);
 			}
 

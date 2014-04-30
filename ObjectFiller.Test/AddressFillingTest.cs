@@ -10,7 +10,7 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void FillAllAddressProperties()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
+            Filler<Address> addressFiller = new Filler<Address>();
             Address a = addressFiller.Fill();
 
             Assert.IsNotNull(a.City);
@@ -23,8 +23,8 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void IgnoreCountry()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
-            addressFiller.Setup().IgnoreProperties(x => x.Country);
+            Filler<Address> addressFiller = new Filler<Address>();
+            addressFiller.Setup().Ignore(x => x.Country);
             Address a = addressFiller.Fill();
 
             Assert.IsNotNull(a.City);
@@ -37,8 +37,8 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void IgnoreCountryAndCity()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
-            addressFiller.Setup().IgnoreProperties(x => x.Country, x => x.City);
+            Filler<Address> addressFiller = new Filler<Address>();
+            addressFiller.Setup().Ignore(x => x.Country, x => x.City);
             Address a = addressFiller.Fill();
 
             Assert.IsNull(a.City);
@@ -51,8 +51,8 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void SetupCityPropertyWithConstantValue()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
-            addressFiller.Setup().RandomizerForProperty(() => "City", ad => ad.City);
+            Filler<Address> addressFiller = new Filler<Address>();
+            addressFiller.Setup().SetProperty(ad => ad.City, () => "City");
             Address a = addressFiller.Fill();
 
             Assert.AreEqual("City", a.City);
@@ -65,9 +65,9 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void SetupCityAndCountryPropertyWithConstantValue()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
+            Filler<Address> addressFiller = new Filler<Address>();
             addressFiller.Setup()
-                .RandomizerForProperty(() => "CityCountry", ad => ad.City, ad => ad.Country);
+                .SetProperty(ad => ad.City, () => "CityCountry", ad => ad.Country);
             Address a = addressFiller.Fill();
 
             Assert.AreEqual("CityCountry", a.City);

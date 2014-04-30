@@ -11,9 +11,9 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillAllListsExceptArray()
         {
-            ObjectFiller<EntityCollection> eFiller = new ObjectFiller<EntityCollection>();
+            Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
             eFiller.Setup()
-                .IgnoreProperties(ec => ec.EntityArray);
+                .Ignore(ec => ec.EntityArray);
             EntityCollection entity = eFiller.Fill();
 
             Assert.IsNotNull(entity);
@@ -26,9 +26,9 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillList()
         {
-            ObjectFiller<EntityCollection> eFiller = new ObjectFiller<EntityCollection>();
+            Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
             eFiller.Setup()
-                .RandomizerForProperty(GetArray, ec => ec.EntityArray);
+                .SetProperty(ec => ec.EntityArray, GetArray);
             EntityCollection entity = eFiller.Fill();
 
             Assert.IsNotNull(entity);
@@ -42,7 +42,7 @@ namespace ObjectFiller.Test
 
         private Entity[] GetArray()
         {
-            ObjectFiller<Entity> of = new ObjectFiller<Entity>();
+            Filler<Entity> of = new Filler<Entity>();
 
             List<Entity> entities = new List<Entity>();
             entities.Add(of.Fill());
@@ -57,8 +57,6 @@ namespace ObjectFiller.Test
 
 
             return entities.ToArray();
-
-
         }
     }
 }

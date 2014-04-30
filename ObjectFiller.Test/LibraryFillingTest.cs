@@ -10,9 +10,9 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithSimpleTypes()
         {
-            ObjectFiller<LibraryConstructorWithSimple> lib = new ObjectFiller<LibraryConstructorWithSimple>();
+            Filler<LibraryConstructorWithSimple> lib = new Filler<LibraryConstructorWithSimple>();
             lib.Setup()
-                .IgnoreProperties(x => x.Books);
+                .Ignore(x => x.Books);
             LibraryConstructorWithSimple filledLib = lib.Fill();
 
             Assert.IsNull(filledLib.Books);
@@ -24,9 +24,9 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithListOfBooks()
         {
-            ObjectFiller<LibraryConstructorList> lib = new ObjectFiller<LibraryConstructorList>();
+            Filler<LibraryConstructorList> lib = new Filler<LibraryConstructorList>();
             lib.Setup()
-                .IgnoreProperties(x => x.Books, x => x.Name);
+                .Ignore(x => x.Books, x => x.Name);
 
 
             LibraryConstructorList filledLib = lib.Fill();
@@ -39,9 +39,9 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithListOfIBooks()
         {
-            ObjectFiller<LibraryConstructorList> lib = new ObjectFiller<LibraryConstructorList>();
+            Filler<LibraryConstructorList> lib = new Filler<LibraryConstructorList>();
             lib.Setup()
-                .IgnoreProperties(x => x.Books)
+                .Ignore(x => x.Books)
                 .RegisterInterface<IBook, Book>();
 
             LibraryConstructorList filledLib = lib.Fill();
@@ -52,9 +52,9 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithPocoOfABook()
         {
-            ObjectFiller<LibraryConstructorPoco> lib = new ObjectFiller<LibraryConstructorPoco>();
+            Filler<LibraryConstructorPoco> lib = new Filler<LibraryConstructorPoco>();
             lib.Setup()
-               .IgnoreProperties(x => x.Books);
+               .Ignore(x => x.Books);
 
 
             LibraryConstructorPoco filledLib = lib.Fill();
@@ -65,10 +65,10 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithDictionary()
         {
-            ObjectFiller<LibraryConstructorDictionary> lib = new ObjectFiller<LibraryConstructorDictionary>();
+            Filler<LibraryConstructorDictionary> lib = new Filler<LibraryConstructorDictionary>();
             lib.Setup()
                 .RegisterInterface<IBook, Book>()
-                .IgnoreProperties(x => x.Books);
+                .Ignore(x => x.Books);
 
 
             LibraryConstructorDictionary filledLib = lib.Fill();
@@ -78,9 +78,9 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithDictionaryAndPoco()
         {
-            ObjectFiller<LibraryConstructorDictionary> lib = new ObjectFiller<LibraryConstructorDictionary>();
+            Filler<LibraryConstructorDictionary> lib = new Filler<LibraryConstructorDictionary>();
             lib.Setup()
-               .IgnoreProperties(x => x.Books, x => x.Name);
+               .Ignore(x => x.Books, x => x.Name);
 
 
             LibraryConstructorDictionary filledLib = lib.Fill();

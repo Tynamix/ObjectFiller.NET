@@ -1,6 +1,5 @@
 using System;
 using System.Linq.Expressions;
-using Tynamix.ObjectFiller.Plugins;
 
 namespace Tynamix.ObjectFiller
 {
@@ -14,20 +13,20 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Sets the randomizer for the given type with a function delegate.
         /// This will then be the default way to generate data for the given <see cref="TTargetType"/>.
-        /// When you want to change the randomizer of a specific propery look at <seealso cref="RandomizerForProperty{TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
+        /// When you want to change the randomizer of a specific propery look at <seealso cref="SetProperty{TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
         /// </summary>
         /// <typeparam name="TTargetType">Type for which the randomizer will be set. For example string, int, etc...</typeparam>
         /// <param name="randomizer">The randomizer delegate has the task to generate the random data for the given <see cref="TTargetType"/></param>
-        IFluentFillerApi<TTargetObject> RandomizerForType<TTargetType>(Func<TTargetType> randomizer);
+        IFluentFillerApi<TTargetObject> SetType<TTargetType>(Func<TTargetType> randomizer);
 
         /// <summary>
         /// Sets the randomizer for the given type with a implementation of the <see cref="IRandomizerPlugin{T}"/>.
         /// This will then be the default way to generate data for the given <see cref="TTargetType"/>.
-        /// When you want to change the randomizer of a specific propery look at <seealso cref="RandomizerForProperty{TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
+        /// When you want to change the randomizer of a specific propery look at <seealso cref="SetProperty{TTargetType}(System.Func{TTargetType},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}},System.Linq.Expressions.Expression{System.Func{TTargetObject,TTargetType}}[])"/>
         /// </summary>
         /// <typeparam name="TTargetType">Type for which the randomizer plugin will be set. For example string, int, etc...</typeparam>
         /// <param name="randomizerPlugin">The randomizer plugin has the task to generate random data for the given <see cref="TTargetType"/></param>
-        IFluentFillerApi<TTargetObject> RandomizerForType<TTargetType>(IRandomizerPlugin<TTargetType> randomizerPlugin);
+        IFluentFillerApi<TTargetObject> SetType<TTargetType>(IRandomizerPlugin<TTargetType> randomizerPlugin);
 
         /// <summary>
         /// Sets a custom randomizer for one or more properties within a class. 
@@ -39,9 +38,9 @@ namespace Tynamix.ObjectFiller
         /// <param name="property">The target property which will be filled by the customm <see cref="randomizer"/>.</param>
         /// <param name="additionalProperties">Some more properties which should be also filled by the custom <see cref="randomizer"/></param>
         /// <example>
-        ///   objectFiller.Setup()..RandomizerForProperty<Person, string>(() => "SOME NAME", person => person.FirstName, person => person.LastName)
+        ///   objectFiller.Setup()..SetProperty<Person, string>(() => "SOME NAME", person => person.FirstName, person => person.LastName)
         /// </example>
-        IFluentFillerApi<TTargetObject> RandomizerForProperty<TTargetType>(Func<TTargetType> randomizer, Expression<Func<TTargetObject, TTargetType>> property, params Expression<Func<TTargetObject, TTargetType>>[] additionalProperties);
+        IFluentFillerApi<TTargetObject> SetProperty<TTargetType>(Expression<Func<TTargetObject, TTargetType>> property, Func<TTargetType> randomizer, params Expression<Func<TTargetObject, TTargetType>>[] additionalProperties);
 
         /// <summary>
         /// Sets a custom randomizer for one or more properties within a class. 
@@ -53,9 +52,9 @@ namespace Tynamix.ObjectFiller
         /// <param name="property">The target property which will be filled by the customm <see cref="randomizerPlugin"/>.</param>
         /// <param name="additionalProperties">Some more properties which should be also filled by the custom <see cref="randomizerPlugin"/></param>
         /// <example>
-        ///   objectFiller.Setup().RandomizerForProperty<Person, string>(new MnemonicStringPlugin(1), person => person.FirstName, person => person.LastName)
+        ///   objectFiller.Setup().SetProperty<Person, string>(new MnemonicString(1), person => person.FirstName, person => person.LastName)
         /// </example>
-        IFluentFillerApi<TTargetObject> RandomizerForProperty<TTargetType>(IRandomizerPlugin<TTargetType> randomizerPlugin, Expression<Func<TTargetObject, TTargetType>> property, params Expression<Func<TTargetObject, TTargetType>>[] additionalProperties);
+        IFluentFillerApi<TTargetObject> SetProperty<TTargetType>(Expression<Func<TTargetObject, TTargetType>> property, IRandomizerPlugin<TTargetType> randomizerPlugin, params Expression<Func<TTargetObject, TTargetType>>[] additionalProperties);
 
         /// <summary>
         /// ObjectFiller will ignore the given <see cref="propertyToIgnore"/> and <see cref="additionalProperties"/> when generating random data.
@@ -64,17 +63,17 @@ namespace Tynamix.ObjectFiller
         /// <typeparam name="TTargetObject">The type of object where the target properties to ignore are located</typeparam>
         /// <param name="propertyToIgnore">Targetproperty to ignore</param>
         /// <param name="additionalProperties">OPTIONAL: Additional Properties which will be also ignored</param>
-        IFluentFillerApi<TTargetObject> IgnoreProperties(Expression<Func<TTargetObject, object>> propertyToIgnore, params Expression<Func<TTargetObject, object>>[] additionalProperties);
+        IFluentFillerApi<TTargetObject> Ignore(Expression<Func<TTargetObject, object>> propertyToIgnore, params Expression<Func<TTargetObject, object>>[] additionalProperties);
 
         /// <summary>
         /// Ignore all properties of type <see cref="TTargetType"/> when generating Testdata.
         /// </summary>
         /// <typeparam name="TTargetType">Type which will be ignored</typeparam>
         /// <example>
-        /// objectFiller.IgnoreAllOfType<string>();
+        /// objectFiller.IgnoreAll<string>();
         /// </example>
-        IFluentFillerApi<TTargetObject> IgnoreAllOfType<TTargetType>();
-            
+        IFluentFillerApi<TTargetObject> IgnoreAll<TTargetType>();
+
         /// <summary>
         /// Setup the maximum item count for lists. The ObjectFiller will not generate more listitems then this.
         /// The default value is 25.
@@ -128,7 +127,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <typeparam name="TNewType">Type for which the setup will be created</typeparam>
         /// <returns></returns>
-        IFluentFillerApi<TNewType> SetupFor<TNewType>(bool useDefaultSettings = false) where TNewType : class;
+        IFluentFillerApi<TNewType> For<TNewType>(bool useDefaultSettings = false) where TNewType : class;
 
     }
 }

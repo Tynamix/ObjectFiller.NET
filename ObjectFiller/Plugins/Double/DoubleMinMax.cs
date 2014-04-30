@@ -1,18 +1,17 @@
 ﻿using System;
 
-namespace Tynamix.ObjectFiller.Plugins
+namespace Tynamix.ObjectFiller
 {
-    public class DoubleMinMaxRandomizerPlugin : IRandomizerPlugin<double>, IRandomizerPlugin<double?>,IRandomizerPlugin<decimal>, IRandomizerPlugin<decimal?>
+    public class DoubleMinMax : IRandomizerPlugin<double>, IRandomizerPlugin<double?>,IRandomizerPlugin<decimal>, IRandomizerPlugin<decimal?>
     {
         private readonly double _minValue;
         private readonly double _maxValue;
-        private Random _random;
 
         /// <summary>
         /// Use to define just a max value for the double randomizer. Min value will be 0!
         /// </summary>
         /// <param name="maxValue">Maximum double value</param>
-        public DoubleMinMaxRandomizerPlugin(double maxValue)
+        public DoubleMinMax(double maxValue)
             : this(0, maxValue)
         {
 
@@ -24,17 +23,16 @@ namespace Tynamix.ObjectFiller.Plugins
         /// </summary>
         /// <param name="minValue">Min value</param>
         /// <param name="maxValue">Max value</param>
-        public DoubleMinMaxRandomizerPlugin(double minValue, double maxValue)
+        public DoubleMinMax(double minValue, double maxValue)
         {
             _minValue = minValue;
             _maxValue = maxValue;
-            _random = new Random();
         }
 
         /// <summary>
         /// Use this to generate a double value between double.MinValue and double.MaxValue
         /// </summary>
-        public DoubleMinMaxRandomizerPlugin()
+        public DoubleMinMax()
             : this(double.MinValue, double.MaxValue)
         {
 
@@ -42,7 +40,7 @@ namespace Tynamix.ObjectFiller.Plugins
 
         public double GetValue()
         {
-            return _random.NextDouble() * (_maxValue - _minValue) + _minValue;
+            return Random.NextDouble() * (_maxValue - _minValue) + _minValue;
         }
 
         double? IRandomizerPlugin<double?>.GetValue()

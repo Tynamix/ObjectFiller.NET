@@ -1,19 +1,18 @@
 ﻿using System;
 using Tynamix.ObjectFiller.Properties;
 
-namespace Tynamix.ObjectFiller.Plugins
+namespace Tynamix.ObjectFiller
 {
-    public class RealNamePlugin : IRandomizerPlugin<string>
+    public class RealNames : IRandomizerPlugin<string>
     {
         private readonly bool _firstName;
         private readonly bool _lastName;
         private readonly bool _fullName;
-        private readonly Random _random;
 
         private string[] _firstNames;
         private string[] _lastNames;
 
-        public RealNamePlugin(bool firstName, bool lastName)
+        public RealNames(bool firstName, bool lastName)
         {
             _firstName = firstName;
             _lastName = lastName;
@@ -27,11 +26,9 @@ namespace Tynamix.ObjectFiller.Plugins
             {
                 _lastNames = Resources.lastNames.Split(';');
             }
-
-            _random = new Random();
         }
 
-        public RealNamePlugin(bool fullName)
+        public RealNames(bool fullName)
             : this(true, fullName)
         {
 
@@ -41,18 +38,18 @@ namespace Tynamix.ObjectFiller.Plugins
         {
             if (_fullName)
             {
-                string firstName = _firstNames[_random.Next(_firstNames.Length)];
-                string lastName = _lastNames[_random.Next(_lastNames.Length)];
+                string firstName = _firstNames[Random.Next(_firstNames.Length)];
+                string lastName = _lastNames[Random.Next(_lastNames.Length)];
 
                 return firstName + " " + lastName;
             }
             if (_firstName)
             {
-                return _firstNames[_random.Next(_firstNames.Length)];
+                return _firstNames[Random.Next(_firstNames.Length)];
             }
             if (_lastName)
             {
-                return _lastNames[_random.Next(_lastNames.Length)];
+                return _lastNames[Random.Next(_lastNames.Length)];
             }
 
             return null;

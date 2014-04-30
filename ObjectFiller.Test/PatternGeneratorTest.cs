@@ -4,7 +4,6 @@ using ObjectFiller;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using Tynamix.ObjectFiller;
-using Tynamix.ObjectFiller.Plugins;
 
 namespace ObjectFiller.Test
 {
@@ -14,7 +13,7 @@ namespace ObjectFiller.Test
 		[TestMethod]
 		public void Must_be_able_to_handle_private_setters()
 		{
-			var filler = new ObjectFiller<ClassWithPrivateStuff>();
+			var filler = new Filler<ClassWithPrivateStuff>();
 			var obj = filler.Fill();
 
 			Assert.AreNotEqual(0, obj.WithPrivateSetter, "Must be able to set even a private setter");
@@ -24,7 +23,7 @@ namespace ObjectFiller.Test
 		[TestMethod]
 		public void Must_be_able_to_handle_inheritance_and_sealed()
 		{
-			var filler = new ObjectFiller<InheritedClass>();
+			var filler = new Filler<InheritedClass>();
 			var obj = filler.Fill();
 
 			Assert.AreNotEqual(0, obj.NormalNumber);
@@ -35,10 +34,10 @@ namespace ObjectFiller.Test
 		[TestMethod, Ignore]
 		public void Must_be_able_to_handle_arrays()
 		{
-			var filler = new ObjectFiller<WithArrays>();
+			var filler = new Filler<WithArrays>();
 			filler.Setup()
 				.RegisterInterface<int[],int[]>();
-				//.SetupFor<int[]>();
+				//.For<int[]>();
 			var obj = filler.Fill();
 
 			Assert.IsNotNull(obj.Ints);
