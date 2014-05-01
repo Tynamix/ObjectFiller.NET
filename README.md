@@ -21,7 +21,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [Fill Lists and Dictionaries](#fill-lists-and-dictionaries)
    - [Mix all up](#mix-all-up)
  - [Available Plugins](#available-plugins)
-   - [Mix all up](#mix-all-up)
+   - [RangeIntegerPlugin](#rangeintegerplugin)
    - [MnemonicStringPlugin](#mnemonicstringplugin)
    - [RealNamePlugin](#realnameplugin)
    - [RandomListItem Plugin](#randomlistitem---plugin)
