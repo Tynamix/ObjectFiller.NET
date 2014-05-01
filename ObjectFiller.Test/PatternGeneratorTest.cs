@@ -14,6 +14,7 @@ namespace ObjectFiller.Test
 		[TestMethod]
 		public void Must_be_able_to_handle_private_setters()
 		{
+			// branch
 			var filler = new ObjectFiller<ClassWithPrivateStuff>();
 			var obj = filler.Fill();
 
