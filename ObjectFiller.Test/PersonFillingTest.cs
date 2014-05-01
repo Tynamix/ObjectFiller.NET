@@ -14,7 +14,8 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
 
-            pFiller.Setup().RegisterInterface<IAddress, Address>();
+            pFiller.Setup()
+                .OnType<IAddress>().Register<Address>();
 
             Person filledPerson = pFiller.Fill();
 
@@ -30,9 +31,9 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
 
-            pFiller.Setup().RegisterInterface<IAddress, Address>()
-                .SetProperty(p => p.FirstName,new RealNames(true, false))
-                .SetProperty(p => p.LastName, new RealNames(false, true));
+            pFiller.Setup().OnType<IAddress>().Register<Address>()
+                .OnProperty(p => p.FirstName).Use(new RealNames(true, false))
+                .OnProperty(p => p.LastName).Use(new RealNames(false, true));
 
             Person filledPerson = pFiller.Fill();
 
@@ -46,9 +47,10 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
 
-            pFiller.Setup().RegisterInterface<IAddress, Address>()
-                .SetProperty(p => p.FirstName,() => "John")
-                .SetProperty(p => p.LastName, new RealNames(false, true));
+            pFiller.Setup()
+                .OnType<IAddress>().Register<Address>()
+                .OnProperty(p => p.FirstName).Use(() => "John")
+                .OnProperty(p => p.LastName).Use(new RealNames(false, true));
 
             Person filledPerson = pFiller.Fill();
 
@@ -66,9 +68,9 @@ namespace ObjectFiller.Test
 
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .RegisterInterface<IAddress, Address>()
-                .SetProperty(p => p.FirstName, new RandomListItem<string>(names))
-                .SetProperty(p => p.Age, new RandomListItem<int>(ages));
+                .OnType<IAddress>().Register<Address>()
+                .OnProperty(p => p.FirstName).Use(new RandomListItem<string>(names))
+                .OnProperty(p => p.Age).Use(new RandomListItem<int>(ages));
 
             var pF = pFiller.Fill();
 
@@ -82,12 +84,12 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .RegisterInterface<IAddress, Address>()
-                .SetProperty(p => p.LastName, new RealNames(true, false), p => p.FirstName)
-                .SetProperty(p => p.Age, () => new Random().Next(10, 32))
-                .For<Address>()
-                .SetProperty(a => a.City, new MnemonicString(1))
-                .Ignore(a => a.Street);
+                .OnType<IAddress>().Register<Address>()
+                .OnProperty(p => p.LastName, p => p.FirstName).Use(new RealNames(true, false))
+                .OnProperty(p => p.Age).Use(() => new Random().Next(10, 32))
+                .SetupFor<Address>()
+                .OnProperty(a => a.City).Use(new MnemonicString(1))
+                .OnProperty(a => a.Street).IgnoreIt();
 
             var pF = pFiller.Fill();
 
@@ -98,13 +100,27 @@ namespace ObjectFiller.Test
         }
 
         [TestMethod]
+        public void FluentTest()
+        {
+            Filler<Person> pFiller = new Filler<Person>();
+            pFiller.Setup()
+                .OnProperty(x => x.Age).Use(() => 18)
+                .OnType<IAddress>().Register<Address>();
+
+            Person p = pFiller.Fill();
+            Assert.IsNotNull(p);
+            Assert.AreEqual(18, p.Age);
+
+        }
+
+        [TestMethod]
         public void TestSetupForTypeOverrideSettings()
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .RegisterInterface<IAddress, Address>()
-                .SetType<int>(() => 1)
-                .For<Address>(true);
+                .OnType<IAddress>().Register<Address>()
+                .OnType<int>().Use(() => 1)
+                .SetupFor<Address>(true);
 
             Person p = pFiller.Fill();
             Assert.AreEqual(1, p.Age);
@@ -116,9 +132,9 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .RegisterInterface<IAddress, Address>()
-                .SetType<int>(() => 1)
-                .For<Address>();
+                .OnType<IAddress>().Register<Address>()
+                .OnType<int>().Use(() => 1)
+                .SetupFor<Address>();
 
             Person p = pFiller.Fill();
             Assert.AreEqual(1, p.Age);
@@ -130,8 +146,8 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .RegisterInterface<IAddress, Address>()
-                .IgnoreAll<string>()
+                .OnType<IAddress>().Register<Address>()
+                .OnType<string>().IgnoreIt()
                 ;
 
             Person p = pFiller.Fill();
@@ -147,10 +163,10 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .RegisterInterface<IAddress, Address>()
-                .IgnoreAll<Address>()
-                .IgnoreAll<IAddress>()
-                ;
+                .OnType<IAddress>().Register<Address>()
+                .OnType<Address>().IgnoreIt()
+                .OnType<IAddress>().IgnoreIt();
+
             Person p = pFiller.Fill();
 
             Assert.IsNotNull(p);
@@ -162,10 +178,11 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .RegisterInterface<IAddress, Address>()
-                .IgnoreAll<Address>()
-                .IgnoreAll<IAddress>()
-                .IgnoreAll<Dictionary<string, IAddress>>();
+                .OnType<IAddress>().Register<Address>()
+                .OnType<Address>().IgnoreIt()
+                .OnType<IAddress>().IgnoreIt()
+                .OnType<Dictionary<string, IAddress>>().IgnoreIt();
+
             Person p = pFiller.Fill();
 
             Assert.IsNotNull(p);

@@ -12,7 +12,7 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryConstructorWithSimple> lib = new Filler<LibraryConstructorWithSimple>();
             lib.Setup()
-                .Ignore(x => x.Books);
+                .OnProperty(x => x.Books).IgnoreIt();
             LibraryConstructorWithSimple filledLib = lib.Fill();
 
             Assert.IsNull(filledLib.Books);
@@ -26,8 +26,8 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryConstructorList> lib = new Filler<LibraryConstructorList>();
             lib.Setup()
-                .Ignore(x => x.Books, x => x.Name);
-
+                .OnProperty(x => x.Books).IgnoreIt()
+                .OnProperty(x => x.Name).IgnoreIt();
 
             LibraryConstructorList filledLib = lib.Fill();
 
@@ -41,8 +41,8 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryConstructorList> lib = new Filler<LibraryConstructorList>();
             lib.Setup()
-                .Ignore(x => x.Books)
-                .RegisterInterface<IBook, Book>();
+                .OnProperty(x => x.Books).IgnoreIt()
+                .OnType<IBook>().Register<Book>();
 
             LibraryConstructorList filledLib = lib.Fill();
 
@@ -54,8 +54,7 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryConstructorPoco> lib = new Filler<LibraryConstructorPoco>();
             lib.Setup()
-               .Ignore(x => x.Books);
-
+                .OnProperty(x=>x.Books).IgnoreIt();
 
             LibraryConstructorPoco filledLib = lib.Fill();
             Assert.IsNotNull(filledLib.Books);
@@ -67,9 +66,8 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryConstructorDictionary> lib = new Filler<LibraryConstructorDictionary>();
             lib.Setup()
-                .RegisterInterface<IBook, Book>()
-                .Ignore(x => x.Books);
-
+                .OnType<IBook>().Register<Book>()
+                .OnProperty(x=>x.Books).IgnoreIt();
 
             LibraryConstructorDictionary filledLib = lib.Fill();
             Assert.IsNotNull(filledLib.Books);
@@ -80,7 +78,8 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryConstructorDictionary> lib = new Filler<LibraryConstructorDictionary>();
             lib.Setup()
-               .Ignore(x => x.Books, x => x.Name);
+                .OnProperty(x => x.Books).IgnoreIt()
+                .OnProperty(x => x.Name).IgnoreIt();
 
 
             LibraryConstructorDictionary filledLib = lib.Fill();

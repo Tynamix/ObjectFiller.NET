@@ -25,9 +25,9 @@ namespace Tynamix.ObjectFiller
         /// Call this to start the setup for the <see cref="Filler{T}"/>
         /// </summary>
         /// <returns>Fluent API setup</returns>
-        public IFluentFillerApi<T> Setup()
+        public FluentFillerApi<T> Setup()
         {
-            return new ObjectFillerApi<T>();
+            return new FluentFillerApi<T>();
         }
 
 

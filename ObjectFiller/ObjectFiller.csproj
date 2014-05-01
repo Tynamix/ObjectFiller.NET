@@ -36,6 +36,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Setup\FluentFillerApi.cs" />
+    <Compile Include="Setup\FluentPropertyApi.cs" />
+    <Compile Include="Setup\FluentTypeApi.cs" />
+    <Compile Include="Setup\IFluentApi.cs" />
     <Compile Include="Plugins\DateTime\DateTimeMinMax.cs" />
     <Compile Include="Plugins\Double\DoubleMinMax.cs" />
     <Compile Include="Plugins\Integer\RangePlugin.cs" />
@@ -45,19 +49,17 @@
     <Compile Include="Plugins\String\LoremIpsum.cs" />
     <Compile Include="Plugins\String\MnemonicString.cs" />
     <Compile Include="Plugins\String\RealNames.cs" />
-    <Compile Include="IFluentFillerApi.cs" />
     <Compile Include="IInterfaceMocker.cs" />
     <Compile Include="Filler.cs" />
-    <Compile Include="ObjectFillerApi.cs" />
     <Compile Include="Random.cs" />
-    <Compile Include="SetupManager.cs" />
+    <Compile Include="Setup\SetupManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ObjectFillerSetup.cs" />
+    <Compile Include="Setup\ObjectFillerSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

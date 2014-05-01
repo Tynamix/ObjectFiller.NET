@@ -35,8 +35,7 @@ namespace ObjectFiller.Test
 		public void Must_be_able_to_handle_arrays()
 		{
 			var filler = new Filler<WithArrays>();
-			filler.Setup()
-				.RegisterInterface<int[],int[]>();
+				
 				//.For<int[]>();
 			var obj = filler.Fill();
 

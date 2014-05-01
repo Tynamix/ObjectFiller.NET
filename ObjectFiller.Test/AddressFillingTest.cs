@@ -24,7 +24,8 @@ namespace ObjectFiller.Test
         public void IgnoreCountry()
         {
             Filler<Address> addressFiller = new Filler<Address>();
-            addressFiller.Setup().Ignore(x => x.Country);
+            addressFiller.Setup()
+                    .OnProperty(x=>x.Country).IgnoreIt();
             Address a = addressFiller.Fill();
 
             Assert.IsNotNull(a.City);
@@ -38,7 +39,8 @@ namespace ObjectFiller.Test
         public void IgnoreCountryAndCity()
         {
             Filler<Address> addressFiller = new Filler<Address>();
-            addressFiller.Setup().Ignore(x => x.Country, x => x.City);
+            addressFiller.Setup()
+                .OnProperty(x => x.Country, x => x.City).IgnoreIt();
             Address a = addressFiller.Fill();
 
             Assert.IsNull(a.City);
@@ -52,7 +54,8 @@ namespace ObjectFiller.Test
         public void SetupCityPropertyWithConstantValue()
         {
             Filler<Address> addressFiller = new Filler<Address>();
-            addressFiller.Setup().SetProperty(ad => ad.City, () => "City");
+            addressFiller.Setup()
+                .OnProperty(ad => ad.City).Use(() => "City");
             Address a = addressFiller.Fill();
 
             Assert.AreEqual("City", a.City);
@@ -67,7 +70,7 @@ namespace ObjectFiller.Test
         {
             Filler<Address> addressFiller = new Filler<Address>();
             addressFiller.Setup()
-                .SetProperty(ad => ad.City, () => "CityCountry", ad => ad.Country);
+                .OnProperty(ad => ad.City, ad => ad.Country).Use(() => "CityCountry");
             Address a = addressFiller.Fill();
 
             Assert.AreEqual("CityCountry", a.City);

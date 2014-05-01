@@ -15,8 +15,8 @@ namespace ObjectFiller.Test
             int nameWordCount = 500;
             Filler<Book> bookFill = new Filler<Book>();
             bookFill.Setup()
-                .SetProperty(x => x.ISBN, new LoremIpsum(isbnWordCount))
-                .SetProperty(x => x.Name, new LoremIpsum(nameWordCount));
+                .OnProperty(x => x.ISBN).Use(new LoremIpsum(isbnWordCount))
+                .OnProperty(x => x.Name).Use(new LoremIpsum(nameWordCount));
 
             Book book = bookFill.Fill();
 

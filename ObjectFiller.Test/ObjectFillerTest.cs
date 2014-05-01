@@ -15,13 +15,13 @@ namespace ObjectFiller.Test
             Person p = new Person();
             Filler<Person> filler = new Filler<Person>();
             filler.Setup()
-                .RegisterInterface<IAddress, Address>()
-                .SetType(new MnemonicString(10))
-                .SetProperty(person => person.FirstName, new MnemonicString(1) )
-                .SetProperty(person => person.LastName,new RandomListItem<string>(new List<string>() { "Maik", "Tom", "Anton" }))
-                .SetProperty(person => person.Age,() => new Random().Next(12, 83))
-                .For<Address>()
-                .Ignore(a => a.City, a => a.Country);
+                .OnType<IAddress>().Register<Address>()
+                .OnType<string>().Use(new MnemonicString(10))
+                .OnProperty(person => person.FirstName).Use(new MnemonicString(1))
+                .OnProperty(person => person.LastName).Use(new RandomListItem<string>(new List<string>() { "Maik", "Tom", "Anton" }))
+                .OnProperty(person => person.Age).Use(() => new Random().Next(12, 83))
+                .SetupFor<Address>()
+                .OnProperty(x => x.City, x => x.Country).IgnoreIt();
 
             Person pFilled = filler.Fill(p);
         }

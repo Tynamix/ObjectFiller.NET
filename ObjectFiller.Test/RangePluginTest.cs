@@ -14,7 +14,7 @@ namespace ObjectFiller.Test
             int max = 100;
             Filler<SimpleList> filler = new Filler<SimpleList>();
 
-            filler.Setup().SetType(new Range(max));
+            filler.Setup().OnType<int>().Use(new Range(max));
             var sl = filler.Fill();
 
             Assert.IsNotNull(sl);
@@ -30,7 +30,7 @@ namespace ObjectFiller.Test
             int min = 50;
             Filler<SimpleList> filler = new Filler<SimpleList>();
 
-            filler.Setup().SetType(new Range(min,max));
+            filler.Setup().OnType<int>().Use(new Range(min, max));
             var sl = filler.Fill();
 
             Assert.IsNotNull(sl);

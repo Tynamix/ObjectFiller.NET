@@ -13,7 +13,8 @@ namespace ObjectFiller.Test
         {
             Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
             eFiller.Setup()
-                .Ignore(ec => ec.EntityArray);
+                .OnProperty(x => x.EntityArray).IgnoreIt();
+
             EntityCollection entity = eFiller.Fill();
 
             Assert.IsNotNull(entity);
@@ -28,7 +29,7 @@ namespace ObjectFiller.Test
         {
             Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
             eFiller.Setup()
-                .SetProperty(ec => ec.EntityArray, GetArray);
+                .OnProperty(ec => ec.EntityArray).Use(GetArray);
             EntityCollection entity = eFiller.Fill();
 
             Assert.IsNotNull(entity);
