@@ -9,7 +9,7 @@ namespace Tynamix.ObjectFiller
     /// </summary>
     /// <typeparam name="TTargetObject">Type of the object for which this setup is related to</typeparam>
     /// <typeparam name="TTargetType">Type of the property which will be setup</typeparam>
-    public class FluentPropertyApi<TTargetObject, TTargetType> 
+    public class FluentPropertyApi<TTargetObject, TTargetType>
         : IFluentApi<TTargetObject, TTargetType> where TTargetObject : class
     {
         private readonly IEnumerable<PropertyInfo> _affectedProps;
@@ -19,6 +19,20 @@ namespace Tynamix.ObjectFiller
         {
             _affectedProps = affectedProps;
             _callback = callback;
+        }
+
+        public FluentPropertyApi<TTargetObject, TTargetType> DoIt(At propertyOrder)
+        {
+            foreach (PropertyInfo propertyInfo in _affectedProps)
+            {
+                SetupManager.GetFor<TTargetObject>().PropertyOrder[propertyInfo] = propertyOrder;
+            }
+            return this;
+        }
+
+        public FluentFillerApi<TTargetObject> UseDefault()
+        {
+            return _callback;
         }
 
         /// <summary>

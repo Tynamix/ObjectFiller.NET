@@ -15,6 +15,7 @@ namespace Tynamix.ObjectFiller
             TypeToRandomFunc = new Dictionary<Type, Func<object>>();
             PropertyToRandomFunc = new Dictionary<PropertyInfo, Func<object>>();
             PropertiesToIgnore = new List<PropertyInfo>();
+            PropertyOrder = new Dictionary<PropertyInfo, At>();
             TypesToIgnore = new List<Type>();
 
             InterfaceToImplementation = new Dictionary<Type, Type>();
@@ -41,7 +42,13 @@ namespace Tynamix.ObjectFiller
             TypeToRandomFunc[typeof(Guid?)] = () => Guid.NewGuid();
             TypeToRandomFunc[typeof(System.DateTime)] = () => dateTimeRandomizer.GetValue();
             TypeToRandomFunc[typeof(System.DateTime?)] = () => dateTimeRandomizer.GetValue();
+
         }
+
+        /// <summary>
+        /// Defines in which order the properties get handled.
+        /// </summary>
+        public Dictionary<PropertyInfo, At> PropertyOrder { get; private set; }
 
         /// <summary>
         /// Contains the Type to random data generator func

@@ -117,8 +117,11 @@ namespace Tynamix.ObjectFiller
 
             if (properties.Length == 0) return;
 
-            foreach (PropertyInfo property in properties)
+            Queue<PropertyInfo> orderedProperties = OrderPropertiers(currentSetup, properties);
+            while (orderedProperties.Count != 0)
             {
+                PropertyInfo property = orderedProperties.Dequeue();
+
                 if (currentSetup.TypesToIgnore.Contains(property.PropertyType))
                 {
                     continue;
@@ -139,6 +142,27 @@ namespace Tynamix.ObjectFiller
 
                 property.SetValue(objectToFill, filledObject, null);
             }
+        }
+
+        private Queue<PropertyInfo> OrderPropertiers(ObjectFillerSetup currentSetup, PropertyInfo[] properties)
+        {
+            Queue<PropertyInfo> propertyQueue = new Queue<PropertyInfo>();
+            var firstProperties = currentSetup.PropertyOrder
+                                              .Where(x => x.Value == At.TheBegin && ContainsProperty(properties, x.Key))
+                                              .Select(x => x.Key).ToList();
+
+            var lastProperties = currentSetup.PropertyOrder
+                                              .Where(x => x.Value == At.TheEnd && ContainsProperty(properties, x.Key))
+                                              .Select(x => x.Key).ToList();
+
+            var propertiesWithoutOrder = properties.Where(x => !ContainsProperty(currentSetup.PropertyOrder.Keys, x)).ToList();
+
+
+            firstProperties.ForEach(propertyQueue.Enqueue);
+            propertiesWithoutOrder.ForEach(propertyQueue.Enqueue);
+            lastProperties.ForEach(propertyQueue.Enqueue);
+
+            return propertyQueue;
         }
 
         private bool IgnoreProperty(PropertyInfo property, ObjectFillerSetup currentSetup)
@@ -169,7 +193,7 @@ namespace Tynamix.ObjectFiller
 
                 return dictionary;
             }
-            
+
             if (TypeIsList(type))
             {
                 IList list = GetFilledList(type, currentSetup);
@@ -180,7 +204,7 @@ namespace Tynamix.ObjectFiller
             {
                 return GetInterfaceInstance(type, currentSetup);
             }
-            
+
             if (TypeIsPoco(type))
             {
                 return GetFilledPoco(type, currentSetup);

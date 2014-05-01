@@ -66,6 +66,7 @@
     <Compile Include="TestPoco\Person\IAddress.cs" />
     <Compile Include="TestPoco\Person\Person.cs" />
     <Compile Include="PatternGeneratorTest.cs" />
+    <Compile Include="TestPoco\Person\OrderedPersonProperties.cs" />
     <Compile Include="TestPoco\SimpleList.cs" />
   </ItemGroup>
   <ItemGroup>

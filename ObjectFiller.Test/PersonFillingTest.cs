@@ -85,7 +85,7 @@ namespace ObjectFiller.Test
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .OnType<IAddress>().Register<Address>()
-                .OnProperty(p => p.LastName, p => p.FirstName).Use(new RealNames(true, false))
+                .OnProperty(p => p.LastName, p => p.FirstName).DoIt(At.TheEnd).Use(new RealNames(true, false))
                 .OnProperty(p => p.Age).Use(() => new Random().Next(10, 32))
                 .SetupFor<Address>()
                 .OnProperty(a => a.City).Use(new MnemonicString(1))
@@ -188,6 +188,32 @@ namespace ObjectFiller.Test
             Assert.IsNotNull(p);
             Assert.IsNull(p.Address);
             Assert.IsNull(p.StringToIAddress);
+        }
+
+        [TestMethod]
+        public void TestPropertyOrderDoNameLast()
+        {
+            Filler<OrderedPersonProperties> filler = new Filler<OrderedPersonProperties>();
+            filler.Setup()
+                .OnProperty(x => x.Name).DoIt(At.TheEnd).UseDefault();
+
+            var p = filler.Fill();
+
+            Assert.IsNotNull(p);
+            Assert.AreEqual(3, p.NameCount);
+        }
+
+        [TestMethod]
+        public void TestPropertyOrderDoNameFirst()
+        {
+            Filler<OrderedPersonProperties> filler = new Filler<OrderedPersonProperties>();
+            filler.Setup()
+                .OnProperty(x => x.Name).DoIt(At.TheBegin).UseDefault();
+
+            var p = filler.Fill();
+
+            Assert.IsNotNull(p);
+            Assert.AreEqual(1, p.NameCount);
         }
     }
 }
