@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Library;
 using Tynamix.ObjectFiller;
@@ -18,7 +18,7 @@ namespace ObjectFiller.Test
                 .OnProperty(x => x.ISBN).Use(new LoremIpsum(isbnWordCount))
                 .OnProperty(x => x.Name).Use(new LoremIpsum(nameWordCount));
 
-            Book book = bookFill.Fill();
+            Book book = bookFill.Create();
 
             Assert.IsNotNull(book);
             Assert.IsNotNull(book.ISBN);
