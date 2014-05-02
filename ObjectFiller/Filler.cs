@@ -158,8 +158,6 @@ namespace Tynamix.ObjectFiller
 
                 object filledObject = GetFilledObject(property.PropertyType, currentSetup);
                 SetPropertyValue(property, objectToFill, filledObject);
-
-                //property.SetValue(objectToFill, filledObject, BindingFlags.NonPublic | BindingFlags.Instance, null, null, CultureInfo.CurrentCulture);
             }
         }
 
