@@ -65,6 +65,7 @@
     <Compile Include="TestPoco\Person\IAddress.cs" />
     <Compile Include="TestPoco\Person\Person.cs" />
     <Compile Include="PatternGeneratorTest.cs" />
+    <Compile Include="SequenceGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ObjectFiller\ObjectFiller.csproj">
