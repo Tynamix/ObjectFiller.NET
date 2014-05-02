@@ -50,12 +50,12 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Registers a implementation  <typeparam name="TImplementation"/> of an interface <typeparam name="TTargetType"></typeparam>
+        /// Registers a implementation  <typeparam name="TImplementation"/> of an interface <typeparam name="TTargetType"/>
         /// The implementation must derive from the interface.
         /// </summary>
-        /// <typeparam name="TImplementation">Type of the implementation which will be used to create a instance of the interface of type <typeparam name="TTargetType"></typeparam></typeparam>
+        /// <typeparam name="TImplementation"/>Type of the implementation which will be used to create a instance of the interface of type <typeparam name="TTargetType"/>
         /// <returns>Main FluentFiller API</returns>
-        public FluentFillerApi<TTargetObject> Register<TImplementation>()
+        public FluentFillerApi<TTargetObject> CreateInstanceOf<TImplementation>()
             where TImplementation : class,TTargetType
         {
             SetupManager.GetFor<TTargetObject>().InterfaceToImplementation.Add(typeof(TTargetType), typeof(TImplementation));
