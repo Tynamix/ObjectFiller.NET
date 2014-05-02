@@ -37,18 +37,6 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// If a property is not writable because of  private setter you can allow the objectfiller
-        /// to write it anyway
-        /// </summary>
-        /// <returns></returns>
-        public FluentPropertyApi<TTargetObject, TTargetType> WritePrivateSetter()
-        {
-            SetupManager.GetFor<TTargetObject>().PropertiesWritePrivateSetter.AddRange(_affectedProps);
-
-            return this;
-        }
-
-        /// <summary>
         /// Use the default random generator method for the given type.
         /// Its usefull when you want to define the order of the property with <see cref="DoIt"/>, but you
         /// don't want to define the random generator.
