@@ -32,21 +32,22 @@ namespace Tynamix.ObjectFiller
 
 
         /// <summary>
-        /// This will fill your object of type <see cref="T"/> and overrides the setup for the generation.
+        /// This will create your object of type <see cref="T"/> and overrides the setup for the generation.
         /// Use this method if you don't wan't to use the FluentAPI
         /// </summary>
-        /// <param name="setup">Setup for the object filling</param>
+        /// <param name="setup">Setup for the objectfiller</param>
         /// <returns>Object which is filled with random data</returns>
-        public T Fill(ObjectFillerSetup setup)
+        public T Create(ObjectFillerSetup setup)
         {
             SetupManager.SetMain(setup);
-            return Fill();
+            return Create();
         }
 
         /// <summary>
-        /// Fills your object. Call this after you finished your setup with the FluentAPI
+        /// Creates your filled object. Call this after you finished your setup with the FluentAPI and if you want
+        /// to create a new object. If you want to use a existing instance use the <see cref="Fill(T)"/> method.
         /// </summary>
-        public T Fill()
+        public T Create()
         {
             T objectToFill = (T)CreateInstanceOfType(typeof(T), SetupManager.GetFor<T>());
 
@@ -54,6 +55,20 @@ namespace Tynamix.ObjectFiller
 
             return objectToFill;
         }
+
+        /// <summary>
+        /// This will fill your instance of an object of type <see cref="T"/> and overrides the setup for the generation.
+        /// Use this method if you don't wan't to use the FluentAPI
+        /// </summary>
+        /// <param name="instanceToFill">The instance which will get filled with random data.</param>
+        /// <param name="setup">Setup for the objectfiller</param>
+        /// <returns>Instance which is filled with random data</returns>
+        public T Fill(T instanceToFill, ObjectFillerSetup setup)
+        {
+            SetupManager.SetMain(setup);
+            return Create();
+        }
+
 
         /// <summary>
         /// Fills your object instance. Call this after you finished your setup with the FluentAPI
