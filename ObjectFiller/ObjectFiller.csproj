@@ -42,7 +42,7 @@
     <Compile Include="Setup\IFluentApi.cs" />
     <Compile Include="Plugins\DateTime\DateTimeRange.cs" />
     <Compile Include="Plugins\Double\DoubleRange.cs" />
-    <Compile Include="Plugins\Integer\RangePlugin.cs" />
+    <Compile Include="Plugins\Integer\IntRange.cs" />
     <Compile Include="Plugins\IRandomizerPlugin.cs" />
     <Compile Include="Plugins\String\PatternGenerator.cs" />
     <Compile Include="Plugins\RandomListItem.cs" />
