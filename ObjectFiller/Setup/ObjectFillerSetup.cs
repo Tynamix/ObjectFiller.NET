@@ -17,7 +17,6 @@ namespace Tynamix.ObjectFiller
             PropertiesToIgnore = new List<PropertyInfo>();
             PropertyOrder = new Dictionary<PropertyInfo, At>();
             TypesToIgnore = new List<Type>();
-
             InterfaceToImplementation = new Dictionary<Type, Type>();
 
             SetDefaultRandomizer();
@@ -99,5 +98,6 @@ namespace Tynamix.ObjectFiller
         /// Interface Mocker for interface generation
         /// </summary>
         public IInterfaceMocker InterfaceMocker { get; set; }
+
     }
 }
