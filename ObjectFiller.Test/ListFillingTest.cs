@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.ListTest;
 using Tynamix.ObjectFiller;
@@ -11,10 +11,11 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillAllListsExceptArray()
         {
-            ObjectFiller<EntityCollection> eFiller = new ObjectFiller<EntityCollection>();
+            Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
             eFiller.Setup()
-                .IgnoreProperties(ec => ec.EntityArray);
-            EntityCollection entity = eFiller.Fill();
+                .OnProperty(x => x.EntityArray).IgnoreIt();
+
+            EntityCollection entity = eFiller.Create();
 
             Assert.IsNotNull(entity);
             Assert.IsNotNull(entity.EntityList);
@@ -26,10 +27,10 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillList()
         {
-            ObjectFiller<EntityCollection> eFiller = new ObjectFiller<EntityCollection>();
+            Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
             eFiller.Setup()
-                .RandomizerForProperty(GetArray, ec => ec.EntityArray);
-            EntityCollection entity = eFiller.Fill();
+                .OnProperty(ec => ec.EntityArray).Use(GetArray);
+            EntityCollection entity = eFiller.Create();
 
             Assert.IsNotNull(entity);
             Assert.IsNotNull(entity.EntityList);
@@ -42,23 +43,21 @@ namespace ObjectFiller.Test
 
         private Entity[] GetArray()
         {
-            ObjectFiller<Entity> of = new ObjectFiller<Entity>();
+            Filler<Entity> of = new Filler<Entity>();
 
             List<Entity> entities = new List<Entity>();
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
 
 
             return entities.ToArray();
-
-
         }
     }
 }

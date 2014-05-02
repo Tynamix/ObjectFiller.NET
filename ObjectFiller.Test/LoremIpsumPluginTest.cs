@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Library;
 using Tynamix.ObjectFiller;
-using Tynamix.ObjectFiller.Plugins;
 
 namespace ObjectFiller.Test
 {
@@ -14,12 +13,12 @@ namespace ObjectFiller.Test
         {
             int isbnWordCount = 1000;
             int nameWordCount = 500;
-            ObjectFiller<Book> bookFill = new ObjectFiller<Book>();
+            Filler<Book> bookFill = new Filler<Book>();
             bookFill.Setup()
-                .RandomizerForProperty(new LoremIpsumPlugin(isbnWordCount), x => x.ISBN)
-                .RandomizerForProperty(new LoremIpsumPlugin(nameWordCount), x => x.Name);
+                .OnProperty(x => x.ISBN).Use(new LoremIpsum(isbnWordCount))
+                .OnProperty(x => x.Name).Use(new LoremIpsum(nameWordCount));
 
-            Book book = bookFill.Fill();
+            Book book = bookFill.Create();
 
             Assert.IsNotNull(book);
             Assert.IsNotNull(book.ISBN);

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -11,42 +13,43 @@ namespace Tynamix.ObjectFiller
     /// with random data
     /// </summary>
     /// <typeparam name="T">Targettype of the object to fill</typeparam>
-    public class ObjectFiller<T> where T : class
+    public class Filler<T> where T : class
     {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ObjectFiller()
+        public Filler()
         {
             SetupManager.Clear();
         }
 
         /// <summary>
-        /// Call this to start the setup for the <see cref="ObjectFiller{T}"/>
+        /// Call this to start the setup for the <see cref="Filler{T}"/>
         /// </summary>
         /// <returns>Fluent API setup</returns>
-        public IFluentFillerApi<T> Setup()
+        public FluentFillerApi<T> Setup()
         {
-            return new ObjectFillerApi<T>();
+            return new FluentFillerApi<T>();
         }
 
 
         /// <summary>
-        /// This will fill your object of type <see cref="T"/> and overrides the setup for the generation.
+        /// This will create your object of type <see cref="T"/> and overrides the setup for the generation.
         /// Use this method if you don't wan't to use the FluentAPI
         /// </summary>
-        /// <param name="setup">Setup for the object filling</param>
+        /// <param name="setup">Setup for the objectfiller</param>
         /// <returns>Object which is filled with random data</returns>
-        public T Fill(ObjectFillerSetup setup)
+        public T Create(ObjectFillerSetup setup)
         {
             SetupManager.SetMain(setup);
-            return Fill();
+            return Create();
         }
 
         /// <summary>
-        /// Fills your object. Call this after you finished your setup with the FluentAPI
+        /// Creates your filled object. Call this after you finished your setup with the FluentAPI and if you want
+        /// to create a new object. If you want to use a existing instance use the <see cref="Fill(T)"/> method.
         /// </summary>
-        public T Fill()
+        public T Create()
         {
             T objectToFill = (T)CreateInstanceOfType(typeof(T), SetupManager.GetFor<T>());
 
@@ -54,6 +57,20 @@ namespace Tynamix.ObjectFiller
 
             return objectToFill;
         }
+
+        /// <summary>
+        /// This will fill your instance of an object of type <see cref="T"/> and overrides the setup for the generation.
+        /// Use this method if you don't wan't to use the FluentAPI
+        /// </summary>
+        /// <param name="instanceToFill">The instance which will get filled with random data.</param>
+        /// <param name="setup">Setup for the objectfiller</param>
+        /// <returns>Instance which is filled with random data</returns>
+        public T Fill(T instanceToFill, ObjectFillerSetup setup)
+        {
+            SetupManager.SetMain(setup);
+            return Create();
+        }
+
 
         /// <summary>
         /// Fills your object instance. Call this after you finished your setup with the FluentAPI
@@ -113,12 +130,16 @@ namespace Tynamix.ObjectFiller
                 return;
             }
 
-            var properties = objectToFill.GetType().GetProperties().Where(x => x.CanWrite).ToArray();
+            var properties = objectToFill.GetType().GetProperties()
+                             .Where(x => GetSetMethodOnDeclaringType(x) != null).ToArray();
 
             if (properties.Length == 0) return;
 
-            foreach (PropertyInfo property in properties)
+            Queue<PropertyInfo> orderedProperties = OrderPropertiers(currentSetup, properties);
+            while (orderedProperties.Count != 0)
             {
+                PropertyInfo property = orderedProperties.Dequeue();
+
                 if (currentSetup.TypesToIgnore.Contains(property.PropertyType))
                 {
                     continue;
@@ -131,14 +152,49 @@ namespace Tynamix.ObjectFiller
                 if (ContainsProperty(currentSetup.PropertyToRandomFunc.Keys, property))
                 {
                     PropertyInfo p = GetPropertyFromProperties(currentSetup.PropertyToRandomFunc.Keys, property).Single();
-                    property.SetValue(objectToFill, currentSetup.PropertyToRandomFunc[p](), null);
+                    SetPropertyValue(property, objectToFill, currentSetup.PropertyToRandomFunc[p]());
                     continue;
                 }
 
                 object filledObject = GetFilledObject(property.PropertyType, currentSetup);
+                SetPropertyValue(property, objectToFill, filledObject);
 
-                property.SetValue(objectToFill, filledObject, null);
+                //property.SetValue(objectToFill, filledObject, BindingFlags.NonPublic | BindingFlags.Instance, null, null, CultureInfo.CurrentCulture);
             }
+        }
+
+        private void SetPropertyValue(PropertyInfo property, object objectToFill, object value)
+        {
+            if (property.CanWrite)
+            {
+                property.SetValue(objectToFill, value, null);
+            }
+            else
+            {
+                MethodInfo m = GetSetMethodOnDeclaringType(property);
+                m.Invoke(objectToFill, new object[] { value });
+            }
+        }
+
+        private Queue<PropertyInfo> OrderPropertiers(ObjectFillerSetup currentSetup, PropertyInfo[] properties)
+        {
+            Queue<PropertyInfo> propertyQueue = new Queue<PropertyInfo>();
+            var firstProperties = currentSetup.PropertyOrder
+                                              .Where(x => x.Value == At.TheBegin && ContainsProperty(properties, x.Key))
+                                              .Select(x => x.Key).ToList();
+
+            var lastProperties = currentSetup.PropertyOrder
+                                              .Where(x => x.Value == At.TheEnd && ContainsProperty(properties, x.Key))
+                                              .Select(x => x.Key).ToList();
+
+            var propertiesWithoutOrder = properties.Where(x => !ContainsProperty(currentSetup.PropertyOrder.Keys, x)).ToList();
+
+
+            firstProperties.ForEach(propertyQueue.Enqueue);
+            propertiesWithoutOrder.ForEach(propertyQueue.Enqueue);
+            lastProperties.ForEach(propertyQueue.Enqueue);
+
+            return propertyQueue;
         }
 
         private bool IgnoreProperty(PropertyInfo property, ObjectFillerSetup currentSetup)
@@ -149,6 +205,20 @@ namespace Tynamix.ObjectFiller
         private bool ContainsProperty(IEnumerable<PropertyInfo> properties, PropertyInfo property)
         {
             return GetPropertyFromProperties(properties, property).Any();
+        }
+
+        private MethodInfo GetSetMethodOnDeclaringType(PropertyInfo propInfo)
+        {
+            var methodInfo = propInfo.GetSetMethod(true);
+
+
+            if (propInfo.DeclaringType != null)
+                return methodInfo ?? propInfo
+                    .DeclaringType
+                    .GetProperty(propInfo.Name)
+                    .GetSetMethod(true);
+
+            return null;
         }
 
         private IEnumerable<PropertyInfo> GetPropertyFromProperties(IEnumerable<PropertyInfo> properties, PropertyInfo property)
@@ -169,7 +239,7 @@ namespace Tynamix.ObjectFiller
 
                 return dictionary;
             }
-            
+
             if (TypeIsList(type))
             {
                 IList list = GetFilledList(type, currentSetup);
@@ -180,7 +250,7 @@ namespace Tynamix.ObjectFiller
             {
                 return GetInterfaceInstance(type, currentSetup);
             }
-            
+
             if (TypeIsPoco(type))
             {
                 return GetFilledPoco(type, currentSetup);
@@ -204,7 +274,7 @@ namespace Tynamix.ObjectFiller
             Type keyType = propertyType.GetGenericArguments()[0];
             Type valueType = propertyType.GetGenericArguments()[1];
 
-            int maxDictionaryItems = currentSetup.RndGenerator.Next(currentSetup.DictionaryKeyMinCount,
+            int maxDictionaryItems = Random.Next(currentSetup.DictionaryKeyMinCount,
                 currentSetup.DictionaryKeyMaxCount);
             for (int i = 0; i < maxDictionaryItems; i++)
             {
@@ -253,7 +323,7 @@ namespace Tynamix.ObjectFiller
             }
 
 
-            int maxListItems = currentSetup.RndGenerator.Next(currentSetup.ListMinCount, currentSetup.ListMaxCount);
+            int maxListItems = Random.Next(currentSetup.ListMinCount, currentSetup.ListMaxCount);
             for (int i = 0; i < maxListItems; i++)
             {
                 object listObject = GetFilledObject(genType, currentSetup);
