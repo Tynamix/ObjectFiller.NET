@@ -17,8 +17,6 @@ namespace Tynamix.ObjectFiller
             PropertiesToIgnore = new List<PropertyInfo>();
             PropertyOrder = new Dictionary<PropertyInfo, At>();
             TypesToIgnore = new List<Type>();
-            PropertiesWritePrivateSetter = new List<PropertyInfo>();
-
             InterfaceToImplementation = new Dictionary<Type, Type>();
 
             SetDefaultRandomizer();
@@ -101,9 +99,5 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         public IInterfaceMocker InterfaceMocker { get; set; }
 
-        /// <summary>
-        /// Properties for which it is allowed to write the private setter
-        /// </summary>
-        public List<PropertyInfo> PropertiesWritePrivateSetter { get; private set; }
     }
 }
