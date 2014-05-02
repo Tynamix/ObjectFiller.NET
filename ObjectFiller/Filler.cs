@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -128,7 +130,10 @@ namespace Tynamix.ObjectFiller
                 return;
             }
 
-            var properties = objectToFill.GetType().GetProperties().Where(x => x.CanWrite).ToArray();
+            var properties = objectToFill.GetType().GetProperties()
+                             .Where(x =>x.CanWrite || ContainsProperty(currentSetup.PropertiesWritePrivateSetter,x) 
+                                                                       && GetSetMethodOnDeclaringType(x) != null)
+                             .ToArray();
 
             if (properties.Length == 0) return;
 
@@ -149,13 +154,27 @@ namespace Tynamix.ObjectFiller
                 if (ContainsProperty(currentSetup.PropertyToRandomFunc.Keys, property))
                 {
                     PropertyInfo p = GetPropertyFromProperties(currentSetup.PropertyToRandomFunc.Keys, property).Single();
-                    property.SetValue(objectToFill, currentSetup.PropertyToRandomFunc[p](), null);
+                    SetPropertyValue(property, objectToFill, currentSetup.PropertyToRandomFunc[p]());
                     continue;
                 }
 
                 object filledObject = GetFilledObject(property.PropertyType, currentSetup);
+                SetPropertyValue(property, objectToFill, filledObject);
 
-                property.SetValue(objectToFill, filledObject, null);
+                //property.SetValue(objectToFill, filledObject, BindingFlags.NonPublic | BindingFlags.Instance, null, null, CultureInfo.CurrentCulture);
+            }
+        }
+
+        private void SetPropertyValue(PropertyInfo property, object objectToFill, object value)
+        {
+            if (property.CanWrite)
+            {
+                property.SetValue(objectToFill, value, null);
+            }
+            else
+            {
+                MethodInfo m = GetSetMethodOnDeclaringType(property);
+                m.Invoke(objectToFill, new object[] { value });
             }
         }
 
@@ -188,6 +207,20 @@ namespace Tynamix.ObjectFiller
         private bool ContainsProperty(IEnumerable<PropertyInfo> properties, PropertyInfo property)
         {
             return GetPropertyFromProperties(properties, property).Any();
+        }
+
+        private MethodInfo GetSetMethodOnDeclaringType(PropertyInfo propInfo)
+        {
+            var methodInfo = propInfo.GetSetMethod(true);
+
+
+            if (propInfo.DeclaringType != null)
+                return methodInfo ?? propInfo
+                    .DeclaringType
+                    .GetProperty(propInfo.Name)
+                    .GetSetMethod(true);
+
+            return null;
         }
 
         private IEnumerable<PropertyInfo> GetPropertyFromProperties(IEnumerable<PropertyInfo> properties, PropertyInfo property)
