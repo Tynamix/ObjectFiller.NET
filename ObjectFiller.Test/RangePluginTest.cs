@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco;
 using Tynamix.ObjectFiller;
@@ -14,8 +14,8 @@ namespace ObjectFiller.Test
             int max = 100;
             Filler<SimpleList> filler = new Filler<SimpleList>();
 
-            filler.Setup().OnType<int>().Use(new Range(max));
-            var sl = filler.Fill();
+            filler.Setup().OnType<int>().Use(new IntRange(max));
+            var sl = filler.Create();
 
             Assert.IsNotNull(sl);
             Assert.IsNotNull(sl.IntegerList);
@@ -30,8 +30,8 @@ namespace ObjectFiller.Test
             int min = 50;
             Filler<SimpleList> filler = new Filler<SimpleList>();
 
-            filler.Setup().OnType<int>().Use(new Range(min, max));
-            var sl = filler.Fill();
+            filler.Setup().OnType<int>().Use(new IntRange(min, max));
+            var sl = filler.Create();
 
             Assert.IsNotNull(sl);
             Assert.IsNotNull(sl.IntegerList);
