@@ -103,7 +103,7 @@ public class HelloFiller
 }
 ```
 
-It is also possible to fill an already existing instance of an object. In the example we first create a person and then call ```Fill(...)``` instead of ```Create()```. This is great for DesignViewModels in WPF for example or whereever you need to fill the object in the constructor with ```Fill(this)```.
+It is also possible to fill an already existing instance of an object. In the example we first create a person and then call ```Fill(...)``` instead of ```Create()```. This is great for DesignViewModels in WPF for example or whereever you need to fill the object in the constructor with ```Fill(this)``` for example.
 
 ###Let's use the fluent setup API
 
