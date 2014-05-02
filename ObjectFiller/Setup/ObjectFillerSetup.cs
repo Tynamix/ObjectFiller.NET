@@ -26,8 +26,8 @@ namespace Tynamix.ObjectFiller
         private void SetDefaultRandomizer()
         {
             var mnemonic = new MnemonicString(20);
-            var doublePlugin = new DoubleMinMax();
-            var dateTimeRandomizer = new DateTimeMinMax(new System.DateTime(1970, 1, 1));
+            var doublePlugin = new DoubleRange();
+            var dateTimeRandomizer = new DateTimeRange(new System.DateTime(1970, 1, 1));
             TypeToRandomFunc[typeof(string)] = mnemonic.GetValue;
             TypeToRandomFunc[typeof(bool)] = () => Random.Next(0, 2) == 1;
             TypeToRandomFunc[typeof(short)] = () => (short)Random.Next(-32767, 32767);
