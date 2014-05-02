@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller;
 using System.Text.RegularExpressions;
@@ -14,7 +14,7 @@ namespace ObjectFiller.Test
 		public void Must_be_able_to_handle_private_setters()
 		{
 			var filler = new Filler<ClassWithPrivateStuff>();
-			var obj = filler.Fill();
+			var obj = filler.Create();
 
 			Assert.AreNotEqual(0, obj.WithPrivateSetter, "Must be able to set even a private setter");
 			Assert.AreEqual(123, obj.WithoutSetter, "Cannot set that... must get default value");
@@ -24,7 +24,7 @@ namespace ObjectFiller.Test
 		public void Must_be_able_to_handle_inheritance_and_sealed()
 		{
 			var filler = new Filler<InheritedClass>();
-			var obj = filler.Fill();
+			var obj = filler.Create();
 
 			Assert.AreNotEqual(0, obj.NormalNumber);
 			Assert.AreNotEqual(0, obj.OverrideNormalNumber);
@@ -37,7 +37,7 @@ namespace ObjectFiller.Test
 			var filler = new Filler<WithArrays>();
 				
 				//.For<int[]>();
-			var obj = filler.Fill();
+			var obj = filler.Create();
 
 			Assert.IsNotNull(obj.Ints);
 			Assert.IsNotNull(obj.Strings);
