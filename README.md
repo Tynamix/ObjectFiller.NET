@@ -72,35 +72,35 @@ public class Person
 
 public class HelloFiller
 {
-        public void FillPerson()
-        {
-            Filler<Person> pFiller = new Filler<Person>();
-            Person p = pFiller.Create();
-        }
+	public void CreatePerson()
+	{
+	    Filler<Person> pFiller = new Filler<Person>();
+	    Person p = pFiller.Create();
+	}
 }
 ```
 
 Nothing special, it will just create a instance of a **```Person```** and fill it with some random data.
 
 ```csharp
-        public class Person
-        {
-            public string Name { get; set; }
-            public string LastName { get; set; }
-            public int Age { get; set; }
-            public DateTime Birthday { get; set; }
-        }
+public class Person
+{
+    public string Name { get; set; }
+    public string LastName { get; set; }
+    public int Age { get; set; }
+    public DateTime Birthday { get; set; }
+}
 
-        public class HelloFiller
-        {
-            public void FillPerson()
-            {
-                Person person = new Person();
+public class HelloFiller
+{
+    public void FillPerson()
+    {
+        Person person = new Person();
 
-                Filler<Person> pFiller = new Filler<Person>();
-                Person p = pFiller.Fill(person);
-            }
-        }
+        Filler<Person> pFiller = new Filler<Person>();
+        Person p = pFiller.Fill(person);
+    }
+}
 ```
 
 It is also possible to fill an already existing instance of an object. In the example we first create a person and then call ```Fill(...)``` instead of ```Create()```. This is great for DesignViewModels in WPF for example or whereever you need to fill the object in the constructor with ```Fill(this)```.
