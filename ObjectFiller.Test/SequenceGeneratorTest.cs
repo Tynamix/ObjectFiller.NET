@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tynamix.ObjectFiller.Plugins;
+using Tynamix.ObjectFiller;
 // ReSharper disable RedundantCast
 
 namespace ObjectFiller.Test

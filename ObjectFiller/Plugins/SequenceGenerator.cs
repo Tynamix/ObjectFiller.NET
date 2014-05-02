@@ -1,6 +1,8 @@
 ﻿using System;
 
-namespace Tynamix.ObjectFiller.Plugins
+// ReSharper disable CheckNamespace
+// ReSharper disable RedundantCast ## intentional, allows a simple copy&paste of the classes
+namespace Tynamix.ObjectFiller
 {
 	#region SequenceGeneratorSByte
 
