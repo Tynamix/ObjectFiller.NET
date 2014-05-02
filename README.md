@@ -21,7 +21,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [Fill Lists and Dictionaries](#fill-lists-and-dictionaries)
    - [Mix all up](#mix-all-up)
  - [Available Plugins](#available-plugins)
-   - [RangeIntegerPlugin](#rangeintegerplugin)
+   - [IntRangePlugin](#rangeintegerplugin)
    - [MnemonicStringPlugin](#mnemonicstringplugin)
    - [RealNamePlugin](#realnameplugin)
    - [RandomListItem Plugin](#randomlistitem---plugin)
@@ -75,12 +75,35 @@ public class HelloFiller
         public void FillPerson()
         {
             Filler<Person> pFiller = new Filler<Person>();
-            Person p = pFiller.Fill();
+            Person p = pFiller.Create();
         }
 }
 ```
 
 Nothing special, it will just create a instance of a **```Person```** and fill it with some random data.
+
+```csharp
+        public class Person
+        {
+            public string Name { get; set; }
+            public string LastName { get; set; }
+            public int Age { get; set; }
+            public DateTime Birthday { get; set; }
+        }
+
+        public class HelloFiller
+        {
+            public void FillPerson()
+            {
+                Person person = new Person();
+
+                Filler<Person> pFiller = new Filler<Person>();
+                Person p = pFiller.Fill(person);
+            }
+        }
+```
+
+It is also possible to fill an already existing instance of an object. In the example we first create a person and then call ```Fill(...)``` instead of ```Create()```. This is great for DesignViewModels in WPF for example or whereever you need to fill the object in the constructor with ```Fill(this)```.
 
 ###Let's use the fluent setup API
 
@@ -101,7 +124,7 @@ Nothing special, it will just create a instance of a **```Person```** and fill i
             pFiller.Setup()
                 .OnType<string>().Use(() => "SomeString")
                 .OnType<DateTime>().Use(() => new DateTime(2014, 4, 1));
-            Person p = pFiller.Fill();
+            Person p = pFiller.Create();
         }
     }
 ```
@@ -127,7 +150,7 @@ In this example we say to the ObjectFiller: Hey ObjectFiller, whenever there wil
                 .OnProperty(p=>p.Name).Use(() => "John")
                 .OnProperty(p => p.LastName).Use(new RealNames(false, true));
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -155,7 +178,7 @@ Its also really easy to write a plugin by yourself. I will show you that later.
             pFiller.Setup()
                 .OnProperty(x=>x.LastName, x=>x.Name).IgnoreIt();
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -179,7 +202,7 @@ With **```.IgnoreIt()```** you can exclude properties to not generate random dat
             pFiller.Setup()
                 .OnType<string>().IgnoreIt();
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -215,7 +238,7 @@ The same method **```.IgnoreIt()```** is also available after you call **```.OnT
                 .SetupFor<Address>()
                 .OnProperty(x => x.City).Use(() => "Dresden");
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -254,7 +277,7 @@ With **```SetupFor<T>```** you start a setup for another type. In the example ab
             pFiller.Setup()
                 .OnProperty(x=>x.Address).IgnoreIt();
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -292,7 +315,7 @@ Now lets do something really cool.
             pFiller.Setup()
                 .OnType<IAddress>().Register<Address>();
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -323,9 +346,9 @@ YES! And ObjectFiller can handle that. Just say **```.Register<T>()```** after y
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>();
+                .OnType<IAddress>().CreateInstanceOf<Address>();
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -365,14 +388,14 @@ It is also really easy possible to fill **```Dictionary```** and **```Lists```**
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>()
+                .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnProperty(p => p.LastName, p => p.Name).Use(new RealNames(true, false))
                 .OnProperty(p => p.Age).Use(() => new Random().Next(10, 32))
                 .SetupFor<Address>()
                 .OnProperty(p => p.City).Use(new MnemonicString(1))
                 .OnProperty(x => x.Street).IgnoreIt();
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -406,9 +429,9 @@ It has upto two constructor parameter. The first one is the maximum value and th
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<int>().Use(new Range(20, 79));
+                .OnType<int>().Use(new IntRange(20, 79));
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -432,7 +455,7 @@ The advantage is that these words are mostly easy to pronounce.
             pFiller.Setup()
                 .OnType<string>().Use(new MnemonicString(1,5,10));
                 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -444,25 +467,31 @@ In this example we see how to use the **```MnemonicStringPlugin```**. It has thr
 The **```RealNamePlugin```** is made to generate strings based on real names like "Jennifer" or "Miller". The realname plugin knows about 5000 First- and Lastnames. 
 
 ```csharp
-    public class Person
-    {
-        public string Name { get; set; }
-    }
-
-    public class HelloFiller
-    {
-        public void FillPerson()
+        public class Person
         {
-            Filler<Person> pFiller = new Filler<Person>();
-            pFiller.Setup()
-                .OnType<string>().Use(new RealNames(true, false));
-
-            Person filledPerson = pFiller.Fill();
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string FullName { get; set; }
+            public string FullNameReverse { get; set; }
         }
-    }
+
+        public class HelloFiller
+        {
+            public void FillPerson()
+            {
+                Filler<Person> pFiller = new Filler<Person>();
+                pFiller.Setup()
+                    .OnProperty(x => x.FirstName).Use(new RealNames(RealNameStyle.FirstNameOnly))
+                    .OnProperty(x => x.LastName).Use(new RealNames(RealNameStyle.LastNameOnly))
+                    .OnProperty(x => x.FullName).Use(new RealNames(RealNameStyle.FirstNameLastName))
+                    .OnProperty(x => x.FullNameReverse).Use(new RealNames(RealNameStyle.LastNameFirstName));
+
+                Person filledPerson = pFiller.Create();
+            }
+        }
 ```
 
-The **```RealNamePlugin```** has up to two constructor parameters. They define if you want to generate a FirstName, a LastName or the FullName
+The **```RealNamePlugin```** has a ```RealNameStyle```-enumeration as constructor parameter. With that enumeration you are able to define how the generated name should look like.
 
 ###RandomListItem - Plugin
 
@@ -484,7 +513,7 @@ The **```RandomListItem```** plugin is usefull when you want to setup a predefin
             pFiller.Setup()
                 .OnType<string>().Use(new RandomListItem<string>(allNames));
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -524,7 +553,7 @@ The **```PatternGenerator```** can be used to created strings following a patter
                 .OnProperty(x => x.PostalCode).Use(new PatternGenerator("CA {C:10000}"))
                 .OnProperty(x => x.Street).Use(new PatternGenerator("Main Street {C:100,10} NE"));
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -587,7 +616,7 @@ The "Lorem Ipsum" plugin generates some random text which contains the famous "L
             pFiller.Setup()
                 .OnType<string>().Use(new LoremIpsum(500));
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
@@ -627,7 +656,7 @@ Here is a very simple example:
             pFiller.Setup()
                 .RandomizerForType<string>(new MyFirstPlugin());
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
         }
     }
 ```
