@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Tynamix.ObjectFiller.Plugins
+namespace Tynamix.ObjectFiller
 {
     public class RandomListItem<T> : IRandomizerPlugin<T>
     {
         private readonly List<T> _allAvailableValues;
-        private readonly Random _rndm;
 
         public RandomListItem(List<T> allAvailableValues)
         {
@@ -15,12 +14,12 @@ namespace Tynamix.ObjectFiller.Plugins
                 throw new ArgumentException("List in RandomListItem ranomizer can not be empty!");
             }
             _allAvailableValues = allAvailableValues;
-            _rndm = new Random();
+
         }
 
         public T GetValue()
         {
-            int rndmListIndex = _rndm.Next(0, _allAvailableValues.Count);
+            int rndmListIndex = Random.Next(0, _allAvailableValues.Count);
             return _allAvailableValues[rndmListIndex];
         }
     }

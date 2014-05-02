@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
 
@@ -10,8 +10,8 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void FillAllAddressProperties()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
-            Address a = addressFiller.Fill();
+            Filler<Address> addressFiller = new Filler<Address>();
+            Address a = addressFiller.Create();
 
             Assert.IsNotNull(a.City);
             Assert.IsNotNull(a.Country);
@@ -23,9 +23,10 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void IgnoreCountry()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
-            addressFiller.Setup().IgnoreProperties(x => x.Country);
-            Address a = addressFiller.Fill();
+            Filler<Address> addressFiller = new Filler<Address>();
+            addressFiller.Setup()
+                    .OnProperty(x=>x.Country).IgnoreIt();
+            Address a = addressFiller.Create();
 
             Assert.IsNotNull(a.City);
             Assert.IsNull(a.Country);
@@ -37,9 +38,10 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void IgnoreCountryAndCity()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
-            addressFiller.Setup().IgnoreProperties(x => x.Country, x => x.City);
-            Address a = addressFiller.Fill();
+            Filler<Address> addressFiller = new Filler<Address>();
+            addressFiller.Setup()
+                .OnProperty(x => x.Country, x => x.City).IgnoreIt();
+            Address a = addressFiller.Create();
 
             Assert.IsNull(a.City);
             Assert.IsNull(a.Country);
@@ -51,9 +53,10 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void SetupCityPropertyWithConstantValue()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
-            addressFiller.Setup().RandomizerForProperty(() => "City", ad => ad.City);
-            Address a = addressFiller.Fill();
+            Filler<Address> addressFiller = new Filler<Address>();
+            addressFiller.Setup()
+                .OnProperty(ad => ad.City).Use(() => "City");
+            Address a = addressFiller.Create();
 
             Assert.AreEqual("City", a.City);
             Assert.IsNotNull(a.Country);
@@ -65,10 +68,10 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void SetupCityAndCountryPropertyWithConstantValue()
         {
-            ObjectFiller<Address> addressFiller = new ObjectFiller<Address>();
+            Filler<Address> addressFiller = new Filler<Address>();
             addressFiller.Setup()
-                .RandomizerForProperty(() => "CityCountry", ad => ad.City, ad => ad.Country);
-            Address a = addressFiller.Fill();
+                .OnProperty(ad => ad.City, ad => ad.Country).Use(() => "CityCountry");
+            Address a = addressFiller.Create();
 
             Assert.AreEqual("CityCountry", a.City);
             Assert.IsNotNull(a.Country);

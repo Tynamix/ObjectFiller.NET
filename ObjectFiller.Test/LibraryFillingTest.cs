@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Library;
 using Tynamix.ObjectFiller;
 
@@ -10,10 +11,10 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithSimpleTypes()
         {
-            ObjectFiller<LibraryConstructorWithSimple> lib = new ObjectFiller<LibraryConstructorWithSimple>();
+            Filler<LibraryConstructorWithSimple> lib = new Filler<LibraryConstructorWithSimple>();
             lib.Setup()
-                .IgnoreProperties(x => x.Books);
-            LibraryConstructorWithSimple filledLib = lib.Fill();
+                .OnProperty(x => x.Books).IgnoreIt();
+            LibraryConstructorWithSimple filledLib = lib.Create();
 
             Assert.IsNull(filledLib.Books);
             Assert.IsNotNull(filledLib);
@@ -24,12 +25,12 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithListOfBooks()
         {
-            ObjectFiller<LibraryConstructorList> lib = new ObjectFiller<LibraryConstructorList>();
+            Filler<LibraryConstructorList> lib = new Filler<LibraryConstructorList>();
             lib.Setup()
-                .IgnoreProperties(x => x.Books, x => x.Name);
+                .OnProperty(x => x.Books).IgnoreIt()
+                .OnProperty(x => x.Name).IgnoreIt();
 
-
-            LibraryConstructorList filledLib = lib.Fill();
+            LibraryConstructorList filledLib = lib.Create();
 
             Assert.IsNotNull(filledLib);
             Assert.IsNotNull(filledLib.Books);
@@ -39,12 +40,12 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithListOfIBooks()
         {
-            ObjectFiller<LibraryConstructorList> lib = new ObjectFiller<LibraryConstructorList>();
+            Filler<LibraryConstructorList> lib = new Filler<LibraryConstructorList>();
             lib.Setup()
-                .IgnoreProperties(x => x.Books)
-                .RegisterInterface<IBook, Book>();
+                .OnProperty(x => x.Books).IgnoreIt()
+                .OnType<IBook>().CreateInstanceOf<Book>();
 
-            LibraryConstructorList filledLib = lib.Fill();
+            LibraryConstructorList filledLib = lib.Create();
 
             Assert.IsNotNull(filledLib.Books);
         }
@@ -52,12 +53,11 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithPocoOfABook()
         {
-            ObjectFiller<LibraryConstructorPoco> lib = new ObjectFiller<LibraryConstructorPoco>();
+            Filler<LibraryConstructorPoco> lib = new Filler<LibraryConstructorPoco>();
             lib.Setup()
-               .IgnoreProperties(x => x.Books);
+                .OnProperty(x => x.Books).IgnoreIt();
 
-
-            LibraryConstructorPoco filledLib = lib.Fill();
+            LibraryConstructorPoco filledLib = lib.Create();
             Assert.IsNotNull(filledLib.Books);
             Assert.AreEqual(1, filledLib.Books.Count);
         }
@@ -65,28 +65,49 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void TestFillLibraryWithDictionary()
         {
-            ObjectFiller<LibraryConstructorDictionary> lib = new ObjectFiller<LibraryConstructorDictionary>();
+            Filler<LibraryConstructorDictionary> lib = new Filler<LibraryConstructorDictionary>();
             lib.Setup()
-                .RegisterInterface<IBook, Book>()
-                .IgnoreProperties(x => x.Books);
+                .OnType<IBook>().CreateInstanceOf<Book>()
+                .OnProperty(x => x.Books).IgnoreIt();
 
-
-            LibraryConstructorDictionary filledLib = lib.Fill();
+            LibraryConstructorDictionary filledLib = lib.Create();
             Assert.IsNotNull(filledLib.Books);
         }
 
         [TestMethod]
         public void TestFillLibraryWithDictionaryAndPoco()
         {
-            ObjectFiller<LibraryConstructorDictionary> lib = new ObjectFiller<LibraryConstructorDictionary>();
+            Filler<LibraryConstructorDictionary> lib = new Filler<LibraryConstructorDictionary>();
             lib.Setup()
-               .IgnoreProperties(x => x.Books, x => x.Name);
+                .OnProperty(x => x.Books).IgnoreIt()
+                .OnProperty(x => x.Name).IgnoreIt();
 
 
-            LibraryConstructorDictionary filledLib = lib.Fill();
+            LibraryConstructorDictionary filledLib = lib.Create();
             Assert.IsNotNull(filledLib.Books);
             Assert.IsNotNull(filledLib.Name);
 
         }
+
+
+        public class Person
+        {
+            public string Name { get; set; }
+            public string LastName { get; set; }
+            public int Age { get; set; }
+            public DateTime Birthday { get; set; }
+        }
+
+        public class HelloFiller
+        {
+            public void FillPerson()
+            {
+                Person person = new Person();
+
+                Filler<Person> pFiller = new Filler<Person>();
+                Person p = pFiller.Fill(person);
+            }
+        }
+
     }
 }

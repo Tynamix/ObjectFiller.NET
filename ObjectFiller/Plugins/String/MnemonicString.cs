@@ -1,25 +1,24 @@
 ﻿using System;
 
-namespace Tynamix.ObjectFiller.Plugins
+namespace Tynamix.ObjectFiller
 {
     /// <summary>
     /// This randomizer plugin generates words which can be talked naturally.
     /// It always takes one vocal after a consonant. This follow up to words like: buwizalo
     /// </summary>
-    public class MnemonicStringPlugin : IRandomizerPlugin<string>
+    public class MnemonicString : IRandomizerPlugin<string>
     {
         private readonly int _wordCount;
         private readonly int _wordMinLength;
         private readonly int _wordMaxLength;
-        private readonly Random _random = new Random();
 
-        public MnemonicStringPlugin(int wordCount)
+        public MnemonicString(int wordCount)
             : this(wordCount, 3, 15)
         {
 
         }
 
-        public MnemonicStringPlugin(int wordCount, int wordMinLength, int wordMaxLength)
+        public MnemonicString(int wordCount, int wordMinLength, int wordMaxLength)
         {
             _wordCount = wordCount;
             _wordMinLength = wordMinLength;
@@ -30,7 +29,7 @@ namespace Tynamix.ObjectFiller.Plugins
         {
             char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
             char[] consonants = { 'w', 'r', 't', 'z', 'p', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'c', 'v', 'b', 'n', 'm' };
-            int wordLength = _random.Next(_wordMinLength, _wordMaxLength);
+            int wordLength = Random.Next(_wordMinLength, _wordMaxLength);
 
             string result = string.Empty;
 
@@ -38,20 +37,20 @@ namespace Tynamix.ObjectFiller.Plugins
             {
                 string currentWord = null;
 
-                bool nextIsVowel = _random.Next(0, 1) == 1;
+                bool nextIsVowel = Random.Next(0, 1) == 1;
 
-                bool upperLetter = i == 0 || _random.Next(0, 2) == 1;
+                bool upperLetter = i == 0 || Random.Next(0, 2) == 1;
 
                 for (int j = 0; j < wordLength; j++)
                 {
                     char currentChar;
                     if (nextIsVowel)
                     {
-                        currentChar = vowels[_random.Next(0, vowels.Length)];
+                        currentChar = vowels[Random.Next(0, vowels.Length)];
                     }
                     else
                     {
-                        currentChar = consonants[_random.Next(0, consonants.Length)];
+                        currentChar = consonants[Random.Next(0, consonants.Length)];
                     }
 
 

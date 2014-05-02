@@ -6,7 +6,7 @@ namespace Tynamix.ObjectFiller
     /// <summary>
     /// Responsible to get the right <see cref="ObjectFillerSetup"/> for a given type.
     /// </summary>
-    public static class SetupManager
+    internal static class SetupManager
     {
         private static ObjectFillerSetup _mainSetup;
         private static Dictionary<Type, ObjectFillerSetup> _typeToSetup;
@@ -24,7 +24,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <typeparam name="TTargetObject">Type for which a <see cref="ObjectFillerSetup"/> will be get</typeparam>
         /// <returns><see cref="ObjectFillerSetup"/> for type <see cref="TTargetObject"/></returns>
-        public static ObjectFillerSetup GetFor<TTargetObject>()
+        internal static ObjectFillerSetup GetFor<TTargetObject>()
             where TTargetObject : class
         {
             return GetFor(typeof(TTargetObject));
@@ -35,7 +35,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <param name="targetType">Type for which a <see cref="ObjectFillerSetup"/> will be get</param>
         /// <returns><see cref="ObjectFillerSetup"/> for type <see cref="targetType"/></returns>
-        public static ObjectFillerSetup GetFor(Type targetType)
+        internal static ObjectFillerSetup GetFor(Type targetType)
         {
             if (_typeToSetup.ContainsKey(targetType))
             {
@@ -50,7 +50,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <typeparam name="TTargetObject">Type of target object for which a new <see cref="ObjectFillerSetup"/> will be set.</typeparam>
         /// <param name="useDefaultSettings">FALSE if the target object will take the settings of the parent object</param>
-        public static void SetNewFor<TTargetObject>(bool useDefaultSettings)
+        internal static void SetNewFor<TTargetObject>(bool useDefaultSettings)
             where TTargetObject : class
         {
             _typeToSetup[typeof(TTargetObject)] = useDefaultSettings ? new ObjectFillerSetup() : _mainSetup;
@@ -60,7 +60,7 @@ namespace Tynamix.ObjectFiller
         /// Set the main <see cref="ObjectFillerSetup"/>. This will be the root setup.
         /// </summary>
         /// <param name="setup">Main setup</param>
-        public static void SetMain(ObjectFillerSetup setup)
+        internal static void SetMain(ObjectFillerSetup setup)
         {
             _mainSetup = setup;
         }
@@ -68,7 +68,7 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Clears all the settings which was made.
         /// </summary>
-        public static void Clear()
+        internal static void Clear()
         {
             _mainSetup = new ObjectFillerSetup();
             _typeToSetup = new Dictionary<Type, ObjectFillerSetup>();
