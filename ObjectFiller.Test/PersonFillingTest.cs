@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
@@ -15,9 +15,9 @@ namespace ObjectFiller.Test
             Filler<Person> pFiller = new Filler<Person>();
 
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>();
+                .OnType<IAddress>().CreateInstanceOf<Address>();
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
 
             Assert.IsNotNull(filledPerson.Address);
             Assert.IsNotNull(filledPerson.Addresses);
@@ -31,11 +31,11 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
 
-            pFiller.Setup().OnType<IAddress>().Register<Address>()
-                .OnProperty(p => p.FirstName).Use(new RealNames(true, false))
-                .OnProperty(p => p.LastName).Use(new RealNames(false, true));
+            pFiller.Setup().OnType<IAddress>().CreateInstanceOf<Address>()
+                .OnProperty(p => p.FirstName).Use(new RealNames(RealNameStyle.FirstNameOnly))
+                .OnProperty(p => p.LastName).Use(new RealNames(RealNameStyle.LastNameOnly));
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
 
             Assert.IsNotNull(filledPerson.FirstName);
             Assert.IsNotNull(filledPerson.LastName);
@@ -48,11 +48,11 @@ namespace ObjectFiller.Test
             Filler<Person> pFiller = new Filler<Person>();
 
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>()
+                .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnProperty(p => p.FirstName).Use(() => "John")
-                .OnProperty(p => p.LastName).Use(new RealNames(false, true));
+                .OnProperty(p => p.LastName).Use(new RealNames(RealNameStyle.LastNameOnly));
 
-            Person filledPerson = pFiller.Fill();
+            Person filledPerson = pFiller.Create();
 
             Assert.IsNotNull(filledPerson.FirstName);
             Assert.AreEqual("John", filledPerson.FirstName);
@@ -68,11 +68,11 @@ namespace ObjectFiller.Test
 
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>()
+                .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnProperty(p => p.FirstName).Use(new RandomListItem<string>(names))
                 .OnProperty(p => p.Age).Use(new RandomListItem<int>(ages));
 
-            var pF = pFiller.Fill();
+            var pF = pFiller.Create();
 
             Assert.IsTrue(names.Contains(pF.FirstName));
             Assert.IsTrue(ages.Contains(pF.Age));
@@ -84,14 +84,14 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>()
-                .OnProperty(p => p.LastName, p => p.FirstName).DoIt(At.TheEnd).Use(new RealNames(true, false))
+                .OnType<IAddress>().CreateInstanceOf<Address>()
+                .OnProperty(p => p.LastName, p => p.FirstName).DoIt(At.TheEnd).Use(new RealNames(RealNameStyle.FirstNameOnly))
                 .OnProperty(p => p.Age).Use(() => new Random().Next(10, 32))
                 .SetupFor<Address>()
                 .OnProperty(a => a.City).Use(new MnemonicString(1))
                 .OnProperty(a => a.Street).IgnoreIt();
 
-            var pF = pFiller.Fill();
+            var pF = pFiller.Create();
 
             Assert.IsNotNull(pF);
             Assert.IsNotNull(pF.Address);
@@ -105,9 +105,9 @@ namespace ObjectFiller.Test
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .OnProperty(x => x.Age).Use(() => 18)
-                .OnType<IAddress>().Register<Address>();
+                .OnType<IAddress>().CreateInstanceOf<Address>();
 
-            Person p = pFiller.Fill();
+            Person p = pFiller.Create();
             Assert.IsNotNull(p);
             Assert.AreEqual(18, p.Age);
 
@@ -118,11 +118,11 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>()
+                .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnType<int>().Use(() => 1)
                 .SetupFor<Address>(true);
 
-            Person p = pFiller.Fill();
+            Person p = pFiller.Create();
             Assert.AreEqual(1, p.Age);
             Assert.AreNotEqual(1, p.Address.HouseNumber);
         }
@@ -132,11 +132,11 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>()
+                .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnType<int>().Use(() => 1)
                 .SetupFor<Address>();
 
-            Person p = pFiller.Fill();
+            Person p = pFiller.Create();
             Assert.AreEqual(1, p.Age);
             Assert.AreEqual(1, p.Address.HouseNumber);
         }
@@ -146,11 +146,11 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>()
+                .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnType<string>().IgnoreIt()
                 ;
 
-            Person p = pFiller.Fill();
+            Person p = pFiller.Create();
 
             Assert.IsNotNull(p);
             Assert.IsNull(p.FirstName);
@@ -163,11 +163,11 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>()
+                .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnType<Address>().IgnoreIt()
                 .OnType<IAddress>().IgnoreIt();
 
-            Person p = pFiller.Fill();
+            Person p = pFiller.Create();
 
             Assert.IsNotNull(p);
             Assert.IsNull(p.Address);
@@ -178,12 +178,12 @@ namespace ObjectFiller.Test
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<IAddress>().Register<Address>()
+                .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnType<Address>().IgnoreIt()
                 .OnType<IAddress>().IgnoreIt()
                 .OnType<Dictionary<string, IAddress>>().IgnoreIt();
 
-            Person p = pFiller.Fill();
+            Person p = pFiller.Create();
 
             Assert.IsNotNull(p);
             Assert.IsNull(p.Address);
@@ -197,7 +197,7 @@ namespace ObjectFiller.Test
             filler.Setup()
                 .OnProperty(x => x.Name).DoIt(At.TheEnd).UseDefault();
 
-            var p = filler.Fill();
+            var p = filler.Create();
 
             Assert.IsNotNull(p);
             Assert.AreEqual(3, p.NameCount);
@@ -210,7 +210,7 @@ namespace ObjectFiller.Test
             filler.Setup()
                 .OnProperty(x => x.Name).DoIt(At.TheBegin).UseDefault();
 
-            var p = filler.Fill();
+            var p = filler.Create();
 
             Assert.IsNotNull(p);
             Assert.AreEqual(1, p.NameCount);
