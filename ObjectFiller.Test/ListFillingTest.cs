@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.ListTest;
 using Tynamix.ObjectFiller;
@@ -15,7 +15,7 @@ namespace ObjectFiller.Test
             eFiller.Setup()
                 .OnProperty(x => x.EntityArray).IgnoreIt();
 
-            EntityCollection entity = eFiller.Fill();
+            EntityCollection entity = eFiller.Create();
 
             Assert.IsNotNull(entity);
             Assert.IsNotNull(entity.EntityList);
@@ -30,7 +30,7 @@ namespace ObjectFiller.Test
             Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
             eFiller.Setup()
                 .OnProperty(ec => ec.EntityArray).Use(GetArray);
-            EntityCollection entity = eFiller.Fill();
+            EntityCollection entity = eFiller.Create();
 
             Assert.IsNotNull(entity);
             Assert.IsNotNull(entity.EntityList);
@@ -46,15 +46,15 @@ namespace ObjectFiller.Test
             Filler<Entity> of = new Filler<Entity>();
 
             List<Entity> entities = new List<Entity>();
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
-            entities.Add(of.Fill());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
+            entities.Add(of.Create());
 
 
             return entities.ToArray();
