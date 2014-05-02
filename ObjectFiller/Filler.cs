@@ -131,9 +131,7 @@ namespace Tynamix.ObjectFiller
             }
 
             var properties = objectToFill.GetType().GetProperties()
-                             .Where(x =>x.CanWrite || ContainsProperty(currentSetup.PropertiesWritePrivateSetter,x) 
-                                                                       && GetSetMethodOnDeclaringType(x) != null)
-                             .ToArray();
+                             .Where(x => GetSetMethodOnDeclaringType(x) != null).ToArray();
 
             if (properties.Length == 0) return;
 
