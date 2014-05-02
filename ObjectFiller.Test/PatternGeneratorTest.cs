@@ -1,6 +1,5 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ObjectFiller;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using Tynamix.ObjectFiller;
@@ -15,8 +14,8 @@ namespace ObjectFiller.Test
         {
             var filler = new Filler<ClassWithPrivateStuffSealed>();
             filler.Setup()
-                .OnProperty(x => x.RealNameStyle).WritePrivateSetter().DoIt(At.TheEnd).Use(() => RealNameStyle.FirstNameLastName)
-                .OnProperty(x=>x.WithPrivateSetter).WritePrivateSetter();
+                .OnProperty(x => x.RealNameStyle).DoIt(At.TheEnd).Use(() => RealNameStyle.FirstNameLastName)
+                .OnProperty(x=>x.WithPrivateSetter);
                 
 
             var obj = filler.Create();
