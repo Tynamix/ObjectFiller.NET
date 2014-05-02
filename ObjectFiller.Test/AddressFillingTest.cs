@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
 
@@ -11,7 +11,7 @@ namespace ObjectFiller.Test
         public void FillAllAddressProperties()
         {
             Filler<Address> addressFiller = new Filler<Address>();
-            Address a = addressFiller.Fill();
+            Address a = addressFiller.Create();
 
             Assert.IsNotNull(a.City);
             Assert.IsNotNull(a.Country);
@@ -26,7 +26,7 @@ namespace ObjectFiller.Test
             Filler<Address> addressFiller = new Filler<Address>();
             addressFiller.Setup()
                     .OnProperty(x=>x.Country).IgnoreIt();
-            Address a = addressFiller.Fill();
+            Address a = addressFiller.Create();
 
             Assert.IsNotNull(a.City);
             Assert.IsNull(a.Country);
@@ -41,7 +41,7 @@ namespace ObjectFiller.Test
             Filler<Address> addressFiller = new Filler<Address>();
             addressFiller.Setup()
                 .OnProperty(x => x.Country, x => x.City).IgnoreIt();
-            Address a = addressFiller.Fill();
+            Address a = addressFiller.Create();
 
             Assert.IsNull(a.City);
             Assert.IsNull(a.Country);
@@ -56,7 +56,7 @@ namespace ObjectFiller.Test
             Filler<Address> addressFiller = new Filler<Address>();
             addressFiller.Setup()
                 .OnProperty(ad => ad.City).Use(() => "City");
-            Address a = addressFiller.Fill();
+            Address a = addressFiller.Create();
 
             Assert.AreEqual("City", a.City);
             Assert.IsNotNull(a.Country);
@@ -71,7 +71,7 @@ namespace ObjectFiller.Test
             Filler<Address> addressFiller = new Filler<Address>();
             addressFiller.Setup()
                 .OnProperty(ad => ad.City, ad => ad.Country).Use(() => "CityCountry");
-            Address a = addressFiller.Fill();
+            Address a = addressFiller.Create();
 
             Assert.AreEqual("CityCountry", a.City);
             Assert.IsNotNull(a.Country);
