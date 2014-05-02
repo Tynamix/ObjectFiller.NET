@@ -21,6 +21,12 @@ namespace Tynamix.ObjectFiller
             _callback = callback;
         }
 
+        /// <summary>
+        /// Specify when the objectfiller will fill the property.
+        /// At the end or the beginning. This is usefull if the properties are related to another.
+        /// </summary>
+        /// <param name="propertyOrder">Defines if the property will be filled at "TheBegin" or at "TheEnd"</param>
+        /// <returns>FluentPropertyAPI to define which </returns>
         public FluentPropertyApi<TTargetObject, TTargetType> DoIt(At propertyOrder)
         {
             foreach (PropertyInfo propertyInfo in _affectedProps)
@@ -30,6 +36,12 @@ namespace Tynamix.ObjectFiller
             return this;
         }
 
+        /// <summary>
+        /// Use the default random generator method for the given type.
+        /// Its usefull when you want to define the order of the property with <see cref="DoIt"/>, but you
+        /// don't want to define the random generator.
+        /// </summary>
+        /// <returns>Main FluentFiller API</returns>
         public FluentFillerApi<TTargetObject> UseDefault()
         {
             return _callback;
