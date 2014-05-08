@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Tynamix.ObjectFiller
 {
@@ -37,6 +38,11 @@ namespace Tynamix.ObjectFiller
         {
             Use(randomizerPlugin.GetValue);
             return _callback;
+        }
+
+        public FluentFillerApi<TTargetObject> Use(IEnumerable<TTargetType> enumerable)
+        {
+            return Use(new EnumeratorPlugin<TTargetType>(enumerable));
         }
 
         /// <summary>
