@@ -53,9 +53,9 @@ I will show you some examples how you can work with it.
 *   ...has many nice plugins
 *   ...is very easy to extend
 
-##Can i extend the .NET ObjectFiller?
+##Can I extend the .NET ObjectFiller?
 
-Of course! The **.NET ObjectFiller** is very flexible and easy to extend. With the help of the **FluentAPI** you can configure and extend the ObjectFiller. You are also able to [write your own **Plugin**](#write-your-own-plugin)! In the examples i will show you how to do it. 
+Of course! The **.NET ObjectFiller** is very flexible and easy to extend. With the help of the **FluentAPI** you can configure and extend the ObjectFiller. You are also able to [write your own **Plugin**](#write-your-own-plugin)! In the examples I will show you how to do it. 
 
 ##Examples
 
@@ -103,7 +103,7 @@ public class HelloFiller
 }
 ```
 
-It is also possible to fill an already existing instance of an object. In the example we first create a person and then call ```Fill(...)``` instead of ```Create()```. This is great for DesignViewModels in WPF for example or whereever you need to fill the object in the constructor with ```Fill(this)``` for example.
+It is also possible to fill an already existing instance of an object. In the example we first create a person and then call ```Fill(...)``` instead of ```Create()```. This is great for stuff like DesignViewModels in WPF or whereever you need to fill the object in the constructor with ```Fill(this)``` for example.
 
 ###Let's use the fluent setup API
 
@@ -129,8 +129,8 @@ It is also possible to fill an already existing instance of an object. In the ex
     }
 ```
 
-So what does this do? First you say **```pFiller.Setup()```**. With **```.Setup()```** you start configure the ObjectFiller. With **```OnType<T>()```** you define which type will be configured and with **```.Use( ... )```** you define what the objectfiller should do with the type. You are able to write your own **```.Func<T>()```** or implement a **```IRandomizerPlugin<T>```** or just use one which is already implemented. ObjectFiller is very flexible and easy to extend!
-In this example we say to the ObjectFiller: Hey ObjectFiller, whenever there will be a property of type **```string```**, just fill it with the word "SomeString". And when there is a **```DateTime```** set it always to 1.4.2014! Easy! Isn't it? But it will get cooler!
+So what does the above code do? First you say **```pFiller.Setup()```**. With **```.Setup()```** you start configure the ObjectFiller. With **```OnType<T>()```** you define which type will be configured and with **```.Use( ... )```** you define what the Objectfiller should do with the type. You are able to write your own **```.Func<T>()```** or implement a **```IRandomizerPlugin<T>```**, or just use one of the provided plugins. ObjectFiller is very flexible and easy to extend!
+In this example we say to the ObjectFiller: Hey ObjectFiller, whenever there will be a property of type **```string```**, just fill it with the word "SomeString". And when there is a **```DateTime```** set it always to 1.4.2014! Easy! Isn't it? But it will get even cooler!
 
 ```csharp
     public class Person
@@ -155,8 +155,8 @@ In this example we say to the ObjectFiller: Hey ObjectFiller, whenever there wil
     }
 ```
 
-Here we say: Ok ObjectFiller, fill the property **```Name```** of a **```Person```** with the value "John" and fill the property **```LastName```** with some random real lastname. The **```.OnProperty```**-method works very similar to the **```OnType<T>()```** method! With **```.Use(new RealNames(false, true));```** we use a **```RealNamePlugin```**.
-The **```RealNamePlugin```** is a plugin which is written for the ObjectFiller and comes with the ObjectFiller.DLL.
+Here we say: Ok ObjectFiller, fill the property **```Name```** of a **```Person```** with the value "John" and fill the property **```LastName```** with some random real lastname. The **```.OnProperty```** method works very similar to the **```OnType<T>()```** method! With **```.Use(new RealNames(false, true));```** we use a **```RealNamePlugin```**.
+The **```RealNamePlugin```** is a plugin which comes with the ObjectFiller assembly along.
 Its also really easy to write a plugin by yourself. I will show you that later.
 
 ###Ignore Properties
@@ -183,7 +183,7 @@ Its also really easy to write a plugin by yourself. I will show you that later.
     }
 ```
 
-With **```.IgnoreIt()```** you can exclude properties to not generate random data for it. When we will now fill a person, all properties get filled except **```LastName```** and **```Name```**.
+With **```.IgnoreIt()```** you can exclude properties from randomizing, they will keep their default value instead. When we will now fill a person, all properties get filled except **```LastName```** and **```Name```**.
 
 ```csharp
     public class Person
@@ -243,7 +243,7 @@ The same method **```.IgnoreIt()```** is also available after you call **```.OnT
     }
 ```
 
-With **```SetupFor<T>```** you start a setup for another type. In the example above we define that the ```Name``` of the ```Person``` will be "John" and the ```City``` of an ```Address```-object will be "Dresden". **```SetupFor<T>```** takes an ```bool``` parameter. if this is set to **```true```** than all the settings which was made to the parent type will be set back to default. When its not set or false, then the setup will take the setup of the parenttype, except the settings which are made specially for this actual type.
+With **```SetupFor<T>```** you start a setup for another type. In the example above we define that the ```Name``` of the ```Person``` will be "John" and the ```City``` of an ```Address``` object will be "Dresden". **```SetupFor<T>```** takes an ```bool``` parameter. If this is set to **```true```** then all the settings which were made on the parent type will be set back to default. When a property is not set up, then the filler will take the setup of the parent type, except the settings which are made specially for this actual type.
 
 ###Fill objects with constructor arguments
 
@@ -283,7 +283,7 @@ With **```SetupFor<T>```** you start a setup for another type. In the example ab
 ```
 
 With ObjectFiller.NET it is also possible to **instantiate** objects which have a **constructor WITH parameters**. 
-In the setup i ignore the property **```Address```** of the person because it will already been set in the constructor. 
+In the above setup I ignore the **```Address```** property. 
 
 Now lets do something really cool.
 
@@ -320,7 +320,7 @@ Now lets do something really cool.
     }
 ```
 
-You see? The **```Person```** has now an **```Address```**. But wait? It's an **```IAddress```**! An **interface**? 
+You see? The **```Person```** has now an **```Address```**. But wait? It is an **```IAddress```**! An **interface**? 
 YES! And ObjectFiller can handle that. Just say **```.Register<T>()```** after you called **```.OnType<T>()```** and give the ObjectFiller the information what is the concrete implementation for that interface. Nice huh?
 
 ###Fill Lists and Dictionaries
@@ -401,18 +401,18 @@ It is also really easy possible to fill **```Dictionary```** and **```Lists```**
 ```
 
 **Now let us mix all up!** What happens here? Well, we say: Ok ObjectFiller, the **```IAddress```** interface will be implemented by the **```Address```** class.
-The **```Name```** and **```LastName```** of a person will be generated by the **```RealNamesPlugin```**. The age of the person should be something between 10 and 32. 
-When you generate a city use the **```MnemonicStringPlugin```** and finally ignore the Street in the **```Address```** and don't fill it. Ok thats a lot. But it works!
+The **```Name```** and **```LastName```** of a person will be generated by the **```RealNamesPlugin```**. The age of the person should be somewhere between 10 and 32. 
+When you generate a city use the **```MnemonicStringPlugin```** and finally ignore the Street in the **```Address```**. Quite a lot. But it works!
 
 ##Available Plugins
 
-The ObjectFiller.NET is easy to extend and you can write your own plugins for it.
+The ObjectFiller.NET is easy to extend, you can write your own plugins for it.
 There are several plugins already implemented which are documented below.
 
 ###RangeIntegerPlugin
 
-The **```RangeIntegerPlugin```** is a very easy plugin and generates integers in a given range.
-It has upto two constructor parameter. The first one is the maximum value and the second one (optional) the minimum. When minimum is not set, the minimum will be 0!
+The **```RangeIntegerPlugin```** is a very simple plugin and generates integers in a given range.
+It has up to two constructor parameter. The first one is the maximum value and the second one (optional) the minimum. When minimum is not set, the minimum will be 0!
 
 ```csharp
     public class Person
@@ -464,7 +464,7 @@ In this example we see how to use the **```MnemonicStringPlugin```**. It has thr
 
 ###RealNamePlugin
 
-The **```RealNamePlugin```** is made to generate strings based on real names like "Jennifer" or "Miller". The realname plugin knows about 5000 First- and Lastnames. 
+The **```RealNamePlugin```** is made to generate strings based on real names like "Jennifer" or "Miller". The realname plugin contains about 5000 first- and last names. 
 
 ```csharp
         public class Person
@@ -491,11 +491,11 @@ The **```RealNamePlugin```** is made to generate strings based on real names lik
         }
 ```
 
-The **```RealNamePlugin```** has a ```RealNameStyle```-enumeration as constructor parameter. With that enumeration you are able to define how the generated name should look like.
+The **```RealNamePlugin```** has a ```RealNameStyle``` enumeration as constructor parameter. With that enumeration you are able to define how the generated name should look like.
 
 ###RandomListItem - Plugin
 
-The **```RandomListItem```** plugin is usefull when you want to setup a predefined set of values which are possible to use. The **```RandomListItem```** will then pick a random one from the list.
+The **```RandomListItem```** plugin is usefull when you want to choose the output values from a certain set of values. The **```RandomListItem```** will then pick randomly one item from the list.
 
 ```csharp
      public class Person
@@ -518,11 +518,11 @@ The **```RandomListItem```** plugin is usefull when you want to setup a predefin
     }
 ```
 
-In the example u can see that i set up four names. One of these will be the name of the **```Person```** object.
+In the example you can see that I set up four value, one of them  will be the generated name of the **```Person```** object.
 
 ###PatternGenerator Plugin
 
-The **```PatternGenerator```** can be used to created strings following a pattern.
+The **```PatternGenerator```** can be used to created strings following a certain pattern. The actual pattern documentation can be found in **```PatternGenerator```** documentation.
 
 ```csharp
     public class Person
@@ -558,10 +558,10 @@ The **```PatternGenerator```** can be used to created strings following a patter
     }
 ```
 
-
-Address.City will become a string, starting with one upper-case char, followed by 2..8 lower-case chars.
+Some explanation is in order, I think:
+Address.City will become a string, starting with exactly one upper-case char, followed by 2..8 lower-case chars.
 Address.PostalCode will start with the fixed value "CA ", followed by a number starting at 10000, incremented by 1 in the next address in the persons address list.
-The Main Street will include a number starting at 100, incremented by 10.
+The street property will contain the text "Main Street ", followed by a (street) number starting at 100, incremented by 10.
 
 The pattern generator can be extended, to allow combining built-in expressions and custom expressions within a pattern.
 
@@ -639,8 +639,8 @@ The ObjectFiller contains also tons of sequence generators, like the SequenceGen
 
 ###Write your own plugin
 
-To write your own plugin is very easy.
-Just implement the **``` IRandomizerPlugin<T> ```** plugin. The typeparamer **```T```** defines for which type you will write the plugin. The interface just has one function which you have to implement: **```T GetValue();```**
+Writing your own plugin is very easy.
+Just implement the **``` IRandomizerPlugin<T> ```** plugin. The typeparameter **```T```** defines for which type you will write the plugin. The interface just has one function which you have to implement: **```T GetValue();```**
 Thats all!
 You can write plugins for simple types and complex types.
 
@@ -649,11 +649,11 @@ Here is a very simple example:
 ```csharp
   public class MyFirstPlugin : IRandomizerPlugin<string>
     {
+        private readonly Random r = new Random();
+        private readonly List<string> allNames = new List<string>() { "Jennifer", "Jenny", "Tom", "John" };
+        
         public string GetValue()
         {
-            List<string> allNames = new List<string>() { "Jennifer", "Jenny", "Tom", "John" };
-            Random r = new Random();
-
             return allNames[r.Next(0, allNames.Count)];
         }
     }
@@ -676,7 +676,7 @@ Here is a very simple example:
     }
 ```
 
-**```MyFirstPlugin```** does basically the same thing as the **```RandomListItem```**-plugin, but it is a good way to show you how easy it is to implement your own plugin.
+**```MyFirstPlugin```** does basically the same thing as the **```RandomListItem```** plugin, but it is a good way to show you how easy it is to implement your own plugin.
 
 ##Thank you for using ObjectFiller.NET
 
