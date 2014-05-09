@@ -566,12 +566,12 @@ The Main Street will include a number starting at 100, incremented by 10.
 The pattern generator can be extended, to allow combining built-in expressions and custom expressions within a pattern.
 
 ```csharp
-    public class FrenchUnicodeExpressionGenerator : IExpressionGenerator<string>
+    public class FrenchWordExpressionGenerator : IExpressionGenerator<string>
     {
         public static IExpressionGenerator TryCreateInstance(string expression)
         {
- 			if (expression == "{U:fr}")
-				return new FrenchUnicodeExpressionGenerator();
+ 			if (expression == "{F}")
+				return new FrenchWordExpressionGenerator();
 			else 
 				return null;
        }
@@ -584,14 +584,14 @@ The pattern generator can be extended, to allow combining built-in expressions a
     
     public void FillPerson()
     {
-        PatterGenerator.ExpressionGeneratorFactories.Add(FrenchUnicodeExpressionGenerator.TryCreateInstance);
+        PatterGenerator.ExpressionGeneratorFactories.Add(FrenchWordExpressionGenerator.TryCreateInstance);
     
         Filler<Person> pFiller = new Filler<Person>();
         
 		pFiller.Setup()
 			.OnType<IAddress>().Register<Address>()
 			.SetupFor<Address>()
-			.OnProperty(x => x.Street).Use(new PatternGenerator("{C}x {U:fr}"));
+			.OnProperty(x => x.Street).Use(new PatternGenerator("{C}x {F}"));
     }
 ```
 
@@ -621,6 +621,21 @@ The "Lorem Ipsum" plugin generates some random text which contains the famous "L
     }
 ```
 This example generates a Lorem Ipsum text with 500 words for all ```string``` properties of the person.
+
+###SequenceGenerator Plugins
+
+The ObjectFiller contains also tons of sequence generators, like the SequenceGeneratorInt32 or the SequenceGeneratorDateTime. When used without any particular setup, they will simply create an increasing sequence like [1,2,3,...]. Most of these sequence generators can be customized to use a different start value (From), a different increment (Step) or can even wrap around after hitting an end value (To). The Step property can be even set to a negative value to generate a decreasing sequence, like in the example below.
+
+```csharp
+    public void Countdown()
+    {
+        var generator = new SequenceGeneratorInt32 { From = 3, Step = -3 };
+        generator.GetValue(); // returns  3
+        generator.GetValue(); // returns  0
+        generator.GetValue(); // returns -3
+        generator.GetValue(); // returns -6
+    }
+```
 
 ###Write your own plugin
 
