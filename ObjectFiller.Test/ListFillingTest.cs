@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.ListTest;
 using Tynamix.ObjectFiller;
@@ -22,6 +24,27 @@ namespace ObjectFiller.Test
             Assert.IsNotNull(entity.EntityICollection);
             Assert.IsNotNull(entity.EntityIEnumerable);
             Assert.IsNotNull(entity.EntityIList);
+        }
+
+        [TestMethod]
+        public void TestUseEnumerable()
+        {
+            Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
+            eFiller.Setup()
+                .ListItemCount(20)
+                .OnProperty(x => x.EntityArray, x => x.EntityICollection,
+                            x => x.EntityIList, x => x.ObservableCollection,
+                            x => x.EntityIEnumerable).IgnoreIt()
+                .SetupFor<Entity>()
+                .OnProperty(x => x.Id).Use(Enumerable.Range(1, 22).Select(x => (int)Math.Pow(2, x)));
+
+            EntityCollection ec = eFiller.Create();
+
+            for (int i = 0; i < ec.EntityList.Count; i++)
+            {
+                int lastPowNum = (int)Math.Pow(2, i + 1);
+                Assert.AreEqual(lastPowNum, ec.EntityList[i].Id);
+            }
         }
 
         [TestMethod]

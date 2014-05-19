@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Tynamix.ObjectFiller
 {
@@ -23,6 +24,15 @@ namespace Tynamix.ObjectFiller
         /// <param name="randomizerPlugin">Func which will be used to generate a value of the <see cref="TTargetType"/></param>
         /// <returns>Main FluentFiller API</returns>
         FluentFillerApi<TTargetObject> Use(IRandomizerPlugin<TTargetType> randomizerPlugin);
+
+        /// <summary>
+        /// Use this function if you want to use an IEnumerable for the datageneration.
+        /// With that you can generate random data in a specific order, with include, exclude and all the other stuff
+        /// what is possible with IEnumerables and linq
+        /// </summary>
+        /// <param name="enumerable">An IEnumerable with items of type <typeparam name="TTargetObject"/> which will be used to fill the data.</param>
+        /// <returns>Main FluentFiller API</returns>
+        FluentFillerApi<TTargetObject> Use(IEnumerable<TTargetType> enumerable);
 
         /// <summary>
         /// Ignores the entity for which the fluent setup is made (Type, Property)

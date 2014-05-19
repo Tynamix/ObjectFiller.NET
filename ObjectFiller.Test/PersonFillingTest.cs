@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
@@ -16,6 +17,25 @@ namespace ObjectFiller.Test
 
             pFiller.Setup()
                 .OnType<IAddress>().CreateInstanceOf<Address>();
+
+            Person filledPerson = pFiller.Create();
+
+            Assert.IsNotNull(filledPerson.Address);
+            Assert.IsNotNull(filledPerson.Addresses);
+            Assert.IsNotNull(filledPerson.StringToIAddress);
+            Assert.IsNotNull(filledPerson.SureNames);
+
+        }
+
+        [TestMethod]
+        public void TestFillPersonWithEnumerable()
+        {
+            Filler<Person> pFiller = new Filler<Person>();
+
+            pFiller.Setup()
+                .OnType<IAddress>().CreateInstanceOf<Address>()
+                .OnProperty(x => x.Age).Use(Enumerable.Range(18, 60));
+                
 
             Person filledPerson = pFiller.Create();
 
