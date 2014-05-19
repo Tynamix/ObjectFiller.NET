@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Library;
 using Tynamix.ObjectFiller;
@@ -60,6 +62,22 @@ namespace ObjectFiller.Test
             LibraryConstructorPoco filledLib = lib.Create();
             Assert.IsNotNull(filledLib.Books);
             Assert.AreEqual(1, filledLib.Books.Count);
+        }
+
+        [TestMethod]
+        public void TestFillLibraryWithConfiguredPocoOfABook()
+        {
+            Filler<LibraryConstructorPoco> lib = new Filler<LibraryConstructorPoco>();
+            lib.Setup()
+                .OnProperty(x => x.Books).IgnoreIt()
+                .SetupFor<Book>()
+                .OnProperty(x => x.Name).Use(() => "ABook");
+            
+
+            var l = lib.Create();
+
+            Assert.AreEqual("ABook", ((Book)l.Books.ToList()[0]).Name);
+
         }
 
         [TestMethod]

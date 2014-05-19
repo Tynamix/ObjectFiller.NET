@@ -254,11 +254,33 @@ namespace Tynamix.ObjectFiller
                 return GetFilledPoco(type, currentSetup);
             }
 
+	        if (TypeIsEnum(type))
+	        {
+				return GetRandomEnumValue(type);
+			}
+
             object newValue = GetRandomValue(type, currentSetup);
             return newValue;
         }
 
-        private object GetFilledPoco(Type type, ObjectFillerSetup currentSetup)
+
+
+	    private object GetRandomEnumValue(Type type)
+	    {
+			// performance: Enum.GetValues() is slow due to reflection, should cache it
+			Array values = Enum.GetValues(type); 
+			if (values.Length > 0)
+			{
+				int index = Random.Next() % values.Length;
+				return values.GetValue(index);
+			}
+			else
+			{
+				return 0; 
+			}
+	    }
+
+	    private object GetFilledPoco(Type type, ObjectFillerSetup currentSetup)
         {
             object result = CreateInstanceOfType(type, currentSetup);
 
@@ -430,5 +452,10 @@ namespace Tynamix.ObjectFiller
                       && (type.GetGenericTypeDefinition() == typeof(IEnumerable<>)
                         || type.GetInterfaces().Any(x => x == typeof(IEnumerable)));
         }
-    }
+
+		private static bool TypeIsEnum(Type type)
+		{
+			return type.IsEnum;
+		}
+	}
 }
