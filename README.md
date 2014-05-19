@@ -16,7 +16,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [Let's use the fluent setup API](#lets-use-the-fluent-setup-api)
    - [Ignore Properties](#ignore-properties)
    - [Setup Subtypes](#setup-subtypes)
-   - [Fill objects with IEnumerable](#fill-enumerable)
+   - [Fill objects with the IEnumerable interface](#fill-objects-with-the-ienumerable-interface)
    - [Fill objects with constructor arguments](#fill-objects-with-constructor-arguments)
    - [Fill Interface-Properties](#fill-interface-properties)
    - [Fill Lists and Dictionaries](#fill-lists-and-dictionaries)
