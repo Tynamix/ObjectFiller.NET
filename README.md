@@ -43,13 +43,13 @@ You can use the **.NET ObjectFiller** for generating test data for your **UnitTe
 I will show you some examples how you can work with it.
 
 **The ObjectFiller.NET ...:**
-*   ...fill the public writable properties of your objects
+*   ...fill the public properties of your objects - even with private setters
 *   ...fills also all subobjects
 *   ...has a nice FluentAPI
 *   ...handles constructors with parameters
 *   ...handles IEnumerable<T> and all derivations
-*   ...handles Interfaces
 *   ...handles Dictionaries
+*   ...handles Interfaces
 *   ...handles Enumerations
 *   ...is highly customizable
 *   ...has many nice plugins
