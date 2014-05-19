@@ -16,6 +16,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [Let's use the fluent setup API](#lets-use-the-fluent-setup-api)
    - [Ignore Properties](#ignore-properties)
    - [Setup Subtypes](#setup-subtypes)
+   - [Fill objects with IEnumerable](#fill-enumerable)
    - [Fill objects with constructor arguments](#fill-objects-with-constructor-arguments)
    - [Fill Interface-Properties](#fill-interface-properties)
    - [Fill Lists and Dictionaries](#fill-lists-and-dictionaries)
@@ -45,10 +46,11 @@ I will show you some examples how you can work with it.
 *   ...fill the public writable properties of your objects
 *   ...fills also all subobjects
 *   ...has a nice FluentAPI
-*   ...can handle constructor with parameters
-*   ...can handle IEnumerable<T> and all derivations
-*   ...can handle Interfaces
-*   ...cas handle Dictionaries
+*   ...handles constructors with parameters
+*   ...handles IEnumerable<T> and all derivations
+*   ...handles Interfaces
+*   ...handles Dictionaries
+*   ...handles Enumerations
 *   ...is highly customizable
 *   ...has many nice plugins
 *   ...is very easy to extend
@@ -244,6 +246,44 @@ The same method **```.IgnoreIt()```** is also available after you call **```.OnT
 ```
 
 With **```SetupFor<T>```** you start a setup for another type. In the example above we define that the ```Name``` of the ```Person``` will be "John" and the ```City``` of an ```Address``` object will be "Dresden". **```SetupFor<T>```** takes an ```bool``` parameter. If this is set to **```true```** then all the settings which were made on the parent type will be set back to default. When a property is not set up, then the filler will take the setup of the parent type, except the settings which are made specially for this actual type.
+
+###Fill objects with the IEnumerable interface
+
+With ObjectFiller.NET you can use the IEnumerable interface to fill objects. Use it for example when you want to fill a property in a specific order with include and exclude and all the other cool stuff which IEnumerable and LINQ supports.
+
+```csharp
+    public class Person
+    {
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public int Age { get; set; }
+        public DateTime Birthday { get; set; }
+
+        public List<Address> Addresses { get; set; }
+    }
+
+    public class Address
+    {
+        public int Id { get; set; }
+
+        public string Street { get; set; }
+    }
+
+    public class HelloFiller
+    {
+        public void FillPerson()
+        {
+            Filler<Person> pFiller = new Filler<Person>();
+            pFiller.Setup()
+                .SetupFor<Address>()
+                .OnProperty(x => x.Id).Use(Enumerable.Range(1, 100).Where(x => x % 2 == 0));
+
+            Person filledPerson = pFiller.Create();
+        }
+    }
+```
+In this example the ID of an Address item will be an even number between 1 and 100 in ascending order.
+This means, the first Address will have the Id 2, the second the Id 4, the fourth Id 6 and so...
 
 ###Fill objects with constructor arguments
 
