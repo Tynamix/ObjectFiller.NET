@@ -31,11 +31,20 @@ namespace ObjectFiller.Test
         {
             Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
             eFiller.Setup()
-                .OnProperty(x => x.EntityArray).IgnoreIt()
+                .ListItemCount(20)
+                .OnProperty(x => x.EntityArray, x => x.EntityICollection,
+                            x => x.EntityIList, x => x.ObservableCollection,
+                            x => x.EntityIEnumerable).IgnoreIt()
                 .SetupFor<Entity>()
-                .OnProperty(x => x.Id).Use(Enumerable.Range(1, 100).Select(x => (int)Math.Pow(2, x)));
+                .OnProperty(x => x.Id).Use(Enumerable.Range(1, 22).Select(x => (int)Math.Pow(2, x)));
 
             EntityCollection ec = eFiller.Create();
+
+            for (int i = 0; i < ec.EntityList.Count; i++)
+            {
+                int lastPowNum = (int)Math.Pow(2, i + 1);
+                Assert.AreEqual(lastPowNum, ec.EntityList[i].Id);
+            }
         }
 
         [TestMethod]
