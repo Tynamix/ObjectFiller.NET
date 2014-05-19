@@ -28,7 +28,7 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Use this function if you want to use an IEnumerable for the datageneration.
         /// With that you can generate random data in a specific order, with include, exclude and all the other stuff
-        /// what is possible with IEnumerables and linq
+        /// what is possible with IEnumerables and LINQ
         /// </summary>
         /// <param name="enumerable">An IEnumerable with items of type <typeparam name="TTargetObject"/> which will be used to fill the data.</param>
         /// <returns>Main FluentFiller API</returns>
