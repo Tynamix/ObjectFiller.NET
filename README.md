@@ -28,6 +28,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [RandomListItem Plugin](#randomlistitem---plugin)
    - [PatternGenerator Plugin](#patterngenerator-plugin)
    - [Lorem Ipsum String Plugin](#lorem-ipsum-string-plugin)
+   - [Sequence Generator Plugin](#sequencegenerator-plugins)
  - [Write your own plugin](#write-your-own-plugin)
  - [Thank you](#thank-you-for-using-objectfillernet)
    
