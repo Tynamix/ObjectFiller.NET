@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -290,10 +288,7 @@ namespace Tynamix.ObjectFiller
 				int index = Random.Next() % values.Length;
 				return values.GetValue(index);
 			}
-			else
-			{
-				return 0; 
-			}
+	        return 0;
 	    }
 
 	    private object GetFilledPoco(Type type, ObjectFillerSetup currentSetup)

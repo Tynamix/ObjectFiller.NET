@@ -54,6 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ObjectFillerTest.cs" />
     <Compile Include="RangePluginTest.cs" />
+    <Compile Include="RealNamePluginTest.cs" />
     <Compile Include="TestPoco\Library\Book.cs" />
     <Compile Include="TestPoco\Library\IBook.cs" />
     <Compile Include="TestPoco\Library\Library.cs" />

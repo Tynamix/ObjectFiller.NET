@@ -36,7 +36,6 @@ namespace ObjectFiller.Test
             Assert.IsNotNull(sl);
             Assert.IsNotNull(sl.IntegerList);
             Assert.IsTrue(sl.IntegerList.All(x => x >= min && x <= max));
-            Assert.IsFalse(sl.IntegerList.All(x => x == sl.IntegerList[0]));
         }
     }
 }
