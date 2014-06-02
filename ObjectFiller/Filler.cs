@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -123,8 +124,9 @@ namespace Tynamix.ObjectFiller
 
                     if (constructorArgs.Count == 0)
                     {
-                        throw new InvalidOperationException("Could not found a constructor for type [" + type.Name +
-                                                            "] where the parameters can be filled with the current objectfiller setup");
+	                    var message = "Could not found a constructor for type [" + type.Name + "] where the parameters can be filled with the current objectfiller setup";
+						Debug.WriteLine("ObjectFiller: " + message);
+	                    throw new InvalidOperationException(message);
                     }
                 }
             }
@@ -316,13 +318,12 @@ namespace Tynamix.ObjectFiller
 
                 if (dictionary.Contains(keyObject))
                 {
-                    throw new ArgumentException(
-                        string.Format(
-                            "Generating Keyvalue failed because it generates always the same data for type [{0}]. Please check your setup.",
-                            keyType));
+	                string message = string.Format("Generating Keyvalue failed because it generates always the same data for type [{0}]. Please check your setup.", keyType);
+					Debug.WriteLine("ObjectFiller: " + message);
+	                throw new ArgumentException(message);
                 }
 
-                object valueObject = GetFilledObject(valueType, currentSetup);
+	            object valueObject = GetFilledObject(valueType, currentSetup);
                 dictionary.Add(keyObject, valueObject);
             }
             return dictionary;
@@ -382,12 +383,12 @@ namespace Tynamix.ObjectFiller
             {
                 if (setup.InterfaceMocker == null)
                 {
-                    throw new InvalidOperationException(
-                        string.Format("ObjectFiller Interface mocker missing and type [{0}] not registered",
-                                      interfaceType.Name));
+	                string message = string.Format("ObjectFiller Interface mocker missing and type [{0}] not registered", interfaceType.Name);
+					Debug.WriteLine("ObjectFiller: " + message);
+	                throw new InvalidOperationException(message);
                 }
 
-                MethodInfo method = setup.InterfaceMocker.GetType().GetMethod("Create");
+	            MethodInfo method = setup.InterfaceMocker.GetType().GetMethod("Create");
                 MethodInfo genericMethod = method.MakeGenericMethod(new[] { interfaceType });
                 result = genericMethod.Invoke(setup.InterfaceMocker, null);
             }
@@ -402,7 +403,9 @@ namespace Tynamix.ObjectFiller
                 return setup.TypeToRandomFunc[propertyType]();
             }
 
-            throw new TypeInitializationException(propertyType.FullName, new Exception("The type [" + propertyType.Name + "] was not registered in the randomizer."));
+	        string message = "The type [" + propertyType.Name + "] was not registered in the randomizer.";
+			Debug.WriteLine("ObjectFiller: " + message);
+	        throw new TypeInitializationException(propertyType.FullName, new Exception(message));
         }
 
         private static bool TypeIsValidForObjectFiller(Type type, ObjectFillerSetup currentSetup)
