@@ -59,6 +59,20 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// Creates multiple filled objects. Call this after you finished your setup with the FluentAPI and if you want
+        /// to create several new objects. If you want to use a existing instance use the <see cref="Fill(T)"/> method.
+        /// </summary>
+        public IEnumerable<T> Create(int count)
+        {
+	        for (int n = 0; n < count; n++)
+	        {
+		        T objectToFill = (T) CreateInstanceOfType(typeof (T), SetupManager.GetFor<T>());
+		        Fill(objectToFill);
+		        yield return objectToFill;
+	        }
+        }
+
+        /// <summary>
         /// This will fill your instance of an object of type <see cref="T"/> and overrides the setup for the generation.
         /// Use this method if you don't wan't to use the FluentAPI
         /// </summary>
