@@ -23,13 +23,11 @@ namespace Tynamix.ObjectFiller
             _rnStyle = realNameStyle;
 
 
-            if (_rnStyle == RealNameStyle.FirstNameLastName
-                || _rnStyle == RealNameStyle.FirstNameOnly)
+            if (_rnStyle != RealNameStyle.LastNameOnly)
             {
                 _firstNames = Resources.firstNames.Split(';');
             }
-            if (_rnStyle == RealNameStyle.LastNameFirstName
-                || _rnStyle == RealNameStyle.LastNameOnly)
+            if (_rnStyle != RealNameStyle.FirstNameOnly)
             {
                 _lastNames = Resources.lastNames.Split(';');
             }
