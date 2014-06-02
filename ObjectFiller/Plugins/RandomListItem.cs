@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Tynamix.ObjectFiller
 {
@@ -11,9 +12,11 @@ namespace Tynamix.ObjectFiller
         {
             if (allAvailableValues == null || allAvailableValues.Count == 0)
             {
-                throw new ArgumentException("List in RandomListItem ranomizer can not be empty!");
+	            const string message = "List in RandomListItem ranomizer can not be empty!";
+				Debug.WriteLine("ObjectFiller: " + message);
+				throw new ArgumentException(message);
             }
-            _allAvailableValues = allAvailableValues;
+	        _allAvailableValues = allAvailableValues;
 
         }
 

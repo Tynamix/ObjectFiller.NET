@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Tynamix.ObjectFiller
 {
@@ -31,7 +32,9 @@ namespace Tynamix.ObjectFiller
 
                 if (!hasNext)
                 {
-                    throw new Exception("Unable to get next value from enumeration " + _enumerable);
+	                string message = "Unable to get next value from enumeration " + _enumerable;
+					Debug.WriteLine("ObjectFiller: " + message);
+					throw new Exception(message);
                 }
             }
 

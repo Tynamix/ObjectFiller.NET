@@ -251,6 +251,9 @@ namespace Tynamix.ObjectFiller
 				if (charClass == 'A') return NextUpperCaseChar();
 				if (charClass == 'N') return NextDecimalDigit();
 				if (charClass == 'X') return NextHexDigit();
+
+				var message = "Unexpected character class: " + charClass;
+				Debug.WriteLine("ObjectFiller: " + message);
 				throw new InvalidOperationException();
 			}
 

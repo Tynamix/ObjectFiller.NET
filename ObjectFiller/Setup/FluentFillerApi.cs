@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -114,9 +115,11 @@ namespace Tynamix.ObjectFiller
         {
             if (SetupManager.GetFor<TTargetObject>().InterfaceMocker != null)
             {
-                throw new ArgumentException("You can not set a interface mocker more than once!");
+	            const string message = "You can not set a interface mocker more than once!";
+				Debug.WriteLine("ObjectFiller: " + message);
+				throw new ArgumentException(message);
             }
-            SetupManager.GetFor<TTargetObject>().InterfaceMocker = mocker;
+	        SetupManager.GetFor<TTargetObject>().InterfaceMocker = mocker;
             return this;
         }
 
