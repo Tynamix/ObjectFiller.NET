@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
@@ -24,6 +25,16 @@ namespace ObjectFiller.Test
                 .OnProperty(x => x.City, x => x.Country).IgnoreIt();
 
             Person pFilled = filler.Fill(p);
+        }
+
+        [TestMethod]
+        public void CreateMultipleInstances()
+        {
+            Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
+            IEnumerable<LibraryFillingTest.Person> pList = filler.Create(10);
+
+            Assert.IsNotNull(pList);
+            Assert.AreEqual(10, pList.Count());
         }
     }
 }
