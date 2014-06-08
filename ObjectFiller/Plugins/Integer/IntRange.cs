@@ -1,6 +1,6 @@
 namespace Tynamix.ObjectFiller
 {
-    public class IntRange : IRandomizerPlugin<int>
+    public class IntRange : IRandomizerPlugin<int>, IRandomizerPlugin<int?>
     {
         private readonly int _min;
         private readonly int _max;
@@ -20,6 +20,11 @@ namespace Tynamix.ObjectFiller
         public int GetValue()
         {
             return Random.Next(_min, _max);
+        }
+
+        int? IRandomizerPlugin<int?>.GetValue()
+        {
+            return GetValue();
         }
     }
 }
