@@ -1,28 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Tynamix.ObjectFiller
 {
     public class RandomListItem<T> : IRandomizerPlugin<T>
     {
-        private readonly List<T> _allAvailableValues;
+        private readonly T[] _allAvailableValues;
 
-        public RandomListItem(List<T> allAvailableValues)
+        public RandomListItem(params T[] allAvailableValues)
         {
-            if (allAvailableValues == null || allAvailableValues.Count == 0)
+            if (allAvailableValues == null || allAvailableValues.Length == 0)
             {
-	            const string message = "List in RandomListItem ranomizer can not be empty!";
-				Debug.WriteLine("ObjectFiller: " + message);
-				throw new ArgumentException(message);
+                const string message = "List in RandomListItem ranomizer can not be empty!";
+                Debug.WriteLine("ObjectFiller: " + message);
+                throw new ArgumentException(message);
             }
-	        _allAvailableValues = allAvailableValues;
+            _allAvailableValues = allAvailableValues;
+        }
+
+        public RandomListItem(IEnumerable<T> allAvailableValues)
+            : this(allAvailableValues.ToArray())
+        {
 
         }
 
+
         public T GetValue()
         {
-            int rndmListIndex = Random.Next(0, _allAvailableValues.Count);
+            int rndmListIndex = Random.Next(0, _allAvailableValues.Length - 1);
             return _allAvailableValues[rndmListIndex];
         }
     }
