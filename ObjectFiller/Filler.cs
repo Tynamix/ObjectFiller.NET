@@ -63,12 +63,12 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         public IEnumerable<T> Create(int count)
         {
-	        for (int n = 0; n < count; n++)
-	        {
-		        T objectToFill = (T) CreateInstanceOfType(typeof (T), SetupManager.GetFor<T>());
-		        Fill(objectToFill);
-		        yield return objectToFill;
-	        }
+            for (int n = 0; n < count; n++)
+            {
+                T objectToFill = (T)CreateInstanceOfType(typeof(T), SetupManager.GetFor<T>());
+                Fill(objectToFill);
+                yield return objectToFill;
+            }
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace Tynamix.ObjectFiller
 
                     if (constructorArgs.Count == 0)
                     {
-	                    var message = "Could not found a constructor for type [" + type.Name + "] where the parameters can be filled with the current objectfiller setup";
-						Debug.WriteLine("ObjectFiller: " + message);
-	                    throw new InvalidOperationException(message);
+                        var message = "Could not found a constructor for type [" + type.Name + "] where the parameters can be filled with the current objectfiller setup";
+                        Debug.WriteLine("ObjectFiller: " + message);
+                        throw new InvalidOperationException(message);
                     }
                 }
             }
@@ -268,10 +268,10 @@ namespace Tynamix.ObjectFiller
                 return GetFilledPoco(type, currentSetup);
             }
 
-	        if (TypeIsEnum(type))
-	        {
-				return GetRandomEnumValue(type);
-			}
+            if (TypeIsEnum(type))
+            {
+                return GetRandomEnumValue(type);
+            }
 
             object newValue = GetRandomValue(type, currentSetup);
             return newValue;
@@ -279,19 +279,19 @@ namespace Tynamix.ObjectFiller
 
 
 
-	    private object GetRandomEnumValue(Type type)
-	    {
-			// performance: Enum.GetValues() is slow due to reflection, should cache it
-			Array values = Enum.GetValues(type); 
-			if (values.Length > 0)
-			{
-				int index = Random.Next() % values.Length;
-				return values.GetValue(index);
-			}
-	        return 0;
-	    }
+        private object GetRandomEnumValue(Type type)
+        {
+            // performance: Enum.GetValues() is slow due to reflection, should cache it
+            Array values = Enum.GetValues(type);
+            if (values.Length > 0)
+            {
+                int index = Random.Next() % values.Length;
+                return values.GetValue(index);
+            }
+            return 0;
+        }
 
-	    private object GetFilledPoco(Type type, ObjectFillerSetup currentSetup)
+        private object GetFilledPoco(Type type, ObjectFillerSetup currentSetup)
         {
             object result = CreateInstanceOfType(type, currentSetup);
 
@@ -313,12 +313,12 @@ namespace Tynamix.ObjectFiller
 
                 if (dictionary.Contains(keyObject))
                 {
-	                string message = string.Format("Generating Keyvalue failed because it generates always the same data for type [{0}]. Please check your setup.", keyType);
-					Debug.WriteLine("ObjectFiller: " + message);
-	                throw new ArgumentException(message);
+                    string message = string.Format("Generating Keyvalue failed because it generates always the same data for type [{0}]. Please check your setup.", keyType);
+                    Debug.WriteLine("ObjectFiller: " + message);
+                    throw new ArgumentException(message);
                 }
 
-	            object valueObject = GetFilledObject(valueType, currentSetup);
+                object valueObject = GetFilledObject(valueType, currentSetup);
                 dictionary.Add(keyObject, valueObject);
             }
             return dictionary;
@@ -378,12 +378,12 @@ namespace Tynamix.ObjectFiller
             {
                 if (setup.InterfaceMocker == null)
                 {
-	                string message = string.Format("ObjectFiller Interface mocker missing and type [{0}] not registered", interfaceType.Name);
-					Debug.WriteLine("ObjectFiller: " + message);
-	                throw new InvalidOperationException(message);
+                    string message = string.Format("ObjectFiller Interface mocker missing and type [{0}] not registered", interfaceType.Name);
+                    Debug.WriteLine("ObjectFiller: " + message);
+                    throw new InvalidOperationException(message);
                 }
 
-	            MethodInfo method = setup.InterfaceMocker.GetType().GetMethod("Create");
+                MethodInfo method = setup.InterfaceMocker.GetType().GetMethod("Create");
                 MethodInfo genericMethod = method.MakeGenericMethod(new[] { interfaceType });
                 result = genericMethod.Invoke(setup.InterfaceMocker, null);
             }
@@ -398,9 +398,18 @@ namespace Tynamix.ObjectFiller
                 return setup.TypeToRandomFunc[propertyType]();
             }
 
-	        string message = "The type [" + propertyType.Name + "] was not registered in the randomizer.";
-			Debug.WriteLine("ObjectFiller: " + message);
-	        throw new TypeInitializationException(propertyType.FullName, new Exception(message));
+            if (setup.IgnoreAllUnknownTypes)
+            {
+                if (propertyType.IsValueType)
+                {
+                    return Activator.CreateInstance(propertyType);
+                }
+                return null;
+            }
+
+            string message = "The type [" + propertyType.Name + "] was not registered in the randomizer.";
+            Debug.WriteLine("ObjectFiller: " + message);
+            throw new TypeInitializationException(propertyType.FullName, new Exception(message));
         }
 
         private static bool TypeIsValidForObjectFiller(Type type, ObjectFillerSetup currentSetup)
@@ -465,9 +474,9 @@ namespace Tynamix.ObjectFiller
                         || type.GetInterfaces().Any(x => x == typeof(IEnumerable)));
         }
 
-		private static bool TypeIsEnum(Type type)
-		{
-			return type.IsEnum;
-		}
-	}
+        private static bool TypeIsEnum(Type type)
+        {
+            return type.IsEnum;
+        }
+    }
 }

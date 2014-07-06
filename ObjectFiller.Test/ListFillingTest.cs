@@ -64,6 +64,28 @@ namespace ObjectFiller.Test
 
         }
 
+        [TestMethod]
+        public void TestIgnoreAllUnknownTypesWithOutException()
+        {
+            Filler<EntityCollection> filler = new Filler<EntityCollection>();
+            filler.Setup().IgnoreAllUnknownTypes();
+            var entity = filler.Create();
+            Assert.IsNull(entity.EntityArray);
+            Assert.IsNotNull(entity);
+            Assert.IsNotNull(entity.EntityList);
+            Assert.IsNotNull(entity.EntityICollection);
+            Assert.IsNotNull(entity.EntityIEnumerable);
+            Assert.IsNotNull(entity.EntityIList);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TypeInitializationException))]
+        public void TestIgnoreAllUnknownTypesWithException()
+        {
+            Filler<EntityCollection> filler = new Filler<EntityCollection>();
+            filler.Create();
+        }
+
         private Entity[] GetArray()
         {
             Filler<Entity> of = new Filler<Entity>();

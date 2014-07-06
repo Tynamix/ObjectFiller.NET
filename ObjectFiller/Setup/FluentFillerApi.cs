@@ -69,6 +69,18 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// Call this if the ObjectFiller should ignore all unknown types which can not filled automatically by the ObjectFiller.
+        /// When you not call this method, the ObjectFiller raises an exception when it is not possible to generate a random value for that type!
+        /// </summary>
+        /// <returns></returns>
+        public FluentFillerApi<TTargetObject> IgnoreAllUnknownTypes()
+        {
+            SetupManager.GetFor<TTargetObject>().IgnoreAllUnknownTypes = true;
+
+            return this;
+        } 
+
+        /// <summary>
         /// Setup the minimum and maximum item count for lists. The ObjectFiller will not generate more or less listitems then this limits.
         /// The default value for <see cref="minCount"/> is 1. The default value for <see cref="maxCount"/> is 25.
         /// </summary>
