@@ -18,6 +18,7 @@ namespace Tynamix.ObjectFiller
             PropertyOrder = new Dictionary<PropertyInfo, At>();
             TypesToIgnore = new List<Type>();
             InterfaceToImplementation = new Dictionary<Type, Type>();
+            IgnoreAllUnknownTypes = false;
 
             SetDefaultRandomizer();
         }
@@ -98,6 +99,11 @@ namespace Tynamix.ObjectFiller
         /// Interface Mocker for interface generation
         /// </summary>
         public IInterfaceMocker InterfaceMocker { get; set; }
+
+        /// <summary>
+        /// True if all unknown types will be ignored by the objectfiller
+        /// </summary>
+        public bool IgnoreAllUnknownTypes { get; set; }
 
     }
 }
