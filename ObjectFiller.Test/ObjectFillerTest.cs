@@ -19,12 +19,14 @@ namespace ObjectFiller.Test
                 .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnType<string>().Use(new MnemonicString(10))
                 .OnProperty(person => person.FirstName).Use(new MnemonicString(1))
-                .OnProperty(person => person.LastName).Use(new RandomListItem<string>(new List<string>() { "Maik", "Tom", "Anton" }))
+                .OnProperty(person => person.LastName).Use(new RandomListItem<string>("Maik", "Tom", "Anton"))
                 .OnProperty(person => person.Age).Use(() => new Random().Next(12, 83))
                 .SetupFor<Address>()
                 .OnProperty(x => x.City, x => x.Country).IgnoreIt();
 
             Person pFilled = filler.Fill(p);
+
+            Assert.IsTrue(new List<string>() { "Maik", "Tom", "Anton" }.Contains(pFilled.LastName));
         }
 
         [TestMethod]
