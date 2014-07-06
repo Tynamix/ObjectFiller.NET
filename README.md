@@ -548,18 +548,16 @@ The **```RandomListItem```** plugin is usefull when you want to choose the outpu
     {
         public void FillPerson()
         {
-            List<string> allNames = new List<string>() { "Jennifer", "Jenny", "Tom", "John" };
-
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<string>().Use(new RandomListItem<string>(allNames));
+                .OnType<string>().Use(new RandomListItem<string>("Jennifer", "Jenny", "Tom", "John"));
 
             Person filledPerson = pFiller.Create();
         }
     }
 ```
 
-In the example you can see that I set up four value, one of them  will be the generated name of the **```Person```** object.
+In the example you can see that I set up four values, one of them  will be the generated name of the **```Person```** object.
 
 ###PatternGenerator Plugin
 
