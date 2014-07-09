@@ -686,11 +686,11 @@ You can write plugins for simple types and complex types.
 Here is a very simple example:
 
 ```csharp
-  public class MyFirstPlugin : IRandomizerPlugin<string>
+    public class MyFirstPlugin : IRandomizerPlugin<string>
     {
         private readonly Random r = new Random();
         private readonly List<string> allNames = new List<string>() { "Jennifer", "Jenny", "Tom", "John" };
-        
+
         public string GetValue()
         {
             return allNames[r.Next(0, allNames.Count)];
@@ -706,9 +706,9 @@ Here is a very simple example:
     {
         public void FillPerson()
         {
-            ObjectFiller<Person> pFiller = new ObjectFiller<Person>();
+            Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .RandomizerForType<string>(new MyFirstPlugin());
+                .OnType<string>().Use(new MyFirstPlugin());
 
             Person filledPerson = pFiller.Create();
         }
