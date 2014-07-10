@@ -36,6 +36,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HashStack.cs" />
     <Compile Include="Setup\FluentFillerApi.cs" />
     <Compile Include="Setup\FluentPropertyApi.cs" />
     <Compile Include="Setup\FluentTypeApi.cs" />
