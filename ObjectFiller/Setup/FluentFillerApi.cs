@@ -13,13 +13,20 @@ namespace Tynamix.ObjectFiller
     public class FluentFillerApi<TTargetObject>
         where TTargetObject : class
     {
+        private SetupManager SetupManager { get; set; }
+
+        internal FluentFillerApi(SetupManager setupManager)
+        {
+            SetupManager = setupManager;
+        }
+
         /// <summary>
         /// Start to configure a type for objectfiller. The follow up methods will be found in the <see cref="FluentTypeApi{TTargetObject,TTargetType}"/>
         /// </summary>
         /// <typeparam name="TTargetType">Type which will be configured. For example string, int, etc...</typeparam>
         public FluentTypeApi<TTargetObject, TTargetType> OnType<TTargetType>()
         {
-            return new FluentTypeApi<TTargetObject, TTargetType>(this);
+            return new FluentTypeApi<TTargetObject, TTargetType>(this, SetupManager);
         }
 
         /// <summary>
@@ -54,7 +61,7 @@ namespace Tynamix.ObjectFiller
                 }
             }
 
-            return new FluentPropertyApi<TTargetObject, TTargetType>(propInfos, this);
+            return new FluentPropertyApi<TTargetObject, TTargetType>(propInfos, this, SetupManager);
         }
 
         /// <summary>
@@ -144,7 +151,7 @@ namespace Tynamix.ObjectFiller
         {
             SetupManager.SetNewFor<TNewType>(useDefaultSettings);
 
-            return new FluentFillerApi<TNewType>();
+            return new FluentFillerApi<TNewType>(SetupManager);
         }
 
     }

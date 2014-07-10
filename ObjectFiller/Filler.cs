@@ -14,11 +14,16 @@ namespace Tynamix.ObjectFiller
     /// <typeparam name="T">Targettype of the object to fill</typeparam>
     public class Filler<T> where T : class
     {
+
+        internal SetupManager SetupManager { get; private set; }
+
         /// <summary>
         /// Default constructor
         /// </summary>
         public Filler()
         {
+            SetupManager = new SetupManager();
+
             SetupManager.Clear();
         }
 
@@ -28,7 +33,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>Fluent API setup</returns>
         public FluentFillerApi<T> Setup()
         {
-            return new FluentFillerApi<T>();
+            return new FluentFillerApi<T>(SetupManager);
         }
 
 
