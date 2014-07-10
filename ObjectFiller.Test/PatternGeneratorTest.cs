@@ -106,6 +106,23 @@ namespace ObjectFiller.Test
         }
 
         [TestMethod]
+        public void StringPatternGenerator_a_composite()
+        {
+            HashSet<char> chars = new HashSet<char>();
+
+            var sut = new PatternGenerator("a {a}");
+            for (int n = 0; n < 10000; n++)
+            {
+                var s = sut.GetValue();
+                Assert.IsTrue(s.Length == 3);
+                Assert.IsTrue(Regex.IsMatch(s, "^a [a-z]$"));
+                chars.Add(s[2]);
+            }
+
+            Assert.AreEqual(26, chars.Count, "Should have all a..z");
+        }
+
+        [TestMethod]
         public void StringPatternGenerator_aaa()
         {
             var sut = new PatternGenerator("xcccx");
