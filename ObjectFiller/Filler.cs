@@ -134,17 +134,26 @@ namespace Tynamix.ObjectFiller
         }
 
 
-        private void FillInternal(object objectToFill)
+        private void FillInternal(object objectToFill, HashStack<Type> typeTracker = null)
         {
-            var currentSetup = SetupManager.GetFor(objectToFill.GetType());
+            var targetType = objectToFill.GetType();
 
-            if (currentSetup.TypeToRandomFunc.ContainsKey(objectToFill.GetType()))
+            if (typeTracker == null)
             {
-                objectToFill = currentSetup.TypeToRandomFunc[objectToFill.GetType()]();
+                // we only really use this in GetFilledPoco but we have to start somewhere...
+                typeTracker = new HashStack<Type>();
+                typeTracker.Push(targetType);
+            }
+
+            var currentSetup = SetupManager.GetFor(targetType);
+
+            if (currentSetup.TypeToRandomFunc.ContainsKey(targetType))
+            {
+                objectToFill = currentSetup.TypeToRandomFunc[targetType]();
                 return;
             }
 
-            var properties = objectToFill.GetType().GetProperties()
+            var properties = targetType.GetProperties()
                              .Where(x => GetSetMethodOnDeclaringType(x) != null).ToArray();
 
             if (properties.Length == 0) return;
@@ -170,7 +179,8 @@ namespace Tynamix.ObjectFiller
                     continue;
                 }
 
-                object filledObject = GetFilledObject(property.PropertyType, currentSetup);
+                object filledObject = GetFilledObject(property.PropertyType, currentSetup, typeTracker);
+
                 SetPropertyValue(property, objectToFill, filledObject);
             }
         }
@@ -238,7 +248,7 @@ namespace Tynamix.ObjectFiller
             return properties.Where(x => x.MetadataToken == property.MetadataToken && x.Module.Equals(property.Module));
         }
 
-        private object GetFilledObject(Type type, ObjectFillerSetup currentSetup)
+        private object GetFilledObject(Type type, ObjectFillerSetup currentSetup, HashStack<Type> typeTracker = null)
         {
             if (HasTypeARandomFunc(type, currentSetup))
             {
@@ -265,7 +275,7 @@ namespace Tynamix.ObjectFiller
 
             if (TypeIsPoco(type))
             {
-                return GetFilledPoco(type, currentSetup);
+                return GetFilledPoco(type, currentSetup, typeTracker);
             }
 
             if (TypeIsEnum(type))
@@ -276,8 +286,6 @@ namespace Tynamix.ObjectFiller
             object newValue = GetRandomValue(type, currentSetup);
             return newValue;
         }
-
-
 
         private object GetRandomEnumValue(Type type)
         {
@@ -291,11 +299,31 @@ namespace Tynamix.ObjectFiller
             return 0;
         }
 
-        private object GetFilledPoco(Type type, ObjectFillerSetup currentSetup)
+        private object GetFilledPoco(Type type, ObjectFillerSetup currentSetup, HashStack<Type> typeTracker)
         {
+            if (typeTracker != null)
+            {
+                if (typeTracker.Contains(type))
+                {
+                    throw new InvalidOperationException(
+                        string.Format(
+                            "The type {0} was already encountered before, which probably means you have a circular reference in your model. Either ignore the properties which cause this or specify explicit creation rules for them which do not rely on types.",
+                            type.Name));
+                }
+
+                typeTracker.Push(type);
+            }
+
             object result = CreateInstanceOfType(type, currentSetup);
 
-            FillInternal(result);
+            FillInternal(result, typeTracker);
+
+            if (typeTracker != null)
+            {
+                // once we fully filled the object, we can pop so other properties in the hierarchy can use the same types
+                typeTracker.Pop();
+            }
+
             return result;
         }
 

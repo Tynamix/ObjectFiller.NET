@@ -47,9 +47,11 @@
   <ItemGroup>
     <Compile Include="AddressFillingTest.cs" />
     <Compile Include="EnumTest.cs" />
+    <Compile Include="HashStackTests.cs" />
     <Compile Include="LibraryFillingTest.cs" />
     <Compile Include="ListFillingTest.cs" />
     <Compile Include="LoremIpsumPluginTest.cs" />
+    <Compile Include="ObjectFillerRecursiveTests.cs" />
     <Compile Include="PersonFillingTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ObjectFillerTest.cs" />
