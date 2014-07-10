@@ -14,12 +14,16 @@ namespace Tynamix.ObjectFiller
     /// <typeparam name="T">Targettype of the object to fill</typeparam>
     public class Filler<T> where T : class
     {
+        private readonly SetupManager _setupManager;
+
         /// <summary>
         /// Default constructor
         /// </summary>
         public Filler()
         {
-            SetupManager.Clear();
+            _setupManager = new SetupManager();
+
+            _setupManager.Clear();
         }
 
         /// <summary>
@@ -28,7 +32,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>Fluent API setup</returns>
         public FluentFillerApi<T> Setup()
         {
-            return new FluentFillerApi<T>();
+            return new FluentFillerApi<T>(_setupManager);
         }
 
 
@@ -40,7 +44,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>Object which is filled with random data</returns>
         public T Create(ObjectFillerSetup setup)
         {
-            SetupManager.SetMain(setup);
+            _setupManager.SetMain(setup);
             return Create();
         }
 
@@ -50,7 +54,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         public T Create()
         {
-            T objectToFill = (T)CreateInstanceOfType(typeof(T), SetupManager.GetFor<T>());
+            T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>());
 
             Fill(objectToFill);
 
@@ -65,7 +69,7 @@ namespace Tynamix.ObjectFiller
         {
             for (int n = 0; n < count; n++)
             {
-                T objectToFill = (T)CreateInstanceOfType(typeof(T), SetupManager.GetFor<T>());
+                T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>());
                 Fill(objectToFill);
                 yield return objectToFill;
             }
@@ -80,7 +84,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>Instance which is filled with random data</returns>
         public T Fill(T instanceToFill, ObjectFillerSetup setup)
         {
-            SetupManager.SetMain(setup);
+            _setupManager.SetMain(setup);
             return Create();
         }
 
@@ -136,7 +140,7 @@ namespace Tynamix.ObjectFiller
 
         private void FillInternal(object objectToFill)
         {
-            var currentSetup = SetupManager.GetFor(objectToFill.GetType());
+            var currentSetup = _setupManager.GetFor(objectToFill.GetType());
 
             if (currentSetup.TypeToRandomFunc.ContainsKey(objectToFill.GetType()))
             {
