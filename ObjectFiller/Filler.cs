@@ -142,7 +142,7 @@ namespace Tynamix.ObjectFiller
             {
                 // we only really use this in GetFilledPoco but we have to start somewhere...
                 typeTracker = new HashStack<Type>();
-                typeTracker.Push(targetType);
+               // typeTracker.Push(targetType);
             }
 
             var currentSetup = SetupManager.GetFor(targetType);
