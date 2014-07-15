@@ -30,6 +30,13 @@ namespace ObjectFiller.Test
             public string Value { get; set; }
         }
 
+        private class TestSelf
+        {
+            public TestSelf Self { get; set; }
+
+            public string Foo { get; set; }
+        }
+
         private class TestDuplicate
         {
             public TestEmptyNode Node1 { get; set; }
@@ -68,9 +75,33 @@ namespace ObjectFiller.Test
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void RecursiveFill_DeepRecursiveType_Succeeds()
+        public void RecursiveFill_RecursiveType_Parent_First_Fails()
+        {
+            var filler = new Filler<TestParent>();
+            filler.Create();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void RecursiveFill_RecursiveType_Child_First_Fails()
+        {
+            var filler = new Filler<TestChild>();
+            filler.Create();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void RecursiveFill_DeepRecursiveType_Fails()
         {
             var filler = new Filler<TestGrandParent>();
+            filler.Create();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void RecursiveFill_SelfReferencing_Fails()
+        {
+            var filler = new Filler<TestSelf>();
             filler.Create();
         }
 
