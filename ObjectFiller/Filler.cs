@@ -142,13 +142,8 @@ namespace Tynamix.ObjectFiller
         {
             var currentSetup = _setupManager.GetFor(objectToFill.GetType());
             var targetType = objectToFill.GetType();
-
-            if (typeTracker == null)
-            {
-                // we only really use this in GetFilledPoco but we have to start somewhere...
-                typeTracker = new HashStack<Type>();
-               // typeTracker.Push(targetType);
-            }
+        
+            typeTracker = typeTracker ?? new HashStack<Type>();
 
             if (currentSetup.TypeToRandomFunc.ContainsKey(targetType))
             {
