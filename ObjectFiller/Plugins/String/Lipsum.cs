@@ -111,17 +111,16 @@ namespace Tynamix.ObjectFiller
         };
 
         private readonly Dictionary<LipsumFlavor, string[]> _map;
-        private readonly System.Random _rnd;
 
-        public Lipsum(LipsumFlavor flavor, int paragraphs = 1, int minSentences = 1, int maxSentences = 4,
-            int minWords = 3, int maxWords = 9, int? seed = null)
+        public Lipsum(LipsumFlavor flavor, int paragraphs = 3, int minSentences = 3, int maxSentences = 8,
+            int minWords = 10, int maxWords = 50, int? seed = null)
         {
             _flavor = flavor;
             _paragraphs = paragraphs;
-            _minSentences = minSentences;
-            _maxSentences = maxSentences;
+            _minSentences = minSentences; 
+            _maxSentences = maxSentences < minSentences ? minSentences : maxSentences;
             _minWords = minWords;
-            _maxWords = maxWords;
+            _maxWords = maxWords < minWords ? minWords : maxWords;
 
             _map = new Dictionary<LipsumFlavor, string[]>()
             {
@@ -132,29 +131,30 @@ namespace Tynamix.ObjectFiller
             };
 
             _seed = seed.HasValue ? seed.Value : Environment.TickCount;
-            _rnd = new System.Random(_seed);
         }
 
         public string GetValue()
         {
+            System.Random rnd = new System.Random(_seed);
             var array = _map[_flavor];
 
             var result = new StringBuilder();
 
             for (var i = 0; i < _paragraphs; i++)
             {
-                var sentences = _rnd.Next(_minSentences, _maxSentences + 1);
+                var sentences = rnd.Next(_minSentences, _maxSentences + 1);
                 for (var j = 0; j < sentences; j++)
                 {
-                    var words = _rnd.Next(_minWords, _maxWords + 1);
+                    var words = rnd.Next(_minWords, _maxWords + 1);
                     for (var k = 0; k < words; k++)
                     {
-                        var word = array[_rnd.Next(array.Length)];
+                        var word = array[rnd.Next(array.Length)];
                         if (k == 0) word = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(word);
                         result.Append(word);
                         result.Append(k == words - 1 ? ". " : " ");
                     }
                 }
+                result.Append(Environment.NewLine);
                 result.Append(Environment.NewLine);
             }
 

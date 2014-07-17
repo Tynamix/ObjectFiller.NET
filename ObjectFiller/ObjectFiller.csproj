@@ -49,7 +49,6 @@
     <Compile Include="Plugins\String\PatternGenerator.cs" />
     <Compile Include="Plugins\RandomListItem.cs" />
     <Compile Include="Plugins\SequenceGenerator.cs" />
-    <Compile Include="Plugins\String\LoremIpsum.cs" />
     <Compile Include="Plugins\String\MnemonicString.cs" />
     <Compile Include="Plugins\String\RealNames.cs" />
     <Compile Include="IInterfaceMocker.cs" />
