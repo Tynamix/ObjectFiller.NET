@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
+using Random = Tynamix.ObjectFiller.Random;
 
 namespace ObjectFiller.Test
 {
@@ -20,7 +21,7 @@ namespace ObjectFiller.Test
                 .OnType<string>().Use(new MnemonicString(10))
                 .OnProperty(person => person.FirstName).Use(new MnemonicString(1))
                 .OnProperty(person => person.LastName).Use(new RandomListItem<string>("Maik", "Tom", "Anton"))
-                .OnProperty(person => person.Age).Use(() => new Random().Next(12, 83))
+                .OnProperty(person => person.Age).Use(() => Random.Next(12, 83))
                 .SetupFor<Address>()
                 .OnProperty(x => x.City, x => x.Country).IgnoreIt();
 
