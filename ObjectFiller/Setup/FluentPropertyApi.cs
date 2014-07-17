@@ -14,11 +14,13 @@ namespace Tynamix.ObjectFiller
     {
         private readonly IEnumerable<PropertyInfo> _affectedProps;
         private readonly FluentFillerApi<TTargetObject> _callback;
+        private readonly SetupManager _setupManager;
 
-        internal FluentPropertyApi(IEnumerable<PropertyInfo> affectedProps, FluentFillerApi<TTargetObject> callback)
+        internal FluentPropertyApi(IEnumerable<PropertyInfo> affectedProps, FluentFillerApi<TTargetObject> callback, SetupManager setupManager)
         {
             _affectedProps = affectedProps;
             _callback = callback;
+            _setupManager = setupManager;
         }
 
         /// <summary>
@@ -31,7 +33,7 @@ namespace Tynamix.ObjectFiller
         {
             foreach (PropertyInfo propertyInfo in _affectedProps)
             {
-                SetupManager.GetFor<TTargetObject>().PropertyOrder[propertyInfo] = propertyOrder;
+                _setupManager.GetFor<TTargetObject>().PropertyOrder[propertyInfo] = propertyOrder;
             }
             return this;
         }
@@ -56,7 +58,7 @@ namespace Tynamix.ObjectFiller
         {
             foreach (PropertyInfo pInfo in _affectedProps)
             {
-                SetupManager.GetFor<TTargetObject>().PropertyToRandomFunc[pInfo] = () => randomizerFunc();
+                _setupManager.GetFor<TTargetObject>().PropertyToRandomFunc[pInfo] = () => randomizerFunc();
             }
             return _callback;
         }
@@ -91,7 +93,7 @@ namespace Tynamix.ObjectFiller
         {
             foreach (PropertyInfo pInfo in _affectedProps)
             {
-                SetupManager.GetFor<TTargetObject>().PropertiesToIgnore.Add(pInfo);
+                _setupManager.GetFor<TTargetObject>().PropertiesToIgnore.Add(pInfo);
             }
 
             return _callback;

@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Plugins\String\Lipsum.cs" />
+    <Compile Include="HashStack.cs" />
     <Compile Include="Setup\FluentFillerApi.cs" />
     <Compile Include="Setup\FluentPropertyApi.cs" />
     <Compile Include="Setup\FluentTypeApi.cs" />

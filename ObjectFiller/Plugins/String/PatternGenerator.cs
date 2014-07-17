@@ -137,7 +137,7 @@ namespace Tynamix.ObjectFiller
 			// We split the pattern into expressions and create one ExpressionHandler per expression.
 			// The split operation may return a few empty expression strings, they should be skipped.
 			var expressions = Regex
-				.Split(pattern, "({[A-Z].*?})")
+				.Split(pattern, "({[a-zA-Z].*?})")
 				.Where(s => s.Length > 0);
 			
 			foreach (var expression in expressions)

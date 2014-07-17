@@ -12,10 +12,12 @@ namespace Tynamix.ObjectFiller
         where TTargetObject : class
     {
         private readonly FluentFillerApi<TTargetObject> _callback;
+        private readonly SetupManager _setupManager;
 
-        internal FluentTypeApi(FluentFillerApi<TTargetObject> callback)
+        internal FluentTypeApi(FluentFillerApi<TTargetObject> callback, SetupManager setupManager)
         {
             _callback = callback;
+            _setupManager = setupManager;
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>Main FluentFiller API</returns>
         public FluentFillerApi<TTargetObject> Use(Func<TTargetType> randomizerFunc)
         {
-            SetupManager.GetFor<TTargetObject>().TypeToRandomFunc[typeof(TTargetType)] = () => randomizerFunc();
+            _setupManager.GetFor<TTargetObject>().TypeToRandomFunc[typeof(TTargetType)] = () => randomizerFunc();
             return _callback;
         }
 
@@ -58,7 +60,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>Main FluentFiller API</returns>
         public FluentFillerApi<TTargetObject> IgnoreIt()
         {
-            SetupManager.GetFor<TTargetObject>().TypesToIgnore.Add(typeof(TTargetType));
+            _setupManager.GetFor<TTargetObject>().TypesToIgnore.Add(typeof(TTargetType));
             return _callback;
         }
 
@@ -71,7 +73,7 @@ namespace Tynamix.ObjectFiller
         public FluentFillerApi<TTargetObject> CreateInstanceOf<TImplementation>()
             where TImplementation : class,TTargetType
         {
-            SetupManager.GetFor<TTargetObject>().InterfaceToImplementation.Add(typeof(TTargetType), typeof(TImplementation));
+            _setupManager.GetFor<TTargetObject>().InterfaceToImplementation.Add(typeof(TTargetType), typeof(TImplementation));
 
             return _callback;
         }

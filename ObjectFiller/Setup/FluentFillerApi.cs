@@ -13,13 +13,20 @@ namespace Tynamix.ObjectFiller
     public class FluentFillerApi<TTargetObject>
         where TTargetObject : class
     {
+        private readonly SetupManager _setupManager;
+
+        internal FluentFillerApi(SetupManager setupManager)
+        {
+            _setupManager = setupManager;
+        }
+
         /// <summary>
         /// Start to configure a type for objectfiller. The follow up methods will be found in the <see cref="FluentTypeApi{TTargetObject,TTargetType}"/>
         /// </summary>
         /// <typeparam name="TTargetType">Type which will be configured. For example string, int, etc...</typeparam>
         public FluentTypeApi<TTargetObject, TTargetType> OnType<TTargetType>()
         {
-            return new FluentTypeApi<TTargetObject, TTargetType>(this);
+            return new FluentTypeApi<TTargetObject, TTargetType>(this, _setupManager);
         }
 
         /// <summary>
@@ -54,7 +61,7 @@ namespace Tynamix.ObjectFiller
                 }
             }
 
-            return new FluentPropertyApi<TTargetObject, TTargetType>(propInfos, this);
+            return new FluentPropertyApi<TTargetObject, TTargetType>(propInfos, this, _setupManager);
         }
 
         /// <summary>
@@ -64,7 +71,7 @@ namespace Tynamix.ObjectFiller
         /// <param name="maxCount">Max items count in a list. Default: 25</param>
         public FluentFillerApi<TTargetObject> ListItemCount(int maxCount)
         {
-            SetupManager.GetFor<TTargetObject>().ListMaxCount = maxCount;
+            _setupManager.GetFor<TTargetObject>().ListMaxCount = maxCount;
             return this;
         }
 
@@ -75,7 +82,7 @@ namespace Tynamix.ObjectFiller
         /// <returns></returns>
         public FluentFillerApi<TTargetObject> IgnoreAllUnknownTypes()
         {
-            SetupManager.GetFor<TTargetObject>().IgnoreAllUnknownTypes = true;
+            _setupManager.GetFor<TTargetObject>().IgnoreAllUnknownTypes = true;
 
             return this;
         } 
@@ -88,8 +95,8 @@ namespace Tynamix.ObjectFiller
         /// <param name="maxCount">Maximum item in a list. Default: 25</param>
         public FluentFillerApi<TTargetObject> ListItemCount(int minCount, int maxCount)
         {
-            SetupManager.GetFor<TTargetObject>().ListMinCount = minCount;
-            SetupManager.GetFor<TTargetObject>().ListMaxCount = maxCount;
+            _setupManager.GetFor<TTargetObject>().ListMinCount = minCount;
+            _setupManager.GetFor<TTargetObject>().ListMaxCount = maxCount;
             return this;
         }
 
@@ -100,7 +107,7 @@ namespace Tynamix.ObjectFiller
         /// <param name="maxCount">Max items count of keys in a dictionary. Default: 10</param>
         public FluentFillerApi<TTargetObject> DictionaryItemCount(int maxCount)
         {
-            SetupManager.GetFor<TTargetObject>().DictionaryKeyMaxCount = maxCount;
+            _setupManager.GetFor<TTargetObject>().DictionaryKeyMaxCount = maxCount;
             return this;
         }
 
@@ -112,8 +119,8 @@ namespace Tynamix.ObjectFiller
         /// <param name="maxCount">Max items count of keys in a dictionary. Default: 10</param>
         public FluentFillerApi<TTargetObject> DictionaryItemCount(int minCount, int maxCount)
         {
-            SetupManager.GetFor<TTargetObject>().DictionaryKeyMinCount = minCount;
-            SetupManager.GetFor<TTargetObject>().DictionaryKeyMaxCount = maxCount;
+            _setupManager.GetFor<TTargetObject>().DictionaryKeyMinCount = minCount;
+            _setupManager.GetFor<TTargetObject>().DictionaryKeyMaxCount = maxCount;
             return this;
         }
 
@@ -125,13 +132,13 @@ namespace Tynamix.ObjectFiller
         /// <returns></returns>
         public FluentFillerApi<TTargetObject> SetInterfaceMocker(IInterfaceMocker mocker)
         {
-            if (SetupManager.GetFor<TTargetObject>().InterfaceMocker != null)
+            if (_setupManager.GetFor<TTargetObject>().InterfaceMocker != null)
             {
 	            const string message = "You can not set a interface mocker more than once!";
 				Debug.WriteLine("ObjectFiller: " + message);
 				throw new ArgumentException(message);
             }
-	        SetupManager.GetFor<TTargetObject>().InterfaceMocker = mocker;
+	        _setupManager.GetFor<TTargetObject>().InterfaceMocker = mocker;
             return this;
         }
 
@@ -142,9 +149,9 @@ namespace Tynamix.ObjectFiller
         /// <returns></returns>
         public FluentFillerApi<TNewType> SetupFor<TNewType>(bool useDefaultSettings = false) where TNewType : class
         {
-            SetupManager.SetNewFor<TNewType>(useDefaultSettings);
+            _setupManager.SetNewFor<TNewType>(useDefaultSettings);
 
-            return new FluentFillerApi<TNewType>();
+            return new FluentFillerApi<TNewType>(_setupManager);
         }
 
     }
