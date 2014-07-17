@@ -36,6 +36,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Plugins\String\Lipsum.cs" />
     <Compile Include="HashStack.cs" />
     <Compile Include="Setup\FluentFillerApi.cs" />
     <Compile Include="Setup\FluentPropertyApi.cs" />
@@ -48,7 +49,6 @@
     <Compile Include="Plugins\String\PatternGenerator.cs" />
     <Compile Include="Plugins\RandomListItem.cs" />
     <Compile Include="Plugins\SequenceGenerator.cs" />
-    <Compile Include="Plugins\String\LoremIpsum.cs" />
     <Compile Include="Plugins\String\MnemonicString.cs" />
     <Compile Include="Plugins\String\RealNames.cs" />
     <Compile Include="IInterfaceMocker.cs" />
