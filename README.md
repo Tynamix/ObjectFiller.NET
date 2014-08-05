@@ -8,7 +8,7 @@ You can also fill properties which are derived by a interface.
 The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and Dictionaries.
 
 ##Table of contents
- - [Where can i get it?](#where-can-i-get-it)
+ - [Where can i get it?](#get-it-on-nuget)
  - [For what do you need it?](#for-what-do-you-need-it)
  - [Can i extend the .NET ObjectFiller?](#can-i-extend-the-net-objectfiller)
  - [Examples](#examples)
@@ -35,9 +35,8 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
  - [Thank you](#thank-you-for-using-objectfillernet)
    
 
-##Where can i get it?
-Easy, you can find it at nuget! It's just one DLL!
-**Look here:** https://www.nuget.org/packages/Tynamix.ObjectFiller
+##Get it on NuGet!
+###https://www.nuget.org/packages/Tynamix.ObjectFiller
 
 
 ##For what do you need it?
