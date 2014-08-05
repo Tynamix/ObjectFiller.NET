@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace Tynamix.ObjectFiller
 {
-    public class ObjectFillerSetup
+    internal class FillerSetupItem
     {
-        public ObjectFillerSetup()
+        internal FillerSetupItem()
         {
             ListMinCount = 1;
             ListMaxCount = 25;
@@ -48,42 +48,42 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Defines in which order the properties get handled.
         /// </summary>
-        public Dictionary<PropertyInfo, At> PropertyOrder { get; private set; }
+        internal Dictionary<PropertyInfo, At> PropertyOrder { get; private set; }
 
         /// <summary>
         /// Contains the Type to random data generator func
         /// </summary>
-        public Dictionary<Type, Func<object>> TypeToRandomFunc { get; private set; }
+        internal Dictionary<Type, Func<object>> TypeToRandomFunc { get; private set; }
 
         /// <summary>
         /// Contains the Property to random data generator func
         /// </summary>
-        public Dictionary<PropertyInfo, Func<object>> PropertyToRandomFunc { get; private set; }
+        internal Dictionary<PropertyInfo, Func<object>> PropertyToRandomFunc { get; private set; }
 
         /// <summary>
         /// Contains the type of interface with the corresponding implementation
         /// </summary>
-        public Dictionary<Type, Type> InterfaceToImplementation { get; private set; }
+        internal Dictionary<Type, Type> InterfaceToImplementation { get; private set; }
 
         /// <summary>
         /// List with all properties which will be ignored while generating test data
         /// </summary>
-        public List<PropertyInfo> PropertiesToIgnore { get; private set; }
+        internal List<PropertyInfo> PropertiesToIgnore { get; private set; }
 
         /// <summary>
         /// All types which will be ignored completly
         /// </summary>
-        public List<Type> TypesToIgnore { get; private set; }
+        internal List<Type> TypesToIgnore { get; private set; }
 
         /// <summary>
         /// Minimum count of list items which will be generated 
         /// </summary>
-        public int ListMinCount { get; set; }
+        internal int ListMinCount { get; set; }
 
         /// <summary>
         /// Maximum count of list items which will be generated 
         /// </summary>
-        public int ListMaxCount { get; set; }
+        internal int ListMaxCount { get; set; }
 
         /// <summary>
         /// Minimum count of key items within a dictionary which will be generated 
@@ -93,17 +93,17 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Maximum count of key items within a dictionary which will be generated 
         /// </summary>
-        public int DictionaryKeyMaxCount { get; set; }
+        internal int DictionaryKeyMaxCount { get; set; }
 
         /// <summary>
         /// Interface Mocker for interface generation
         /// </summary>
-        public IInterfaceMocker InterfaceMocker { get; set; }
+        internal IInterfaceMocker InterfaceMocker { get; set; }
 
         /// <summary>
         /// True if all unknown types will be ignored by the objectfiller
         /// </summary>
-        public bool IgnoreAllUnknownTypes { get; set; }
+        internal bool IgnoreAllUnknownTypes { get; set; }
 
     }
 }

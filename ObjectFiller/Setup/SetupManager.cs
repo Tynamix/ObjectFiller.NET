@@ -4,74 +4,56 @@ using System.Collections.Generic;
 namespace Tynamix.ObjectFiller
 {
     /// <summary>
-    /// Responsible to get the right <see cref="ObjectFillerSetup"/> for a given type.
+    /// Responsible to get the right <see cref="FillerSetupItem"/> for a given type.
     /// </summary>
     internal class SetupManager
     {
-        private ObjectFillerSetup _mainSetup;
-        private Dictionary<Type, ObjectFillerSetup> _typeToSetup;
+       
+        internal FillerSetup FillerSetup { get;  set; }
 
         /// <summary>
         /// static ctor
         /// </summary>
         internal SetupManager()
         {
-            Clear();
+            FillerSetup = new FillerSetup();
         }
 
         /// <summary>
-        /// Gets the <see cref="ObjectFillerSetup"/> for a given type
+        /// Gets the <see cref="FillerSetupItem"/> for a given type
         /// </summary>
-        /// <typeparam name="TTargetObject">Type for which a <see cref="ObjectFillerSetup"/> will be get</typeparam>
-        /// <returns><see cref="ObjectFillerSetup"/> for type <see cref="TTargetObject"/></returns>
-        internal ObjectFillerSetup GetFor<TTargetObject>()
+        /// <typeparam name="TTargetObject">Type for which a <see cref="FillerSetupItem"/> will be get</typeparam>
+        /// <returns><see cref="FillerSetupItem"/> for type <see cref="TTargetObject"/></returns>
+        internal FillerSetupItem GetFor<TTargetObject>()
             where TTargetObject : class
         {
             return GetFor(typeof(TTargetObject));
         }
 
         /// <summary>
-        /// Gets the <see cref="ObjectFillerSetup"/> for a given type
+        /// Gets the <see cref="FillerSetupItem"/> for a given type
         /// </summary>
-        /// <param name="targetType">Type for which a <see cref="ObjectFillerSetup"/> will be get</param>
-        /// <returns><see cref="ObjectFillerSetup"/> for type <see cref="targetType"/></returns>
-        internal ObjectFillerSetup GetFor(Type targetType)
+        /// <param name="targetType">Type for which a <see cref="FillerSetupItem"/> will be get</param>
+        /// <returns><see cref="FillerSetupItem"/> for type <see cref="targetType"/></returns>
+        internal FillerSetupItem GetFor(Type targetType)
         {
-            if (_typeToSetup.ContainsKey(targetType))
+            if (FillerSetup.TypeToFillerSetup.ContainsKey(targetType))
             {
-                return _typeToSetup[targetType];
+                return FillerSetup.TypeToFillerSetup[targetType];
             }
 
-            return _mainSetup;
+            return FillerSetup.MainSetupItem;
         }
 
         /// <summary>
-        /// Sets a new <see cref="ObjectFillerSetup"/> for the given <see cref="TTargetObject"/>
+        /// Sets a new <see cref="FillerSetupItem"/> for the given <see cref="TTargetObject"/>
         /// </summary>
-        /// <typeparam name="TTargetObject">Type of target object for which a new <see cref="ObjectFillerSetup"/> will be set.</typeparam>
+        /// <typeparam name="TTargetObject">Type of target object for which a new <see cref="FillerSetupItem"/> will be set.</typeparam>
         /// <param name="useDefaultSettings">FALSE if the target object will take the settings of the parent object</param>
         internal void SetNewFor<TTargetObject>(bool useDefaultSettings)
             where TTargetObject : class
         {
-            _typeToSetup[typeof(TTargetObject)] = useDefaultSettings ? new ObjectFillerSetup() : _mainSetup;
-        }
-
-        /// <summary>
-        /// Set the main <see cref="ObjectFillerSetup"/>. This will be the root setup.
-        /// </summary>
-        /// <param name="setup">Main setup</param>
-        internal void SetMain(ObjectFillerSetup setup)
-        {
-            _mainSetup = setup;
-        }
-
-        /// <summary>
-        /// Clears all the settings which was made.
-        /// </summary>
-        internal void Clear()
-        {
-            _mainSetup = new ObjectFillerSetup();
-            _typeToSetup = new Dictionary<Type, ObjectFillerSetup>();
+            FillerSetup.TypeToFillerSetup[typeof(TTargetObject)] = useDefaultSettings ? new FillerSetupItem() : FillerSetup.MainSetupItem;
         }
     }
 }
