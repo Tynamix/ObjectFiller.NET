@@ -21,7 +21,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [Fill objects with constructor arguments](#fill-objects-with-constructor-arguments)
    - [Fill Interface-Properties](#fill-interface-properties)
    - [Fill Lists and Dictionaries](#fill-lists-and-dictionaries)
-   - [Detect Circular Dependencies](#detect-circular-dependencies
+   - [Detect Circular Dependencies](#detect-circular-dependencies)
    - [Mix all up](#mix-all-up)
  - [Available Plugins](#available-plugins)
    - [IntRangePlugin](#rangeintegerplugin)
@@ -427,6 +427,35 @@ YES! And ObjectFiller can handle that. Just say **```.Register<T>()```** after y
 ```
 
 It is also really easy possible to fill **```Dictionary```** and **```Lists```** objects.
+
+###Detect Circular Dependencies
+
+The ObjectFiller is able to detect circulare references. You can specify that the ObjectFiller will ignore the circular references or throw an exception when a circular reference occurs.
+
+```csharp
+
+    public class Children
+    {
+        public Parent Parent { get; set; }
+    }
+
+    public class Parent
+    {
+        public List<Children> Childrens { get; set; }
+    }
+
+    public class HelloFiller
+    {
+        public void FillPerson()
+        {
+            Filler<Parent> pFiller = new Filler<Parent>();
+            pFiller.Setup().OnCircularReference().ThrowException(false);
+
+            Parent filledParent = pFiller.Create();
+        }
+    }
+```
+Here you can see that a parent has a ```List<Children>``` and the ```Children``` has a ```Parent``` - a circular reference. The ObjectFiller detects that and doesn't fill the circular object anymore! When you call ```.Setup().OnCircularReference().ThrowException(true);``` with the ```true``` flag it will raise an exception instead of just ignore the circular reference.
 
 ###Mix all up
 
