@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
+using Tynamix.ObjectFiller.Setup;
 
 namespace Tynamix.ObjectFiller
 {
@@ -32,6 +33,15 @@ namespace Tynamix.ObjectFiller
         public FluentTypeApi<TTargetObject, TTargetType> OnType<TTargetType>()
         {
             return new FluentTypeApi<TTargetObject, TTargetType>(this, _setupManager);
+        }
+
+
+        /// <summary>
+        /// Starts to configure the behaviour of the ObjectFiller when a circular reference in your model occurs
+        /// </summary>
+        public FluentCircularApi<TTargetObject> OnCircularReference()
+        {
+            return new FluentCircularApi<TTargetObject>(this, _setupManager);
         }
 
         /// <summary>
@@ -158,6 +168,7 @@ namespace Tynamix.ObjectFiller
 
             return new FluentFillerApi<TNewType>(_setupManager);
         }
+
 
     }
 }
