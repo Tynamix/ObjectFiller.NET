@@ -73,6 +73,7 @@
     <Compile Include="SequenceGeneratorTest.cs" />
     <Compile Include="TestPoco\Person\OrderedPersonProperties.cs" />
     <Compile Include="TestPoco\SimpleList.cs" />
+    <Compile Include="SaveFillerSetupTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ObjectFiller\ObjectFiller.csproj">

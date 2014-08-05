@@ -22,8 +22,6 @@ namespace Tynamix.ObjectFiller
         public Filler()
         {
             _setupManager = new SetupManager();
-
-            _setupManager.Clear();
         }
 
         /// <summary>
@@ -32,20 +30,23 @@ namespace Tynamix.ObjectFiller
         /// <returns>Fluent API setup</returns>
         public FluentFillerApi<T> Setup()
         {
-            return new FluentFillerApi<T>(_setupManager);
+            return Setup(null);
         }
 
-
         /// <summary>
-        /// This will create your object of type <see cref="T"/> and overrides the setup for the generation.
-        /// Use this method if you don't wan't to use the FluentAPI
+        /// Call this to start the setup for the <see cref="Filler{T}"/> and use a setup which you created
+        /// before with the FluentApi
         /// </summary>
-        /// <param name="setup">Setup for the objectfiller</param>
-        /// <returns>Object which is filled with random data</returns>
-        public T Create(ObjectFillerSetup setup)
+        /// <param name="fillerSetupToUse">FillerSetup to use</param>
+        /// <returns>Fluebt API Setup</returns>
+        public FluentFillerApi<T> Setup(FillerSetup fillerSetupToUse)
         {
-            _setupManager.SetMain(setup);
-            return Create();
+            if (fillerSetupToUse != null)
+            {
+                _setupManager.FillerSetup = fillerSetupToUse;
+            }
+            return new FluentFillerApi<T>(_setupManager);
+
         }
 
         /// <summary>
@@ -76,20 +77,6 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// This will fill your instance of an object of type <see cref="T"/> and overrides the setup for the generation.
-        /// Use this method if you don't wan't to use the FluentAPI
-        /// </summary>
-        /// <param name="instanceToFill">The instance which will get filled with random data.</param>
-        /// <param name="setup">Setup for the objectfiller</param>
-        /// <returns>Instance which is filled with random data</returns>
-        public T Fill(T instanceToFill, ObjectFillerSetup setup)
-        {
-            _setupManager.SetMain(setup);
-            return Create();
-        }
-
-
-        /// <summary>
         /// Fills your object instance. Call this after you finished your setup with the FluentAPI
         /// </summary>
         public T Fill(T instanceToFill)
@@ -100,7 +87,7 @@ namespace Tynamix.ObjectFiller
         }
 
 
-        private object CreateInstanceOfType(Type type, ObjectFillerSetup currentSetup)
+        private object CreateInstanceOfType(Type type, FillerSetupItem currentSetupItem)
         {
             List<object> constructorArgs = new List<object>();
 
@@ -113,11 +100,11 @@ namespace Tynamix.ObjectFiller
                     {
                         Type[] paramTypes = ctorInfo.GetParameters().Select(p => p.ParameterType).ToArray();
 
-                        if (paramTypes.All(t => TypeIsValidForObjectFiller(t, currentSetup)))
+                        if (paramTypes.All(t => TypeIsValidForObjectFiller(t, currentSetupItem)))
                         {
                             foreach (Type paramType in paramTypes)
                             {
-                                constructorArgs.Add(GetFilledObject(paramType, currentSetup));
+                                constructorArgs.Add(GetFilledObject(paramType, currentSetupItem));
                             }
 
                             break;
@@ -142,7 +129,7 @@ namespace Tynamix.ObjectFiller
         {
             var currentSetup = _setupManager.GetFor(objectToFill.GetType());
             var targetType = objectToFill.GetType();
-        
+
             typeTracker = typeTracker ?? new HashStack<Type>();
 
             if (currentSetup.TypeToRandomFunc.ContainsKey(targetType))
@@ -196,18 +183,18 @@ namespace Tynamix.ObjectFiller
             }
         }
 
-        private Queue<PropertyInfo> OrderPropertiers(ObjectFillerSetup currentSetup, PropertyInfo[] properties)
+        private Queue<PropertyInfo> OrderPropertiers(FillerSetupItem currentSetupItem, PropertyInfo[] properties)
         {
             Queue<PropertyInfo> propertyQueue = new Queue<PropertyInfo>();
-            var firstProperties = currentSetup.PropertyOrder
+            var firstProperties = currentSetupItem.PropertyOrder
                                               .Where(x => x.Value == At.TheBegin && ContainsProperty(properties, x.Key))
                                               .Select(x => x.Key).ToList();
 
-            var lastProperties = currentSetup.PropertyOrder
+            var lastProperties = currentSetupItem.PropertyOrder
                                               .Where(x => x.Value == At.TheEnd && ContainsProperty(properties, x.Key))
                                               .Select(x => x.Key).ToList();
 
-            var propertiesWithoutOrder = properties.Where(x => !ContainsProperty(currentSetup.PropertyOrder.Keys, x)).ToList();
+            var propertiesWithoutOrder = properties.Where(x => !ContainsProperty(currentSetupItem.PropertyOrder.Keys, x)).ToList();
 
 
             firstProperties.ForEach(propertyQueue.Enqueue);
@@ -217,9 +204,9 @@ namespace Tynamix.ObjectFiller
             return propertyQueue;
         }
 
-        private bool IgnoreProperty(PropertyInfo property, ObjectFillerSetup currentSetup)
+        private bool IgnoreProperty(PropertyInfo property, FillerSetupItem currentSetupItem)
         {
-            return ContainsProperty(currentSetup.PropertiesToIgnore, property);
+            return ContainsProperty(currentSetupItem.PropertiesToIgnore, property);
         }
 
         private bool ContainsProperty(IEnumerable<PropertyInfo> properties, PropertyInfo property)
@@ -246,34 +233,34 @@ namespace Tynamix.ObjectFiller
             return properties.Where(x => x.MetadataToken == property.MetadataToken && x.Module.Equals(property.Module));
         }
 
-        private object GetFilledObject(Type type, ObjectFillerSetup currentSetup, HashStack<Type> typeTracker = null)
+        private object GetFilledObject(Type type, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker = null)
         {
-            if (HasTypeARandomFunc(type, currentSetup))
+            if (HasTypeARandomFunc(type, currentSetupItem))
             {
-                return GetRandomValue(type, currentSetup);
+                return GetRandomValue(type, currentSetupItem);
             }
 
             if (TypeIsDictionary(type))
             {
-                IDictionary dictionary = GetFilledDictionary(type, currentSetup);
+                IDictionary dictionary = GetFilledDictionary(type, currentSetupItem);
 
                 return dictionary;
             }
 
             if (TypeIsList(type))
             {
-                IList list = GetFilledList(type, currentSetup);
+                IList list = GetFilledList(type, currentSetupItem);
                 return list;
             }
 
             if (type.IsInterface)
             {
-                return GetInterfaceInstance(type, currentSetup);
+                return GetInterfaceInstance(type, currentSetupItem);
             }
 
             if (TypeIsPoco(type))
             {
-                return GetFilledPoco(type, currentSetup, typeTracker);
+                return GetFilledPoco(type, currentSetupItem, typeTracker);
             }
 
             if (TypeIsEnum(type))
@@ -281,7 +268,7 @@ namespace Tynamix.ObjectFiller
                 return GetRandomEnumValue(type);
             }
 
-            object newValue = GetRandomValue(type, currentSetup);
+            object newValue = GetRandomValue(type, currentSetupItem);
             return newValue;
         }
 
@@ -297,7 +284,7 @@ namespace Tynamix.ObjectFiller
             return 0;
         }
 
-        private object GetFilledPoco(Type type, ObjectFillerSetup currentSetup, HashStack<Type> typeTracker)
+        private object GetFilledPoco(Type type, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
             if (typeTracker != null)
             {
@@ -312,7 +299,7 @@ namespace Tynamix.ObjectFiller
                 typeTracker.Push(type);
             }
 
-            object result = CreateInstanceOfType(type, currentSetup);
+            object result = CreateInstanceOfType(type, currentSetupItem);
 
             FillInternal(result, typeTracker);
 
@@ -325,17 +312,17 @@ namespace Tynamix.ObjectFiller
             return result;
         }
 
-        private IDictionary GetFilledDictionary(Type propertyType, ObjectFillerSetup currentSetup)
+        private IDictionary GetFilledDictionary(Type propertyType, FillerSetupItem currentSetupItem)
         {
             IDictionary dictionary = (IDictionary)Activator.CreateInstance(propertyType);
             Type keyType = propertyType.GetGenericArguments()[0];
             Type valueType = propertyType.GetGenericArguments()[1];
 
-            int maxDictionaryItems = Random.Next(currentSetup.DictionaryKeyMinCount,
-                currentSetup.DictionaryKeyMaxCount);
+            int maxDictionaryItems = Random.Next(currentSetupItem.DictionaryKeyMinCount,
+                currentSetupItem.DictionaryKeyMaxCount);
             for (int i = 0; i < maxDictionaryItems; i++)
             {
-                object keyObject = GetFilledObject(keyType, currentSetup);
+                object keyObject = GetFilledObject(keyType, currentSetupItem);
 
                 if (dictionary.Contains(keyObject))
                 {
@@ -344,19 +331,19 @@ namespace Tynamix.ObjectFiller
                     throw new ArgumentException(message);
                 }
 
-                object valueObject = GetFilledObject(valueType, currentSetup);
+                object valueObject = GetFilledObject(valueType, currentSetupItem);
                 dictionary.Add(keyObject, valueObject);
             }
             return dictionary;
         }
 
-        private static bool HasTypeARandomFunc(Type type, ObjectFillerSetup currentSetup)
+        private static bool HasTypeARandomFunc(Type type, FillerSetupItem currentSetupItem)
         {
-            return currentSetup.TypeToRandomFunc.ContainsKey(type);
+            return currentSetupItem.TypeToRandomFunc.ContainsKey(type);
         }
 
 
-        private IList GetFilledList(Type propertyType, ObjectFillerSetup currentSetup)
+        private IList GetFilledList(Type propertyType, FillerSetupItem currentSetupItem)
         {
             Type genType = propertyType.GetGenericArguments()[0];
 
@@ -379,52 +366,52 @@ namespace Tynamix.ObjectFiller
             }
 
 
-            int maxListItems = Random.Next(currentSetup.ListMinCount, currentSetup.ListMaxCount);
+            int maxListItems = Random.Next(currentSetupItem.ListMinCount, currentSetupItem.ListMaxCount);
             for (int i = 0; i < maxListItems; i++)
             {
-                object listObject = GetFilledObject(genType, currentSetup);
+                object listObject = GetFilledObject(genType, currentSetupItem);
                 list.Add(listObject);
             }
             return list;
         }
 
-        private object GetInterfaceInstance(Type interfaceType, ObjectFillerSetup setup)
+        private object GetInterfaceInstance(Type interfaceType, FillerSetupItem setupItem)
         {
             object result;
-            if (setup.TypeToRandomFunc.ContainsKey(interfaceType))
+            if (setupItem.TypeToRandomFunc.ContainsKey(interfaceType))
             {
-                return setup.TypeToRandomFunc[interfaceType]();
+                return setupItem.TypeToRandomFunc[interfaceType]();
             }
-            if (setup.InterfaceToImplementation.ContainsKey(interfaceType))
+            if (setupItem.InterfaceToImplementation.ContainsKey(interfaceType))
             {
-                Type implType = setup.InterfaceToImplementation[interfaceType];
-                result = CreateInstanceOfType(implType, setup);
+                Type implType = setupItem.InterfaceToImplementation[interfaceType];
+                result = CreateInstanceOfType(implType, setupItem);
             }
             else
             {
-                if (setup.InterfaceMocker == null)
+                if (setupItem.InterfaceMocker == null)
                 {
                     string message = string.Format("ObjectFiller Interface mocker missing and type [{0}] not registered", interfaceType.Name);
                     Debug.WriteLine("ObjectFiller: " + message);
                     throw new InvalidOperationException(message);
                 }
 
-                MethodInfo method = setup.InterfaceMocker.GetType().GetMethod("Create");
+                MethodInfo method = setupItem.InterfaceMocker.GetType().GetMethod("Create");
                 MethodInfo genericMethod = method.MakeGenericMethod(new[] { interfaceType });
-                result = genericMethod.Invoke(setup.InterfaceMocker, null);
+                result = genericMethod.Invoke(setupItem.InterfaceMocker, null);
             }
             FillInternal(result);
             return result;
         }
 
-        private object GetRandomValue(Type propertyType, ObjectFillerSetup setup)
+        private object GetRandomValue(Type propertyType, FillerSetupItem setupItem)
         {
-            if (setup.TypeToRandomFunc.ContainsKey(propertyType))
+            if (setupItem.TypeToRandomFunc.ContainsKey(propertyType))
             {
-                return setup.TypeToRandomFunc[propertyType]();
+                return setupItem.TypeToRandomFunc[propertyType]();
             }
 
-            if (setup.IgnoreAllUnknownTypes)
+            if (setupItem.IgnoreAllUnknownTypes)
             {
                 if (propertyType.IsValueType)
                 {
@@ -438,19 +425,19 @@ namespace Tynamix.ObjectFiller
             throw new TypeInitializationException(propertyType.FullName, new Exception(message));
         }
 
-        private static bool TypeIsValidForObjectFiller(Type type, ObjectFillerSetup currentSetup)
+        private static bool TypeIsValidForObjectFiller(Type type, FillerSetupItem currentSetupItem)
         {
-            return HasTypeARandomFunc(type, currentSetup)
-                   || (TypeIsList(type) && ListParamTypeIsValid(type, currentSetup))
-                   || (TypeIsDictionary(type) && DictionaryParamTypesAreValid(type, currentSetup))
+            return HasTypeARandomFunc(type, currentSetupItem)
+                   || (TypeIsList(type) && ListParamTypeIsValid(type, currentSetupItem))
+                   || (TypeIsDictionary(type) && DictionaryParamTypesAreValid(type, currentSetupItem))
                    || TypeIsPoco(type)
                    || (type.IsInterface
-                        && currentSetup.InterfaceToImplementation.ContainsKey(type)
-                        || currentSetup.InterfaceMocker != null);
+                        && currentSetupItem.InterfaceToImplementation.ContainsKey(type)
+                        || currentSetupItem.InterfaceMocker != null);
 
         }
 
-        private static bool DictionaryParamTypesAreValid(Type type, ObjectFillerSetup currentSetup)
+        private static bool DictionaryParamTypesAreValid(Type type, FillerSetupItem currentSetupItem)
         {
             if (!TypeIsDictionary(type))
             {
@@ -460,11 +447,11 @@ namespace Tynamix.ObjectFiller
             Type keyType = type.GetGenericArguments()[0];
             Type valueType = type.GetGenericArguments()[1];
 
-            return TypeIsValidForObjectFiller(keyType, currentSetup) &&
-                   TypeIsValidForObjectFiller(valueType, currentSetup);
+            return TypeIsValidForObjectFiller(keyType, currentSetupItem) &&
+                   TypeIsValidForObjectFiller(valueType, currentSetupItem);
         }
 
-        private static bool ListParamTypeIsValid(Type type, ObjectFillerSetup setup)
+        private static bool ListParamTypeIsValid(Type type, FillerSetupItem setupItem)
         {
             if (!TypeIsList(type))
             {
@@ -472,7 +459,7 @@ namespace Tynamix.ObjectFiller
             }
             Type genType = type.GetGenericArguments()[0];
 
-            return TypeIsValidForObjectFiller(genType, setup);
+            return TypeIsValidForObjectFiller(genType, setupItem);
         }
 
         private static bool TypeIsPoco(Type type)

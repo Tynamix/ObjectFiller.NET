@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Plugins\String\Lipsum.cs" />
     <Compile Include="HashStack.cs" />
+    <Compile Include="Setup\FillerSetup.cs" />
     <Compile Include="Setup\FluentFillerApi.cs" />
     <Compile Include="Setup\FluentPropertyApi.cs" />
     <Compile Include="Setup\FluentTypeApi.cs" />
@@ -62,7 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Setup\ObjectFillerSetup.cs" />
+    <Compile Include="Setup\FillerSetupItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -20,6 +20,11 @@ namespace Tynamix.ObjectFiller
             _setupManager = setupManager;
         }
 
+        public FillerSetup Result
+        {
+            get { return _setupManager.FillerSetup; }
+        }
+
         /// <summary>
         /// Start to configure a type for objectfiller. The follow up methods will be found in the <see cref="FluentTypeApi{TTargetObject,TTargetType}"/>
         /// </summary>
@@ -85,7 +90,7 @@ namespace Tynamix.ObjectFiller
             _setupManager.GetFor<TTargetObject>().IgnoreAllUnknownTypes = true;
 
             return this;
-        } 
+        }
 
         /// <summary>
         /// Setup the minimum and maximum item count for lists. The ObjectFiller will not generate more or less listitems then this limits.
@@ -134,11 +139,11 @@ namespace Tynamix.ObjectFiller
         {
             if (_setupManager.GetFor<TTargetObject>().InterfaceMocker != null)
             {
-	            const string message = "You can not set a interface mocker more than once!";
-				Debug.WriteLine("ObjectFiller: " + message);
-				throw new ArgumentException(message);
+                const string message = "You can not set a interface mocker more than once!";
+                Debug.WriteLine("ObjectFiller: " + message);
+                throw new ArgumentException(message);
             }
-	        _setupManager.GetFor<TTargetObject>().InterfaceMocker = mocker;
+            _setupManager.GetFor<TTargetObject>().InterfaceMocker = mocker;
             return this;
         }
 
