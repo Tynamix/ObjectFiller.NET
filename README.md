@@ -14,12 +14,14 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
  - [Examples](#examples)
    - [Let's start easy](#lets-start-easy)
    - [Let's use the fluent setup API](#lets-use-the-fluent-setup-api)
+   - [Export ObjectFiller Settings](#export-objectfiller-settings)
    - [Ignore Properties](#ignore-properties)
    - [Setup Subtypes](#setup-subtypes)
    - [Fill objects with the IEnumerable interface](#fill-objects-with-the-ienumerable-interface)
    - [Fill objects with constructor arguments](#fill-objects-with-constructor-arguments)
    - [Fill Interface-Properties](#fill-interface-properties)
    - [Fill Lists and Dictionaries](#fill-lists-and-dictionaries)
+   - [Detect Circular Dependencies](#detect-circular-dependencies
    - [Mix all up](#mix-all-up)
  - [Available Plugins](#available-plugins)
    - [IntRangePlugin](#rangeintegerplugin)
@@ -27,7 +29,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [RealNamePlugin](#realnameplugin)
    - [RandomListItem Plugin](#randomlistitem---plugin)
    - [PatternGenerator Plugin](#patterngenerator-plugin)
-   - [Lorem Ipsum String Plugin](#lorem-ipsum-string-plugin)
+   - [Lipsum String Plugin](#lipsum-string-plugin)
    - [Sequence Generator Plugin](#sequencegenerator-plugins)
  - [Write your own plugin](#write-your-own-plugin)
  - [Thank you](#thank-you-for-using-objectfillernet)
@@ -161,6 +163,36 @@ In this example we say to the ObjectFiller: Hey ObjectFiller, whenever there wil
 Here we say: Ok ObjectFiller, fill the property **```Name```** of a **```Person```** with the value "John" and fill the property **```LastName```** with some random real lastname. The **```.OnProperty```** method works very similar to the **```OnType<T>()```** method! With **```.Use(new RealNames(false, true));```** we use a **```RealNamePlugin```**.
 The **```RealNamePlugin```** is a plugin which comes with the ObjectFiller assembly along.
 Its also really easy to write a plugin by yourself. I will show you that later.
+
+###Export ObjectFiller Settings
+
+```csharp
+    public class HelloFiller
+    {
+        private FillerSetup _fillerSetup;
+        public HelloFiller()
+        {
+            Filler<Person> pFiller = new Filler<Person>();
+
+            _fillerSetup = pFiller.Setup()
+                  .OnProperty(x => x.LastName).Use(new RealNames(RealNameStyle.LastNameOnly))
+                  .OnProperty(x => x.Name).Use(new RealNames(RealNameStyle.FirstNameOnly))
+                  .OnType<int>().Use(new IntRange(18, 75))
+                  .Result;
+
+
+        }
+        public void FillPerson()
+        {
+            Filler<Person> pFiller = new Filler<Person>();
+            pFiller.Setup(_fillerSetup);
+
+            Person filledPerson = pFiller.Create();
+        }
+    }
+```
+Here we can see that i created the filler setup in the constructor and save the ```.Result``` of the filler setup to a private field. In the method ```FillPerson()``` we call the ```.Setup(_fillerSetup)``` with the setup of this private field! Thats good if you want to reuse your setup!
+
 
 ###Ignore Properties
 
@@ -634,9 +666,9 @@ The pattern generator can be extended, to allow combining built-in expressions a
     }
 ```
 
-###Lorem Ipsum String Plugin
+###Lipsum String Plugin
 
-The "Lorem Ipsum" plugin generates some random text which contains the famous "Lorem Ipsum" text. Read more about the Lorem Ipsum [here](http://en.wikipedia.org/wiki/Lorem_ipsum)
+The "Lorem Ipsum" plugin generates some random text which contains the famous "Lorem Ipsum" text. Read more about the Lorem Ipsum [here](http://en.wikipedia.org/wiki/Lorem_ipsum). With the Lipsum plugin it is also possible to generate some other random text in english (Child Harold), german (In der Fremde) and french (Le Masque)
 
 ```csharp
     public class Person
@@ -653,13 +685,14 @@ The "Lorem Ipsum" plugin generates some random text which contains the famous "L
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
-                .OnType<string>().Use(new LoremIpsum(500));
-
+                .OnProperty(x => x.LastName).Use(new Lipsum(LipsumFlavor.LoremIpsum, 3, 5, minWords: 100))
+                .OnProperty(x => x.Name).Use(new Lipsum(LipsumFlavor.InDerFremde));
             Person filledPerson = pFiller.Create();
         }
     }
 ```
-This example generates a Lorem Ipsum text with 500 words for all ```string``` properties of the person.
+This example generates for the ```Lastname``` a Lorem Ipsum text with 3 paragraphs, min 5 sentences and min 100 words.
+On property ```Name``` it generates a text on german.
 
 ###SequenceGenerator Plugins
 
