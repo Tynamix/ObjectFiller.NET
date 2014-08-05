@@ -19,7 +19,7 @@ namespace ObjectFiller.Test
 
             Assert.IsNotNull(sl);
             Assert.IsNotNull(sl.IntegerList);
-            Assert.IsTrue(sl.IntegerList.All(x => x <= 100));
+            Assert.IsTrue(sl.IntegerList.All(x => x < 100));
             Assert.IsFalse(sl.IntegerList.All(x => x == sl.IntegerList[0]));
         }
 

@@ -242,20 +242,20 @@ namespace Tynamix.ObjectFiller
 
             if (TypeIsDictionary(type))
             {
-                IDictionary dictionary = GetFilledDictionary(type, currentSetupItem);
+                IDictionary dictionary = GetFilledDictionary(type, currentSetupItem, typeTracker);
 
                 return dictionary;
             }
 
             if (TypeIsList(type))
             {
-                IList list = GetFilledList(type, currentSetupItem);
+                IList list = GetFilledList(type, currentSetupItem, typeTracker);
                 return list;
             }
 
             if (type.IsInterface)
             {
-                return GetInterfaceInstance(type, currentSetupItem);
+                return GetInterfaceInstance(type, currentSetupItem, typeTracker);
             }
 
             if (TypeIsPoco(type))
@@ -317,7 +317,7 @@ namespace Tynamix.ObjectFiller
             return result;
         }
 
-        private IDictionary GetFilledDictionary(Type propertyType, FillerSetupItem currentSetupItem)
+        private IDictionary GetFilledDictionary(Type propertyType, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
             IDictionary dictionary = (IDictionary)Activator.CreateInstance(propertyType);
             Type keyType = propertyType.GetGenericArguments()[0];
@@ -327,7 +327,7 @@ namespace Tynamix.ObjectFiller
                 currentSetupItem.DictionaryKeyMaxCount);
             for (int i = 0; i < maxDictionaryItems; i++)
             {
-                object keyObject = GetFilledObject(keyType, currentSetupItem);
+                object keyObject = GetFilledObject(keyType, currentSetupItem, typeTracker);
 
                 if (dictionary.Contains(keyObject))
                 {
@@ -336,7 +336,7 @@ namespace Tynamix.ObjectFiller
                     throw new ArgumentException(message);
                 }
 
-                object valueObject = GetFilledObject(valueType, currentSetupItem);
+                object valueObject = GetFilledObject(valueType, currentSetupItem, typeTracker);
                 dictionary.Add(keyObject, valueObject);
             }
             return dictionary;
@@ -348,7 +348,7 @@ namespace Tynamix.ObjectFiller
         }
 
 
-        private IList GetFilledList(Type propertyType, FillerSetupItem currentSetupItem)
+        private IList GetFilledList(Type propertyType, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
             Type genType = propertyType.GetGenericArguments()[0];
 
@@ -374,13 +374,13 @@ namespace Tynamix.ObjectFiller
             int maxListItems = Random.Next(currentSetupItem.ListMinCount, currentSetupItem.ListMaxCount);
             for (int i = 0; i < maxListItems; i++)
             {
-                object listObject = GetFilledObject(genType, currentSetupItem);
+                object listObject = GetFilledObject(genType, currentSetupItem, typeTracker);
                 list.Add(listObject);
             }
             return list;
         }
 
-        private object GetInterfaceInstance(Type interfaceType, FillerSetupItem setupItem)
+        private object GetInterfaceInstance(Type interfaceType, FillerSetupItem setupItem, HashStack<Type> typeTracker)
         {
             object result;
             if (setupItem.TypeToRandomFunc.ContainsKey(interfaceType))
@@ -405,7 +405,7 @@ namespace Tynamix.ObjectFiller
                 MethodInfo genericMethod = method.MakeGenericMethod(new[] { interfaceType });
                 result = genericMethod.Invoke(setupItem.InterfaceMocker, null);
             }
-            FillInternal(result);
+            FillInternal(result, typeTracker);
             return result;
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tynamix.ObjectFiller;
 
@@ -41,6 +42,21 @@ namespace ObjectFiller.Test
         {
             public TestEmptyNode Node1 { get; set; }
             public TestEmptyNode Node2 { get; set; }
+        }
+
+        public class Children
+        {
+            public Parent Parent { get; set; }
+        }
+
+        public class Parent
+        {
+            public List<Children> Childrens { get; set; }
+        }
+
+        public class ParentDictionary
+        {
+            public Dictionary<string, Children> Childrens { get; set; }
         }
 
         // ReSharper restore ClassNeverInstantiated.Local
@@ -154,6 +170,22 @@ namespace ObjectFiller.Test
             var r = filler.Create();
 
             Assert.IsNull(r.Self.Self);
+        }
+
+        [TestMethod]
+        public void RecursiveFill_ParentList_Succeeds()
+        {
+            var filler = new Filler<Parent>();
+            var r = filler.Create();
+        }
+
+        [TestMethod]
+        public void RecursiveFill_ParentDictionary_Succeeds()
+        {
+            var filler = new Filler<ParentDictionary>();
+            var r = filler.Create();
+
+
         }
     }
 }
