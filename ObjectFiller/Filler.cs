@@ -290,10 +290,15 @@ namespace Tynamix.ObjectFiller
             {
                 if (typeTracker.Contains(type))
                 {
-                    throw new InvalidOperationException(
-                        string.Format(
-                            "The type {0} was already encountered before, which probably means you have a circular reference in your model. Either ignore the properties which cause this or specify explicit creation rules for them which do not rely on types.",
-                            type.Name));
+                    if (currentSetupItem.ThrowExceptionOnCircularReference)
+                    {
+                        throw new InvalidOperationException(
+                                string.Format(
+                                    "The type {0} was already encountered before, which probably means you have a circular reference in your model. Either ignore the properties which cause this or specify explicit creation rules for them which do not rely on types.",
+                                    type.Name));
+                    }
+
+                    return GetDefaultValueOfType(type);
                 }
 
                 typeTracker.Push(type);
@@ -413,16 +418,21 @@ namespace Tynamix.ObjectFiller
 
             if (setupItem.IgnoreAllUnknownTypes)
             {
-                if (propertyType.IsValueType)
-                {
-                    return Activator.CreateInstance(propertyType);
-                }
-                return null;
+                return GetDefaultValueOfType(propertyType);
             }
 
             string message = "The type [" + propertyType.Name + "] was not registered in the randomizer.";
             Debug.WriteLine("ObjectFiller: " + message);
             throw new TypeInitializationException(propertyType.FullName, new Exception(message));
+        }
+
+        private static object GetDefaultValueOfType(Type propertyType)
+        {
+            if (propertyType.IsValueType)
+            {
+                return Activator.CreateInstance(propertyType);
+            }
+            return null;
         }
 
         private static bool TypeIsValidForObjectFiller(Type type, FillerSetupItem currentSetupItem)

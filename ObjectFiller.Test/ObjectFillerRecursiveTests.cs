@@ -50,6 +50,7 @@ namespace ObjectFiller.Test
         public void RecursiveFill_RecursiveType_ThrowsException()
         {
             var filler = new Filler<TestParent>();
+            filler.Setup().OnCircularReference().ThrowException();
             filler.Create();
         }
 
@@ -78,6 +79,7 @@ namespace ObjectFiller.Test
         public void RecursiveFill_RecursiveType_Parent_First_Fails()
         {
             var filler = new Filler<TestParent>();
+            filler.Setup().OnCircularReference().ThrowException();
             filler.Create();
         }
 
@@ -86,6 +88,7 @@ namespace ObjectFiller.Test
         public void RecursiveFill_RecursiveType_Child_First_Fails()
         {
             var filler = new Filler<TestChild>();
+            filler.Setup().OnCircularReference().ThrowException();
             filler.Create();
         }
 
@@ -94,7 +97,9 @@ namespace ObjectFiller.Test
         public void RecursiveFill_DeepRecursiveType_Fails()
         {
             var filler = new Filler<TestGrandParent>();
+            filler.Setup().OnCircularReference().ThrowException();
             filler.Create();
+
         }
 
         [TestMethod]
@@ -102,6 +107,7 @@ namespace ObjectFiller.Test
         public void RecursiveFill_SelfReferencing_Fails()
         {
             var filler = new Filler<TestSelf>();
+            filler.Setup().OnCircularReference().ThrowException();
             filler.Create();
         }
 
@@ -114,6 +120,40 @@ namespace ObjectFiller.Test
             var result = filler.Create();
 
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void RecursiveFill_RecursiveType_Parent_First_Succeeds()
+        {
+            var filler = new Filler<TestParent>();
+            var r = filler.Create();
+            Assert.IsNull(r.Child.Parent.Child);
+        }
+
+        [TestMethod]
+        public void RecursiveFill_RecursiveType_Child_First_Succeeds()
+        {
+            var filler = new Filler<TestChild>();
+            var r = filler.Create();
+            Assert.IsNull(r.Parent.Child.Parent);
+
+        }
+
+        [TestMethod]
+        public void RecursiveFill_DeepRecursiveType_Succeeds()
+        {
+            var filler = new Filler<TestGrandParent>();
+            var r = filler.Create();
+            Assert.IsNull(r.SubObject.Child.Parent);
+        }
+
+        [TestMethod]
+        public void RecursiveFill_SelfReferencing_Succeeds()
+        {
+            var filler = new Filler<TestSelf>();
+            var r = filler.Create();
+
+            Assert.IsNull(r.Self.Self);
         }
     }
 }

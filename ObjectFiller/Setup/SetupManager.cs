@@ -7,8 +7,7 @@ namespace Tynamix.ObjectFiller
     /// Responsible to get the right <see cref="FillerSetupItem"/> for a given type.
     /// </summary>
     internal class SetupManager
-    {
-       
+    {       
         internal FillerSetup FillerSetup { get;  set; }
 
         /// <summary>

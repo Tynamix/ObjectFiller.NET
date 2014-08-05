@@ -105,5 +105,10 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         internal bool IgnoreAllUnknownTypes { get; set; }
 
+        /// <summary>
+        /// True if an exception will be thrown if an circular reference occured
+        /// </summary>
+        public bool ThrowExceptionOnCircularReference { get; set; }
+
     }
 }
