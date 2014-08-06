@@ -177,6 +177,8 @@ namespace ObjectFiller.Test
         {
             var filler = new Filler<Parent>();
             var r = filler.Create();
+
+            Assert.IsNull(r.Childrens[0].Parent.Childrens);
         }
 
         [TestMethod]
@@ -184,8 +186,8 @@ namespace ObjectFiller.Test
         {
             var filler = new Filler<ParentDictionary>();
             var r = filler.Create();
-
-
         }
+
+
     }
 }

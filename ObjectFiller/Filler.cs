@@ -284,25 +284,34 @@ namespace Tynamix.ObjectFiller
             return 0;
         }
 
-        private object GetFilledPoco(Type type, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
+        private bool CheckForCircularReference(Type targetType, HashStack<Type> typeTracker, FillerSetupItem currentSetupItem)
         {
             if (typeTracker != null)
             {
-                if (typeTracker.Contains(type))
+                if (typeTracker.Contains(targetType))
                 {
                     if (currentSetupItem.ThrowExceptionOnCircularReference)
                     {
                         throw new InvalidOperationException(
                                 string.Format(
                                     "The type {0} was already encountered before, which probably means you have a circular reference in your model. Either ignore the properties which cause this or specify explicit creation rules for them which do not rely on types.",
-                                    type.Name));
+                                    targetType.Name));
                     }
 
-                    return GetDefaultValueOfType(type);
+                    return true;
                 }
-
-                typeTracker.Push(type);
             }
+
+            return false;
+        }
+
+        private object GetFilledPoco(Type type, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
+        {
+            if (CheckForCircularReference(type, typeTracker, currentSetupItem))
+            {
+                return GetDefaultValueOfType(type);
+            }
+            typeTracker.Push(type);
 
             object result = CreateInstanceOfType(type, currentSetupItem);
 
@@ -351,6 +360,11 @@ namespace Tynamix.ObjectFiller
         private IList GetFilledList(Type propertyType, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
             Type genType = propertyType.GetGenericArguments()[0];
+
+            if (CheckForCircularReference(genType, typeTracker, currentSetupItem))
+            {
+                return null;
+            }
 
             IList list;
             if (!propertyType.IsInterface && propertyType.GetInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
