@@ -166,29 +166,37 @@ Its also really easy to write a plugin by yourself. I will show you that later.
 ###Export ObjectFiller Settings
 
 ```csharp
-    public class HelloFiller
-    {
-        private FillerSetup _fillerSetup;
-        public HelloFiller()
+        public class Person
         {
-            Filler<Person> pFiller = new Filler<Person>();
-
-            _fillerSetup = pFiller.Setup()
-                  .OnProperty(x => x.LastName).Use(new RealNames(RealNameStyle.LastNameOnly))
-                  .OnProperty(x => x.Name).Use(new RealNames(RealNameStyle.FirstNameOnly))
-                  .OnType<int>().Use(new IntRange(18, 75))
-                  .Result;
-
-
+            public string Name { get; set; }
+            public string LastName { get; set; }
+            public int Age { get; set; }
+            public DateTime Birthday { get; set; }
         }
-        public void FillPerson()
+
+        public class HelloFiller
         {
-            Filler<Person> pFiller = new Filler<Person>();
-            pFiller.Setup(_fillerSetup);
+            private FillerSetup _fillerSetup;
+            public HelloFiller()
+            {
+                Filler<Person> pFiller = new Filler<Person>();
 
-            Person filledPerson = pFiller.Create();
+                _fillerSetup = pFiller.Setup()
+                      .OnProperty(x => x.LastName).Use(new RealNames(RealNameStyle.LastNameOnly))
+                      .OnProperty(x => x.Name).Use(new RealNames(RealNameStyle.FirstNameOnly))
+                      .OnType<int>().Use(new IntRange(18, 75))
+                      .Result;
+
+
+            }
+            public void FillPerson()
+            {
+                Filler<Person> pFiller = new Filler<Person>();
+                pFiller.Setup(_fillerSetup);
+
+                Person filledPerson = pFiller.Create();
+            }
         }
-    }
 ```
 Here we can see that i created the filler setup in the constructor and save the ```.Result``` of the filler setup to a private field. In the method ```FillPerson()``` we call the ```.Setup(_fillerSetup)``` with the setup of this private field! Thats good if you want to reuse your setup!
 
