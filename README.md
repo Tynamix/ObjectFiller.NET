@@ -41,7 +41,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
 
 ##For what do you need it?
 
-You can use the **.NET ObjectFiller** for generating test data for your **UnitTests** or for your **DesignViewModels** in WPF or for whatever you need some random testdata.
+You can use the **.NET ObjectFiller** for generating test data for **Prototyping**, for your **UnitTests**, for generating data of your **Mocks*** or for your **DesignViewModels** in WPF or wherever you need some random testdata.
 I will show you some examples how you can work with it.
 
 **The ObjectFiller.NET ...:**
