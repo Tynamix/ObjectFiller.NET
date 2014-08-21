@@ -253,9 +253,9 @@ namespace Tynamix.ObjectFiller
                 return list;
             }
 
-            if (type.IsInterface)
+            if (type.IsInterface || type.IsAbstract)
             {
-                return GetInterfaceInstance(type, currentSetupItem, typeTracker);
+                return CreateInstanceOfInterfaceOrAbstractClass(type, currentSetupItem, typeTracker);
             }
 
             if (TypeIsPoco(type))
@@ -394,7 +394,7 @@ namespace Tynamix.ObjectFiller
             return list;
         }
 
-        private object GetInterfaceInstance(Type interfaceType, FillerSetupItem setupItem, HashStack<Type> typeTracker)
+        private object CreateInstanceOfInterfaceOrAbstractClass(Type interfaceType, FillerSetupItem setupItem, HashStack<Type> typeTracker)
         {
             object result;
             if (setupItem.TypeToRandomFunc.ContainsKey(interfaceType))
