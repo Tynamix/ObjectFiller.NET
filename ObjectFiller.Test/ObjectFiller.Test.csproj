@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AddressFillingTest.cs" />
     <Compile Include="CreateInstanceTest.cs" />
+    <Compile Include="DefaultDatatypeMappingsTest.cs" />
     <Compile Include="EnumTest.cs" />
     <Compile Include="HashStackTests.cs" />
     <Compile Include="LibraryFillingTest.cs" />
