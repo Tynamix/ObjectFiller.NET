@@ -55,7 +55,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         public T Create()
         {
-            T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>());
+            T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>(), new HashStack<Type>());
 
             Fill(objectToFill);
 
@@ -68,9 +68,10 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         public IEnumerable<T> Create(int count)
         {
+            var typeStack = new HashStack<Type>();
             for (int n = 0; n < count; n++)
             {
-                T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>());
+                T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>(), typeStack);
                 Fill(objectToFill);
                 yield return objectToFill;
             }
@@ -87,7 +88,7 @@ namespace Tynamix.ObjectFiller
         }
 
 
-        private object CreateInstanceOfType(Type type, FillerSetupItem currentSetupItem)
+        private object CreateInstanceOfType(Type type, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
             List<object> constructorArgs = new List<object>();
 
@@ -104,7 +105,7 @@ namespace Tynamix.ObjectFiller
                         {
                             foreach (Type paramType in paramTypes)
                             {
-                                constructorArgs.Add(GetFilledObject(paramType, currentSetupItem));
+                                constructorArgs.Add(GetFilledObject(paramType, currentSetupItem, typeTracker));
                             }
 
                             break;
@@ -313,7 +314,7 @@ namespace Tynamix.ObjectFiller
             }
             typeTracker.Push(type);
 
-            object result = CreateInstanceOfType(type, currentSetupItem);
+            object result = CreateInstanceOfType(type, currentSetupItem, typeTracker);
 
             FillInternal(result, typeTracker);
 
@@ -404,7 +405,7 @@ namespace Tynamix.ObjectFiller
             if (setupItem.InterfaceToImplementation.ContainsKey(interfaceType))
             {
                 Type implType = setupItem.InterfaceToImplementation[interfaceType];
-                result = CreateInstanceOfType(implType, setupItem);
+                result = CreateInstanceOfType(implType, setupItem, typeTracker);
             }
             else
             {
