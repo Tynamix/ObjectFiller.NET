@@ -50,6 +50,16 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// Defines which static value will be used for the given <see cref="TTargetType"/>
+        /// </summary>
+        /// <param name="valueToUse">Value which will be used</param>
+        /// <returns>Main FluentFiller API</returns>
+        public FluentFillerApi<TTargetObject> Use(TTargetType valueToUse)
+        {
+            return Use(() => valueToUse);
+        }
+
+        /// <summary>
         /// Defines which <see cref="Func{TResult}"/> will be used to generate a value for the given <see cref="TTargetType"/>
         /// </summary>
         /// <param name="randomizerFunc">Func which will be used to generate a value of the <see cref="TTargetType"/></param>
