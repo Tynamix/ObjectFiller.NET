@@ -5,7 +5,6 @@ using Tynamix.ObjectFiller;
 namespace ObjectFiller.Test
 {
     using System.Linq;
-    using System.Security.Cryptography.X509Certificates;
 
     [TestClass]
     public class AddressFillingTest
