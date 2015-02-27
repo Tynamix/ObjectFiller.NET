@@ -4,6 +4,9 @@ using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
+    using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
+
     [TestClass]
     public class AddressFillingTest
     {
@@ -95,6 +98,27 @@ namespace ObjectFiller.Test
             Assert.AreEqual("Germany", address.Country);
             Assert.AreEqual("0011100", address.PostalCode);
             Assert.AreEqual(10, address.HouseNumber);
+        }
+
+        [TestMethod]
+        public void RandomListPluginShallReturnDifferentValues()
+        {
+            Filler<Address> addressFiller = new Filler<Address>();
+
+            addressFiller.Setup().OnProperty(x => x.City).Use(new RandomListItem<string>("Test1", "Test2"));
+
+            var addresses = addressFiller.Create(1000);
+
+            Assert.IsTrue(addresses.Any(x => x.City == "Test2"));
+
+            addressFiller = new Filler<Address>();
+
+            addressFiller.Setup().OnProperty(x => x.City).Use(new RandomListItem<string>("Test1"));
+
+            addresses = addressFiller.Create(1000);
+
+            Assert.IsTrue(addresses.All(x => x.City == "Test1"));
+
         }
 
 
