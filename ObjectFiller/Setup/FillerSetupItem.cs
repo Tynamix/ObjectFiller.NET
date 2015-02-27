@@ -30,6 +30,7 @@ namespace Tynamix.ObjectFiller
             var dateTimeRandomizer = new DateTimeRange(new System.DateTime(1970, 1, 1));
             TypeToRandomFunc[typeof(string)] = mnemonic.GetValue;
             TypeToRandomFunc[typeof(bool)] = () => Random.Next(0, 2) == 1;
+            TypeToRandomFunc[typeof(bool?)] = () => new RandomListItem<bool?>(true, false, null).GetValue();
             TypeToRandomFunc[typeof(short)] = () => (short)Random.Next(-32767, 32767);
             TypeToRandomFunc[typeof(short?)] = () => (short)Random.Next(-32767, 32767);
             TypeToRandomFunc[typeof(int)] = () => Random.Next();
@@ -40,26 +41,26 @@ namespace Tynamix.ObjectFiller
             TypeToRandomFunc[typeof(float?)] = () => (float?)doublePlugin.GetValue();
             TypeToRandomFunc[typeof(double)] = () => doublePlugin.GetValue();
             TypeToRandomFunc[typeof(double?)] = () => doublePlugin.GetValue();
-			TypeToRandomFunc[typeof(decimal)] = () => (decimal)Random.Next();
-			TypeToRandomFunc[typeof(decimal?)] = () => (decimal)Random.Next();
+            TypeToRandomFunc[typeof(decimal)] = () => (decimal)Random.Next();
+            TypeToRandomFunc[typeof(decimal?)] = () => (decimal)Random.Next();
             TypeToRandomFunc[typeof(Guid)] = () => Guid.NewGuid();
             TypeToRandomFunc[typeof(Guid?)] = () => Guid.NewGuid();
             TypeToRandomFunc[typeof(System.DateTime)] = () => dateTimeRandomizer.GetValue();
             TypeToRandomFunc[typeof(System.DateTime?)] = () => dateTimeRandomizer.GetValue();
-			TypeToRandomFunc[typeof(byte)] = () => (byte)Random.Next();
-			TypeToRandomFunc[typeof(byte?)] = () => (byte?)Random.Next();
-			TypeToRandomFunc[typeof(char)] = () => (char)Random.Next();
-			TypeToRandomFunc[typeof(char?)] = () => (char)Random.Next();
-			TypeToRandomFunc[typeof(ushort)] = () => (ushort)Random.Next();
-			TypeToRandomFunc[typeof(ushort?)] = () => (ushort)Random.Next();
-			TypeToRandomFunc[typeof(uint)] = () => (uint)Random.Next();
-			TypeToRandomFunc[typeof(uint?)] = () => (uint)Random.Next();
-			TypeToRandomFunc[typeof(ulong)] = () => (ulong)Random.Next();
-			TypeToRandomFunc[typeof(ulong?)] = () => (ulong)Random.Next();
-			TypeToRandomFunc[typeof(IntPtr)] = () => default(IntPtr);
-			TypeToRandomFunc[typeof(IntPtr?)] = () => default(IntPtr);
-			TypeToRandomFunc[typeof(TimeSpan)] = () => new TimeSpan(Random.Next());
-			TypeToRandomFunc[typeof(TimeSpan?)] = () => new TimeSpan(Random.Next());
+            TypeToRandomFunc[typeof(byte)] = () => (byte)Random.Next();
+            TypeToRandomFunc[typeof(byte?)] = () => (byte?)Random.Next();
+            TypeToRandomFunc[typeof(char)] = () => (char)Random.Next();
+            TypeToRandomFunc[typeof(char?)] = () => (char)Random.Next();
+            TypeToRandomFunc[typeof(ushort)] = () => (ushort)Random.Next();
+            TypeToRandomFunc[typeof(ushort?)] = () => (ushort)Random.Next();
+            TypeToRandomFunc[typeof(uint)] = () => (uint)Random.Next();
+            TypeToRandomFunc[typeof(uint?)] = () => (uint)Random.Next();
+            TypeToRandomFunc[typeof(ulong)] = () => (ulong)Random.Next();
+            TypeToRandomFunc[typeof(ulong?)] = () => (ulong)Random.Next();
+            TypeToRandomFunc[typeof(IntPtr)] = () => default(IntPtr);
+            TypeToRandomFunc[typeof(IntPtr?)] = () => default(IntPtr);
+            TypeToRandomFunc[typeof(TimeSpan)] = () => new TimeSpan(Random.Next());
+            TypeToRandomFunc[typeof(TimeSpan?)] = () => new TimeSpan(Random.Next());
         }
 
         /// <summary>

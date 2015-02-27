@@ -29,7 +29,7 @@ namespace Tynamix.ObjectFiller
 
         public T GetValue()
         {
-            int rndmListIndex = Random.Next(0, _allAvailableValues.Length - 1);
+            int rndmListIndex = Random.Next(0, _allAvailableValues.Length);
             return _allAvailableValues[rndmListIndex];
         }
     }
