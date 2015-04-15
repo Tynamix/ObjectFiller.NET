@@ -36,6 +36,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Plugins\String\CityNames.cs" />
+    <Compile Include="Plugins\String\GermanStreetNames.cs" />
     <Compile Include="Plugins\String\Lipsum.cs" />
     <Compile Include="HashStack.cs" />
     <Compile Include="Setup\FillerSetup.cs" />

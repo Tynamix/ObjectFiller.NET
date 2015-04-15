@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressFillingTest.cs" />
+    <Compile Include="CityNamesPluginTest.cs" />
     <Compile Include="CreateInstanceTest.cs" />
     <Compile Include="DefaultDatatypeMappingsTest.cs" />
     <Compile Include="EnumTest.cs" />
+    <Compile Include="GermanStreetNamesPluginTest.cs" />
     <Compile Include="HashStackTests.cs" />
     <Compile Include="LibraryFillingTest.cs" />
     <Compile Include="ListFillingTest.cs" />
