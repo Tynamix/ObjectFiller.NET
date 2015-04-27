@@ -173,3 +173,6 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+ObjectFillerNET.v2.ncrunchsolution
+ObjectFiller/ObjectFiller.v2.ncrunchproject
+ObjectFiller.Test/ObjectFiller.Test.v2.ncrunchproject
