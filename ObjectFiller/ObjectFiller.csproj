@@ -41,6 +41,7 @@
     <Compile Include="Plugins\String\GermanStreetNames.cs" />
     <Compile Include="Plugins\String\Lipsum.cs" />
     <Compile Include="HashStack.cs" />
+    <Compile Include="Randomizer.cs" />
     <Compile Include="Setup\FillerSetup.cs" />
     <Compile Include="Setup\FluentCircularApi.cs" />
     <Compile Include="Setup\FluentFillerApi.cs" />
