@@ -1,22 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SetupManager.cs" company="Tynamix">
+//   © 2014 by Roman Köhler
+// </copyright>
+// <summary>
+//   Responsible to get the right <see cref="FillerSetupItem" /> for a given type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Tynamix.ObjectFiller
 {
+    using System;
+
     /// <summary>
     /// Responsible to get the right <see cref="FillerSetupItem"/> for a given type.
     /// </summary>
     internal class SetupManager
-    {       
-        internal FillerSetup FillerSetup { get;  set; }
-
+    {
         /// <summary>
-        /// static ctor
+        /// Initializes a new instance of the <see cref="SetupManager"/> class. 
         /// </summary>
         internal SetupManager()
         {
             FillerSetup = new FillerSetup();
         }
+
+        /// <summary>
+        /// Gets or sets the filler setup.
+        /// </summary>
+        internal FillerSetup FillerSetup { get; set; }
 
         /// <summary>
         /// Gets the <see cref="FillerSetupItem"/> for a given type
@@ -26,7 +37,7 @@ namespace Tynamix.ObjectFiller
         internal FillerSetupItem GetFor<TTargetObject>()
             where TTargetObject : class
         {
-            return GetFor(typeof(TTargetObject));
+            return this.GetFor(typeof(TTargetObject));
         }
 
         /// <summary>
