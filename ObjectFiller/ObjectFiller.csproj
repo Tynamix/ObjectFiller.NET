@@ -38,7 +38,7 @@
   <ItemGroup>
     <Compile Include="Plugins\String\CityNames.cs" />
     <Compile Include="Plugins\String\EmailAddresses.cs" />
-    <Compile Include="Plugins\String\GermanStreetNames.cs" />
+    <Compile Include="Plugins\String\StreetName.cs" />
     <Compile Include="Plugins\String\Lipsum.cs" />
     <Compile Include="HashStack.cs" />
     <Compile Include="Randomizer.cs" />

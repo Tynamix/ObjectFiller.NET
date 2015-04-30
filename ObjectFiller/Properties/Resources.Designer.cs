@@ -86,5 +86,50 @@ namespace Tynamix.ObjectFiller.Properties {
                 return ResourceManager.GetString("lastNames", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aaron Hill Road;Abbess Close;Abbeville Road;Abbey Avenue;Abbey Close;Abbey Crescent;Abbey Drive;Abbey Gardens;Abbey Grove;Abbey Lane;Abbey Mount;Abbey Park;Abbey Road;Abbey Street;Abbey Terrace;Abbey View;Abbey Wood Lane;Abbey Wood Road;Abbeyfield Close;Abbeyfield Road;Abbeyfields Close;Abbeyhill Road;Abbot Close;Abbots Close;Abbots Drive;Abbots Gardens;Abbots Green;Abbots Lane;Abbots Park;Abbot&apos;s Place;Abbots Road;Abbots Way;Abbotsbury Close;Abbotsbury Gardens;Abbotsbury Mews;Abbotsbury Road;Abbotsford Ave [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string londonStreetNames {
+            get {
+                return ResourceManager.GetString("londonStreetNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10-й микрорайон;10-й проезд Марьиной Рощи;10-я Парковая улица;10-я Радиальная улица;10-я улица Новые Сады;10-я улица Соколиной Горы;10-я улица Текстильщиков;10-я Чоботовская аллея;11-й автобусный парк - киностудия;11-й проезд Марьиной Рощи;11-й проспект Новогиреево;11-я Парковая улица;11-я Радиальная улица;11-я улица Новые Сады;11-я улица Текстильщиков;11-я Чоботовская аллея;12-й микрорайон;12-й микрорайон Куркина;12-й проезд Марьиной Рощи;12-я городская клиническая больница;12-я Новокузьминская улица;12-я  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string moscowStreetNames {
+            get {
+                return ResourceManager.GetString("moscowStreetNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 100th Avenue;100th Drive;100th Place;100th Road;100th Street;101st Avenue;101st Road;101st Street;102nd Avenue;102nd Road;102nd Street;103-24 Roosevelt Avenue;103rd Avenue;103rd Drive;103rd Road;103rd Street;104th Avenue;104th Road;104th Street;105th Avenue;105th Place;105th Street;106th Avenue;106th Road;106th Street;107th Avenue;107th Road;107th Street;108th Avenue;108th Drive;108th Road;108th Street;109th Avenue;109th Drive;109th Road;109th Street;10th Avenue;10th Road;10th Street;110th Avenue;110th Road [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string newYorkStreetNames {
+            get {
+                return ResourceManager.GetString("newYorkStreetNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1150 North;11th Street;12th Street;13th Street;14th Street;15th Street;16th Street;17th Street;19th Street;2nd Street;2nd West Street;3rd Street;3rd West Street;4th Street;8th Street;950th Road;9th Street;Abbott Lane;Aden Street;Adkins Street;Alésia - Général Leclerc;Alésia - Maine;Alexander Street;Allée de la Reine Marguerite;Allée de Longchamp;Allée des Eiders;Allée des Fortifications;Allée du Bord de l&apos;Eau;Allée du Château Ouvrier;Allée du Philosophe;Allée Irène Némirovsky;Allée Isadora Duncan;Allée Mari [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string parisStreetNames {
+            get {
+                return ResourceManager.GetString("parisStreetNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to あかしあ通り;アカシア通り (Akashia Dori);あきる野羽村線;アジア大学通り;あじさいレインボーライン;あたご一息坂;あたご切通し;あたご山通り (Atagoyama dori);あづま通り商店街;あやめ橋;あやめ橋通り;いずみ通り;いちょうホール通り (Icho Hall dori);いちょう並木通り (Ichonamiki Dori);いちょう通り;いちょう通り (icyho-dori);いろは坂通り;いろは通り;いろは通り商店街 (Iroha Market);うつり坂;エコプラザ多摩前;エビ通り;おいと坂;オルガン坂;お伊勢の森神明社前;お茶の水;かえで小路;かえで通り;かえで通り (Kaede dori);ガス橋;かたくりの湯入口;カタクリ橋;かっぱ橋道具街通り;カトレア通り (Cattleya Street);かむろ坂下;かむろ坂通り;かわばたコミュニティ通り;カンカン森通り;カントリー・ロード;キネマ通り;くすのき通り;クダッチ;クリーンセンター多摩川入口;グリーンタウン入口;けいさつ前通り;けやき並木;けやき並木北;けやき並木北 (Keyaki Namiki North);けやき台団 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string tokyoStreetNames {
+            get {
+                return ResourceManager.GetString("tokyoStreetNames", resourceCulture);
+            }
+        }
     }
 }

@@ -58,9 +58,17 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         public T Create()
         {
-            T objectToFill = (T)this.CreateInstanceOfType(typeof(T), this.setupManager.GetFor<T>(), new HashStack<Type>());
-
-            this.Fill(objectToFill);
+            T objectToFill;
+            var hashStack = new HashStack<Type>();
+            if (!TypeIsClrType(typeof(T)))
+            {
+                objectToFill = (T)this.CreateInstanceOfType(typeof(T), this.setupManager.GetFor<T>(), hashStack);
+                this.Fill(objectToFill);
+            }
+            else
+            {
+                objectToFill = (T)this.CreateAndFillObject(typeof(T), this.setupManager.GetFor<T>(), hashStack);
+            }
 
             return objectToFill;
         }
@@ -77,13 +85,26 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         public IEnumerable<T> Create(int count)
         {
+            IList<T> items = new List<T>();
             var typeStack = new HashStack<Type>();
+            Type targetType = typeof(T);
             for (int n = 0; n < count; n++)
             {
-                T objectToFill = (T)this.CreateInstanceOfType(typeof(T), this.setupManager.GetFor<T>(), typeStack);
-                this.Fill(objectToFill);
-                yield return objectToFill;
+                T objectToFill;
+                if (!TypeIsClrType(targetType))
+                {
+                    objectToFill = (T)this.CreateInstanceOfType(targetType, this.setupManager.GetFor<T>(), typeStack);
+                    this.Fill(objectToFill);
+                }
+                else
+                {
+                    objectToFill = (T)this.CreateAndFillObject(typeof(T), this.setupManager.GetFor<T>(), typeStack);
+                }
+
+                items.Add(objectToFill);
             }
+
+            return items;
         }
 
         /// <summary>
@@ -265,6 +286,17 @@ namespace Tynamix.ObjectFiller
             return !type.IsValueType && !type.IsArray && type.IsClass && type.GetProperties().Length > 0
                    && (type.Namespace == null
                        || (!type.Namespace.StartsWith("System") && !type.Namespace.StartsWith("Microsoft")));
+        }
+
+        /// <summary>
+        /// Check if the given type is a type from the common language library
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        /// <returns>True if the given type is a type from the common language library</returns>
+        private static bool TypeIsClrType(Type type)
+        {
+            return (type.Namespace != null && (type.Namespace.StartsWith("System") || type.Namespace.StartsWith("Microsoft")))
+                    || type.Module.ScopeName == "CommonLanguageRuntimeLibrary";
         }
 
         /// <summary>
