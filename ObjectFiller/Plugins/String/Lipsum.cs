@@ -30,15 +30,18 @@ namespace Tynamix.ObjectFiller
     /// </summary>
     public class Lipsum : IRandomizerPlugin<string>
     {
-        private readonly LipsumFlavor _flavor;
-        private readonly int _paragraphs;
-        private readonly int _minSentences;
-        private readonly int _maxSentences;
-        private readonly int _minWords;
-        private readonly int _maxWords;
-        private readonly int _seed;
+        private readonly LipsumFlavor flavor;
+        private readonly int paragraphs;
+        private readonly int minSentences;
+        private readonly int maxSentences;
+        private readonly int minWords;
+        private readonly int maxWords;
+        private readonly int seed;
 
-        private static readonly string[] _loremIpsum =
+        /// <summary>
+        /// Words for the standard lorem ipsum text.
+        /// </summary>
+        private static readonly string[] LoremIpsum =
         {
             "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod",
             "tempor", "incididunt", "ut", "labore", "et", "dolore", "magna", "aliqua", "enim", "ad", "minim", "veniam",
@@ -48,7 +51,10 @@ namespace Tynamix.ObjectFiller
             "culpa", "qui", "officia", "deserunt", "mollit", "anim", "id", "est", "laborum",
         };
 
-        private static readonly string[] _childeHarold =
+        /// <summary>
+        /// Words for the childe harold text
+        /// </summary>
+        private static readonly string[] ChildeHarold =
         {
             "oh", "thou", "in", "hellas", "deemed", "of", "heavenly", "birth", "muse", "formed", "or", "fabled", "at",
             "the", "minstrels", "will", "since", "shamed", "full", "oft", "by", "later", "lyres", "on", "earth", "mine",
@@ -70,7 +76,10 @@ namespace Tynamix.ObjectFiller
             "more", "lone", "eremites", "cell",
         };
 
-        private static readonly string[] _inderFremde =
+        /// <summary>
+        /// Words for the text: In der Fremde.
+        /// </summary>
+        private static readonly string[] InderFremde =
         {
             "es", "treibt", "dich", "fort", "von", "ort", "zu", "du", "weißt", "nicht", "mal", "warum", "im", "winde",
             "klingt", "ein", "sanftes", "wort", "schaust", "verwundert", "um", "die", "liebe", "dahinten", "blieb",
@@ -88,7 +97,10 @@ namespace Tynamix.ObjectFiller
             "schnelle", "gesellschaft", "gehn", "weh",
         };
 
-        private static readonly string[] _leMasque =
+        /// <summary>
+        /// Words for the text: Le Masque.
+        /// </summary>
+        private static readonly string[] LeMasque =
         {
             "contemplons", "ce", "trésor", "de", "grâces", "florentines", "dans", "l'ondulation", "corps", "musculeux",
             "l'elégance", "et", "la", "force", "abondent", "soeurs", "divines", "cette", "femme", "morceau", "vraiment",
@@ -110,50 +122,86 @@ namespace Tynamix.ObjectFiller
             "faudra", "vivre", "encore", "apres-demain", "toujours", "comme",
         };
 
-        private readonly Dictionary<LipsumFlavor, string[]> _map;
+        /// <summary>
+        /// The map between <see cref="LipsumFlavor"/> and the words for this flavor
+        /// </summary>
+        private readonly Dictionary<LipsumFlavor, string[]> map;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lipsum"/> class.
+        /// </summary>
+        /// <param name="flavor">
+        /// The flavor for the generated text
+        /// </param>
+        /// <param name="paragraphs">
+        /// The count of generated paragraphs.
+        /// </param>
+        /// <param name="minSentences">
+        /// The min sentences of the generated text
+        /// </param>
+        /// <param name="maxSentences">
+        /// The max sentences of the generated text
+        /// </param>
+        /// <param name="minWords">
+        /// The min words of the generated text.
+        /// </param>
+        /// <param name="maxWords">
+        /// The max words of the generated text.
+        /// </param>
+        /// <param name="seed">
+        /// The seed for the random to get the same result with the same seed.
+        /// </param>
         public Lipsum(LipsumFlavor flavor, int paragraphs = 3, int minSentences = 3, int maxSentences = 8,
             int minWords = 10, int maxWords = 50, int? seed = null)
         {
-            _flavor = flavor;
-            _paragraphs = paragraphs;
-            _minSentences = minSentences; 
-            _maxSentences = maxSentences < minSentences ? minSentences : maxSentences;
-            _minWords = minWords;
-            _maxWords = maxWords < minWords ? minWords : maxWords;
+            this.flavor = flavor;
+            this.paragraphs = paragraphs;
+            this.minSentences = minSentences;
+            this.maxSentences = maxSentences < minSentences ? minSentences : maxSentences;
+            this.minWords = minWords;
+            this.maxWords = maxWords < minWords ? minWords : maxWords;
 
-            _map = new Dictionary<LipsumFlavor, string[]>()
-            {
-                {LipsumFlavor.LoremIpsum, _loremIpsum},
-                {LipsumFlavor.ChildHarold, _childeHarold},
-                {LipsumFlavor.InDerFremde, _inderFremde},
-                {LipsumFlavor.LeMasque, _leMasque}
+            this.map = new Dictionary<LipsumFlavor, string[]>()
+                           {
+                               { LipsumFlavor.LoremIpsum, LoremIpsum },
+                               { LipsumFlavor.ChildHarold, ChildeHarold },
+                               { LipsumFlavor.InDerFremde, InderFremde },
+                               { LipsumFlavor.LeMasque, LeMasque }
             };
 
-            _seed = seed.HasValue ? seed.Value : Environment.TickCount;
+            this.seed = seed.HasValue ? seed.Value : Environment.TickCount;
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
         public string GetValue()
         {
-            System.Random rnd = new System.Random(_seed);
-            var array = _map[_flavor];
+            System.Random rnd = new System.Random(this.seed);
+            var array = this.map[this.flavor];
 
             var result = new StringBuilder();
 
-            for (var i = 0; i < _paragraphs; i++)
+            for (var i = 0; i < this.paragraphs; i++)
             {
-                var sentences = rnd.Next(_minSentences, _maxSentences + 1);
+                var sentences = rnd.Next(this.minSentences, this.maxSentences + 1);
                 for (var j = 0; j < sentences; j++)
                 {
-                    var words = rnd.Next(_minWords, _maxWords + 1);
+                    var words = rnd.Next(this.minWords, this.maxWords + 1);
                     for (var k = 0; k < words; k++)
                     {
                         var word = array[rnd.Next(array.Length)];
-                        if (k == 0) word = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(word);
+                        if (k == 0)
+                        {
+                            word = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(word);
+                        }
+
                         result.Append(word);
                         result.Append(k == words - 1 ? ". " : " ");
                     }
                 }
+
                 result.Append(Environment.NewLine);
                 result.Append(Environment.NewLine);
             }

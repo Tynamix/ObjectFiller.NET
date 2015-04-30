@@ -18,8 +18,8 @@ namespace ObjectFiller.Test
             _fillerSetup = filler.Setup()
                  .OnType<IAddress>().CreateInstanceOf<Address>()
                  .OnProperty(x => x.Age).Use(new IntRange(18, 35))
-                 .OnProperty(x => x.FirstName).Use(new RealNames(RealNameStyle.FirstNameOnly))
-                 .OnProperty(x => x.LastName).Use(new RealNames(RealNameStyle.LastNameOnly))
+                 .OnProperty(x => x.FirstName).Use(new RealNames(NameStyle.FirstName))
+                 .OnProperty(x => x.LastName).Use(new RealNames(NameStyle.LastName))
                  .SetupFor<Address>()
                  .OnProperty(x => x.HouseNumber).Use(new IntRange(1, 100))
                  .Result;

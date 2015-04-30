@@ -53,8 +53,8 @@ namespace ObjectFiller.Test
             Filler<Person> pFiller = new Filler<Person>();
 
             pFiller.Setup().OnType<IAddress>().CreateInstanceOf<Address>()
-                .OnProperty(p => p.FirstName).Use(new RealNames(RealNameStyle.FirstNameOnly))
-                .OnProperty(p => p.LastName).Use(new RealNames(RealNameStyle.LastNameOnly));
+                .OnProperty(p => p.FirstName).Use(new RealNames(NameStyle.FirstName))
+                .OnProperty(p => p.LastName).Use(new RealNames(NameStyle.LastName));
 
             Person filledPerson = pFiller.Create();
 
@@ -71,7 +71,7 @@ namespace ObjectFiller.Test
             pFiller.Setup()
                 .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnProperty(p => p.FirstName).Use(() => "John")
-                .OnProperty(p => p.LastName).Use(new RealNames(RealNameStyle.LastNameOnly));
+                .OnProperty(p => p.LastName).Use(new RealNames(NameStyle.LastName));
 
             Person filledPerson = pFiller.Create();
 
@@ -106,7 +106,7 @@ namespace ObjectFiller.Test
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .OnType<IAddress>().CreateInstanceOf<Address>()
-                .OnProperty(p => p.LastName, p => p.FirstName).DoIt(At.TheEnd).Use(new RealNames(RealNameStyle.FirstNameOnly))
+                .OnProperty(p => p.LastName, p => p.FirstName).DoIt(At.TheEnd).Use(new RealNames(NameStyle.FirstName))
                 .OnProperty(p => p.Age).Use(() => Random.Next(10, 32))
                 .SetupFor<Address>()
                 .OnProperty(a => a.City).Use(new MnemonicString(1))

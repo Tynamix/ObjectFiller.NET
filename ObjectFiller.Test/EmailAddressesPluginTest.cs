@@ -113,7 +113,7 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void EmailAddressesWorksInCombinationWithRealNamesPlugin()
         {
-            var realNames = new RealNames(RealNameStyle.FirstNameLastName);
+            var realNames = new RealNames(NameStyle.FirstNameLastName);
 
             var sut = new EmailAddresses(realNames);
             var result = sut.GetValue();

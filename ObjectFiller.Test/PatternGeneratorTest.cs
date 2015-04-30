@@ -14,7 +14,7 @@ namespace ObjectFiller.Test
         {
             var filler = new Filler<ClassWithPrivateStuffSealed>();
             filler.Setup()
-                .OnProperty(x => x.RealNameStyle).DoIt(At.TheEnd).Use(() => RealNameStyle.FirstNameLastName)
+                .OnProperty(x => x.NameStyle).DoIt(At.TheEnd).Use(() => NameStyle.FirstNameLastName)
                 .OnProperty(x=>x.WithPrivateSetter);
                 
 
@@ -23,7 +23,7 @@ namespace ObjectFiller.Test
             Assert.AreNotEqual(0, obj.WithPrivateSetter, "Must be able to set even a private setter");
             Assert.AreEqual(123, obj.WithoutSetter, "Cannot set that... must get default value");
 
-            Assert.AreEqual(obj.RealNameStyle, RealNameStyle.FirstNameLastName);
+            Assert.AreEqual(obj.NameStyle, NameStyle.FirstNameLastName);
         }
 
         [TestMethod]
@@ -244,7 +244,7 @@ namespace ObjectFiller.Test
         public int WithPrivateSetter { get; private set; }
         public int WithoutSetter { get { return 123; } }
 
-        public RealNameStyle RealNameStyle { get; private set; }
+        public NameStyle NameStyle { get; private set; }
     }
 
     public class ClassWithPrivateStuff : ClassWithPrivateStuffAbstract

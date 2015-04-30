@@ -3,6 +3,8 @@ using Tynamix.ObjectFiller.Plugins.String;
 
 namespace ObjectFiller.Test
 {
+    using Tynamix.ObjectFiller;
+
     [TestClass]
     public class GermanStreetNamesPluginTest
     {

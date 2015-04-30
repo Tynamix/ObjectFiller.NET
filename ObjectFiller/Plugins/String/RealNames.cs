@@ -1,55 +1,106 @@
-using System;
-using Tynamix.ObjectFiller.Properties;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="RealNames.cs" company="Tynamix">
+//   © 2015 by Roman Köhler
+// </copyright>
+// <summary>
+//   Generates real names like "Antonio Winter"
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Tynamix.ObjectFiller
 {
-    public enum RealNameStyle
+    using Tynamix.ObjectFiller.Properties;
+
+    /// <summary>
+    /// Style of the Name
+    /// </summary>
+    public enum NameStyle
     {
-        FirstNameOnly,
-        LastNameOnly,
+        /// <summary>
+        /// Just generate first name
+        /// </summary>
+        FirstName,
+
+        /// <summary>
+        /// Just generate last name
+        /// </summary>
+        LastName,
+
+        /// <summary>
+        /// Generate first name and then last name
+        /// </summary>
         FirstNameLastName,
+
+        /// <summary>
+        /// Generate last name and then first name
+        /// </summary>
         LastNameFirstName
     }
 
+    /// <summary>
+    /// Generates real names like "Antonio Winter"
+    /// </summary>
     public class RealNames : IRandomizerPlugin<string>
     {
-        private readonly RealNameStyle _rnStyle;
+        /// <summary>
+        /// The style of the name to generate
+        /// </summary>
+        private readonly NameStyle nameStyle;
 
-        private string[] _firstNames;
-        private string[] _lastNames;
+        /// <summary>
+        /// All first names from the resource file
+        /// </summary>
+        private readonly string[] firstNames;
 
-        public RealNames(RealNameStyle realNameStyle)
+        /// <summary>
+        /// All last names from the resource file
+        /// </summary>
+        private readonly string[] lastNames;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RealNames"/> class.
+        /// </summary>
+        /// <param name="nameStyle">
+        /// The style how the name shall be generated.
+        /// </param>
+        public RealNames(NameStyle nameStyle)
         {
-            _rnStyle = realNameStyle;
+            this.nameStyle = nameStyle;
 
-
-            if (_rnStyle != RealNameStyle.LastNameOnly)
+            if (this.nameStyle != NameStyle.LastName)
             {
-                _firstNames = Resources.firstNames.Split(';');
+                this.firstNames = Resources.firstNames.Split(';');
             }
-            if (_rnStyle != RealNameStyle.FirstNameOnly)
+
+            if (this.nameStyle != NameStyle.FirstName)
             {
-                _lastNames = Resources.lastNames.Split(';');
+                this.lastNames = Resources.lastNames.Split(';');
             }
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
         public string GetValue()
         {
-            if (_rnStyle == RealNameStyle.FirstNameLastName || _rnStyle == RealNameStyle.LastNameFirstName)
+            if (this.nameStyle == NameStyle.FirstNameLastName || this.nameStyle == NameStyle.LastNameFirstName)
             {
-                string firstName = _firstNames[Random.Next(_firstNames.Length)];
-                string lastName = _lastNames[Random.Next(_lastNames.Length)];
+                string firstName = this.firstNames[Random.Next(this.firstNames.Length)];
+                string lastName = this.lastNames[Random.Next(this.lastNames.Length)];
 
 
-                return _rnStyle == RealNameStyle.FirstNameLastName ? firstName + " " + lastName : lastName + " " + firstName;
+                return this.nameStyle == NameStyle.FirstNameLastName ? firstName + " " + lastName : lastName + " " + firstName;
             }
-            if (_rnStyle == RealNameStyle.FirstNameOnly)
+
+            if (this.nameStyle == NameStyle.FirstName)
             {
-                return _firstNames[Random.Next(_firstNames.Length)];
+                return this.firstNames[Random.Next(this.firstNames.Length)];
             }
-            if (_rnStyle == RealNameStyle.LastNameOnly)
+
+            if (this.nameStyle == NameStyle.LastName)
             {
-                return _lastNames[Random.Next(_lastNames.Length)];
+                return this.lastNames[Random.Next(this.lastNames.Length)];
             }
 
             return null;

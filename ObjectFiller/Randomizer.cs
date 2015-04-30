@@ -1,4 +1,13 @@
-﻿namespace Tynamix.ObjectFiller
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Randomizer.cs" company="Tynamix">
+//   
+// </copyright>
+// <summary>
+//   This class is a easy way to get random values.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Tynamix.ObjectFiller
 {
     using System;
     using System.Linq;
@@ -12,14 +21,14 @@
         /// <summary>
         /// The default setup item
         /// </summary>
-        private static readonly FillerSetupItem setup;
+        private static readonly FillerSetupItem Setup;
 
         /// <summary>
         /// Initializes static members of the <see cref="Randomizer{T}"/> class.
         /// </summary>
         static Randomizer()
         {
-            setup = new FillerSetupItem();
+            Setup = new FillerSetupItem();
         }
 
         /// <summary>
@@ -29,29 +38,31 @@
         public static T Create()
         {
             Type targetType = typeof(T);
-            if (!setup.TypeToRandomFunc.ContainsKey(targetType))
+            if (!Setup.TypeToRandomFunc.ContainsKey(targetType))
             {
                 if (targetType.IsClass)
                 {
                     var fillerType = typeof(Filler<>).MakeGenericType(typeof(T));
-                    var oFiller = Activator.CreateInstance(fillerType);
-                    var methodInfo = oFiller.GetType().GetMethods().Single(x => !x.GetParameters().Any() && x.Name == "Create");
+                    var objectFiller = Activator.CreateInstance(fillerType);
+                    var methodInfo = objectFiller.GetType().GetMethods().Single(x => !x.GetParameters().Any() && x.Name == "Create");
 
                     try
                     {
-                        return (T)methodInfo.Invoke(oFiller, null);
+                        return (T)methodInfo.Invoke(objectFiller, null);
                     }
                     catch (Exception ex)
                     {
-                        throw new InvalidOperationException("The type " + typeof(T).FullName + " needs additional information to get created. " +
-                            "Please use the Filler class and call \"Setup\" to create a setup for that type. See Innerexception for more details.", ex);
+                        throw new InvalidOperationException(
+                            "The type " + typeof(T).FullName + " needs additional information to get created. "
+                            + "Please use the Filler class and call \"Setup\" to create a setup for that type. See Innerexception for more details.",
+                            ex);
                     }
                 }
 
                 return default(T);
             }
 
-            return (T)setup.TypeToRandomFunc[typeof(T)]();
+            return (T)Setup.TypeToRandomFunc[typeof(T)]();
         }
 
         /// <summary>
