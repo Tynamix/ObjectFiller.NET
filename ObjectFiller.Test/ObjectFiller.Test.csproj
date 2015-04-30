@@ -50,7 +50,7 @@
     <Compile Include="CreateInstanceTest.cs" />
     <Compile Include="DefaultDatatypeMappingsTest.cs" />
     <Compile Include="EnumTest.cs" />
-    <Compile Include="GermanStreetNamesPluginTest.cs" />
+    <Compile Include="StreetNamesPluginTest.cs" />
     <Compile Include="HashStackTests.cs" />
     <Compile Include="LibraryFillingTest.cs" />
     <Compile Include="ListFillingTest.cs" />
