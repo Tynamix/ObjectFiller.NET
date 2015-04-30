@@ -86,6 +86,51 @@ namespace ObjectFiller.Test
             filler.Create();
         }
 
+        [TestMethod]
+        public void GenerateTestDataForASortedList()
+        {
+            Filler<SortedList<int, string>> filler = new Filler<SortedList<int, string>>();
+            filler.Setup().OnType<int>().Use(Enumerable.Range(1, 1000));
+            var result = filler.Create(10).ToList();
+
+            Assert.AreEqual(10, result.Count);
+            foreach (var sortedList in result)
+            {
+                Assert.IsTrue(sortedList.Any());
+            }
+        }
+
+        [TestMethod]
+        public void GenerateTestDataForASimpleList()
+        {
+            Filler<IList<EntityCollection>> filler = new Filler<IList<EntityCollection>>();
+            filler.Setup().IgnoreAllUnknownTypes();
+            var createdList = filler.Create();
+
+            Assert.IsTrue(createdList.Any());
+
+            foreach (EntityCollection entityCollection in createdList)
+            {
+                Assert.IsTrue(entityCollection.EntityICollection.Any());
+                Assert.IsTrue(entityCollection.EntityIEnumerable.Any());
+                Assert.IsTrue(entityCollection.EntityIList.Any());
+                Assert.IsTrue(entityCollection.EntityList.Any());
+            }
+        }
+
+        [TestMethod]
+        public void GenerateTestDataForADictionary()
+        {
+            Filler<Dictionary<int, string>> filler = new Filler<Dictionary<int, string>>();
+            var result = filler.Create(10).ToList();
+
+            Assert.AreEqual(10, result.Count);
+            foreach (var sortedList in result)
+            {
+                Assert.IsTrue(sortedList.Any());
+            }
+        }
+
         private Entity[] GetArray()
         {
             Filler<Entity> of = new Filler<Entity>();
@@ -104,5 +149,6 @@ namespace ObjectFiller.Test
 
             return entities.ToArray();
         }
+
     }
 }
