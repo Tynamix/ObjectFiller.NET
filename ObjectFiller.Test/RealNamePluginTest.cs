@@ -11,7 +11,7 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
             filler.Setup()
-                .OnProperty(x => x.Name).Use(new RealNames(RealNameStyle.FirstNameOnly));
+                .OnProperty(x => x.Name).Use(new RealNames(NameStyle.FirstName));
 
             LibraryFillingTest.Person p = filler.Create();
 
@@ -25,7 +25,7 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
             filler.Setup()
-                .OnProperty(x => x.Name).Use(new RealNames(RealNameStyle.LastNameOnly));
+                .OnProperty(x => x.Name).Use(new RealNames(NameStyle.LastName));
 
             LibraryFillingTest.Person p = filler.Create();
 
@@ -39,7 +39,7 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
             filler.Setup()
-                .OnProperty(x => x.Name).Use(new RealNames(RealNameStyle.FirstNameLastName));
+                .OnProperty(x => x.Name).Use(new RealNames(NameStyle.FirstNameLastName));
 
             LibraryFillingTest.Person p = filler.Create();
 
@@ -54,7 +54,7 @@ namespace ObjectFiller.Test
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
             filler.Setup()
-                .OnProperty(x => x.Name).Use(new RealNames(RealNameStyle.LastNameFirstName));
+                .OnProperty(x => x.Name).Use(new RealNames(NameStyle.LastNameFirstName));
 
             LibraryFillingTest.Person p = filler.Create();
 

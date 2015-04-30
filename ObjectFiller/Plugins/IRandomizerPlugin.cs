@@ -1,4 +1,13 @@
-﻿namespace Tynamix.ObjectFiller
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IRandomizerPlugin.cs" company="Tynamix">
+//   © 2015 by Roman Köhler
+// </copyright>
+// <summary>
+//   Implement this interface to create a custom randomizer of type <see cref="T" />
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Tynamix.ObjectFiller
 {
     /// <summary>
     /// Implement this interface to create a custom randomizer of type <see cref="T"/>

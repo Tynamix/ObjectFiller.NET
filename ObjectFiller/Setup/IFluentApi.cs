@@ -1,8 +1,18 @@
-using System;
-using System.Collections.Generic;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IFluentApi.cs" company="Tynamix">
+//   © Roman Köhler
+// </copyright>
+// <summary>
+//   This interface is implemented by the <see cref="FluentTypeApi{TTargetObject,TTargetType}" />
+//   and <see cref="FluentPropertyApi{TTargetObject,TTargetType}" />. It provides the common methods for both.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Tynamix.ObjectFiller
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// This interface is implemented by the <see cref="FluentTypeApi{TTargetObject,TTargetType}"/>
     /// and <see cref="FluentPropertyApi{TTargetObject,TTargetType}"/>. It provides the common methods for both.
@@ -21,23 +31,23 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Defines which <see cref="Func{TResult}"/> will be used to generate a value for the given <see cref="TTargetType"/>
         /// </summary>
-        /// <param name="randomizerFunc">Func which will be used to generate a value of the <see cref="TTargetType"/></param>
+        /// <param name="randomizerFunc"><see cref="Func{TTargetType}"/> which will be used to generate a value of the <see cref="TTargetType"/></param>
         /// <returns>Main FluentFiller API</returns>
         FluentFillerApi<TTargetObject> Use(Func<TTargetType> randomizerFunc);
 
         /// <summary>
         /// Defines which implementation of the <see cref="IRandomizerPlugin{T}"/> interface will be used to generate a value for the given <see cref="TTargetType"/>
         /// </summary>
-        /// <param name="randomizerPlugin">Func which will be used to generate a value of the <see cref="TTargetType"/></param>
+        /// <param name="randomizerPlugin">A <see cref="IRandomizerPlugin{TTargetType}"/> which will be used to generate a value of the <see cref="TTargetType"/></param>
         /// <returns>Main FluentFiller API</returns>
         FluentFillerApi<TTargetObject> Use(IRandomizerPlugin<TTargetType> randomizerPlugin);
 
         /// <summary>
-        /// Use this function if you want to use an IEnumerable for the datageneration.
+        /// Use this function if you want to use an IEnumerable for the data generation.
         /// With that you can generate random data in a specific order, with include, exclude and all the other stuff
-        /// what is possible with IEnumerables and LINQ
+        /// what is possible with <see cref="IEnumerable{T}"/> and LINQ
         /// </summary>
-        /// <param name="enumerable">An IEnumerable with items of type <typeparam name="TTargetObject"/> which will be used to fill the data.</param>
+        /// <param name="enumerable">An <see cref="IEnumerable{TTargetType}"/> with items of type <typeparam name="TTargetObject"/> which will be used to fill the data.</param>
         /// <returns>Main FluentFiller API</returns>
         FluentFillerApi<TTargetObject> Use(IEnumerable<TTargetType> enumerable);
 

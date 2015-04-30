@@ -1,7 +1,17 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IInterfaceMocker.cs" company="Tynamix">
+//   ©2015 by Roman Köhler
+// </copyright>
+// <summary>
+//   Implement this interface to use a mocking framework for instantiate your interfaces.
+//   Register this <see cref="IInterfaceMocker" /> in the setup of the ObjectFiller
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Tynamix.ObjectFiller
 {
     /// <summary>
-    /// Implement this interface to use a mockingframework for instantiate your interfaces.
+    /// Implement this interface to use a mocking framework for instantiate your interfaces.
     /// Register this <see cref="IInterfaceMocker"/> in the setup of the ObjectFiller
     /// </summary>
     public interface IInterfaceMocker
