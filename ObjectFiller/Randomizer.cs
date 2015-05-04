@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Randomizer.cs" company="Tynamix">
-//   
+//   ©2015 by Roman Köhler
 // </copyright>
 // <summary>
 //   This class is a easy way to get random values.
@@ -72,6 +72,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>A random value of type <see cref="T"/></returns>
         public static T Create(IRandomizerPlugin<T> randomizerPlugin)
         {
+            Setup.TypeToRandomFunc[typeof(T)] = () => randomizerPlugin.GetValue();
             return randomizerPlugin.GetValue();
         }
     }
