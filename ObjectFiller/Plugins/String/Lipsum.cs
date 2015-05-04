@@ -11,14 +11,17 @@ namespace Tynamix.ObjectFiller
         /// Standard Lorem Ipsum words.
         /// </summary>
         LoremIpsum,
+
         /// <summary>
         /// Words from Child Harold by Lord Byron.
         /// </summary>
         ChildHarold,
+
         /// <summary>
         /// Words from In der Fremde by Heinrich Hiene (German)
         /// </summary>
         InDerFremde,
+
         /// <summary>
         /// Words from Le Masque by Arthur Rembaud (French)
         /// </summary>

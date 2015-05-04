@@ -61,6 +61,24 @@ namespace Tynamix.ObjectFiller.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tokyo;Shanghai;Bombay;Karachi;Delhi;New Delhi;Manila;Moscow;Seoul;São Paulo;Istanbul;Lagos;Mexico;Jakarta;New York;Kinshasa;Cairo;Lima;Peking;London;Bogotá;Dhaka;Lahore;Rio de Janeiro;Baghdad;Bangkok;Bangalore;Santiago;Calcutta;Toronto;Rangoon;Sydney;Madras;Wuhan;Saint Petersburg;Chongqing;Xian;Chengdu;Los Angeles;Alexandria;Tianjin;Melbourne;Ahmadabad;Abidjan;Kano;Casablanca;Hyderabad;Ibadan;Singapore;Ankara;Shenyang;Riyadh;Ho Chi Minh City;Cape Town;Berlin;Montreal;Harbin;Guangzhou;Durban;Madrid;Nanjing;K [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string cityNames {
+            get {
+                return ResourceManager.GetString("cityNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Afghanistan;Albania;Algeria;American Samoa;Andorra;Angola;Antarctica;Antigua and  Barbuda;Argentina;Armenia;Aruba;Australia;Austria;Azerbaijan;Bahamas;Bahrain;Bangladesh;Barbados;Belarus;Belgium;Belize;Benin;Bermuda;Bhutan;Bolivia;Bosnia and Herzegovina;Botswana;Brazil;British Virgin Islands;Brunei;Bulgaria;Burkina Faso;Burundi;Cambodia;Cameroon;Canada;Cape Verde;Caribbean Netherlands;Cayman Islands;Central African Republic;Chad;Chile;China;Colombia;Comoros;Congo (Dem. Rep.);Congo;Cook Islands;Costa Rica;Cr [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string countryNames {
+            get {
+                return ResourceManager.GetString("countryNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aaron;Abbey;Abbie;Abby;Abdul;Abe;Abel;Abigail;Abraham;Abram;Ada;Adah;Adalberto;Adaline;Adam;Adam;Adan;Addie;Adela;Adelaida;Adelaide;Adele;Adelia;Adelina;Adeline;Adell;Adella;Adelle;Adena;Adina;Adolfo;Adolph;Adria;Adrian;Adrian;Adriana;Adriane;Adrianna;Adrianne;Adrien;Adriene;Adrienne;Afton;Agatha;Agnes;Agnus;Agripina;Agueda;Agustin;Agustina;Ahmad;Ahmed;Ai;Aida;Aide;Aiko;Aileen;Ailene;Aimee;Aisha;Aja;Akiko;Akilah;Al;Alaina;Alaine;Alan;Alana;Alane;Alanna;Alayna;Alba;Albert;Albert;Alberta;Albertha;Albertina;Al [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string firstNames {

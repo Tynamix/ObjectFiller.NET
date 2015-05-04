@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tynamix.ObjectFiller.Plugins.String;
 
 namespace ObjectFiller.Test
 {
