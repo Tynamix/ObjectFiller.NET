@@ -423,14 +423,14 @@ namespace Tynamix.ObjectFiller
                 return this.CreateInstanceOfInterfaceOrAbstractClass(type, currentSetupItem, typeTracker);
             }
 
-            if (TypeIsPoco(type))
-            {
-                return this.GetFilledPoco(type, currentSetupItem, typeTracker);
-            }
-
             if (this.TypeIsEnum(type))
             {
                 return this.GetRandomEnumValue(type);
+            }
+
+            if (TypeIsPoco(type))
+            {
+                return this.GetFilledPoco(type, currentSetupItem, typeTracker);
             }
 
             object newValue = this.GetRandomValue(type, currentSetupItem);
