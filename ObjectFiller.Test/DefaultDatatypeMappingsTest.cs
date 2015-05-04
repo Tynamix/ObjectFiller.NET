@@ -10,6 +10,14 @@ namespace ObjectFiller.Test
     public class DefaultDatatypeMappingsTest
     {
         [TestMethod]
+        public void Ensure_that_double_does_not_return_infinity()
+        {
+            var filler = new Filler<MyClass>();
+            var myClass = filler.Create();
+            Assert.IsFalse(double.IsInfinity(myClass._double));
+        }
+
+        [TestMethod]
         public void Ensure_that_each_primitive_datatype_is_mapped_by_default()
         {
             var filler = new Filler<MyClass>();
