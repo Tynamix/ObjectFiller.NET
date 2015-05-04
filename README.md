@@ -23,6 +23,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [Fill Lists and Dictionaries](#fill-lists-and-dictionaries)
    - [Detect Circular Dependencies](#detect-circular-dependencies)
    - [Mix all up](#mix-all-up)
+ - [Randomizer<T> class](#randomizer-class)
  - [Available Plugins](#available-plugins)
    - [IntRangePlugin](#rangeintegerplugin)
    - [MnemonicStringPlugin](#mnemonicstringplugin)
@@ -538,7 +539,7 @@ Here is another example where the Randomizer generates a random string based on 
 ```csharp
         public string GiveMeSomeRandomLoremIpsumText()
         {
-            Randomizer<string>.Create(new Lipsum(LipsumFlavor.LoremIpsum));
+            return Randomizer<string>.Create(new Lipsum(LipsumFlavor.LoremIpsum));
         }
 ```
 
