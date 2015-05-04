@@ -313,12 +313,15 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsValidForObjectFiller(Type type, FillerSetupItem currentSetupItem)
         {
-            return HasTypeARandomFunc(type, currentSetupItem)
+            var result= HasTypeARandomFunc(type, currentSetupItem)
                    || (TypeIsList(type) && ListParamTypeIsValid(type, currentSetupItem))
                    || (TypeIsDictionary(type) && DictionaryParamTypesAreValid(type, currentSetupItem))
                    || TypeIsPoco(type)
+                   || TypeIsEnum(type)
                    || (type.IsInterface && currentSetupItem.InterfaceToImplementation.ContainsKey(type)
                        || currentSetupItem.InterfaceMocker != null);
+
+            return result;
         }
 
         /// <summary>
@@ -423,7 +426,7 @@ namespace Tynamix.ObjectFiller
                 return this.CreateInstanceOfInterfaceOrAbstractClass(type, currentSetupItem, typeTracker);
             }
 
-            if (this.TypeIsEnum(type))
+            if (TypeIsEnum(type))
             {
                 return this.GetRandomEnumValue(type);
             }
@@ -918,7 +921,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>
         /// True if the target <see cref="type"/>  is a enumeration
         /// </returns>
-        private bool TypeIsEnum(Type type)
+        private static bool TypeIsEnum(Type type)
         {
             return type.IsEnum;
         }
