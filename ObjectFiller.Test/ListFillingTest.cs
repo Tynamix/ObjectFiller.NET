@@ -7,6 +7,8 @@ using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
+    using ObjectFiller.Test.TestPoco;
+
     [TestClass]
     public class ListFillingTest
     {
@@ -131,6 +133,16 @@ namespace ObjectFiller.Test
             }
         }
 
+        [TestMethod]
+        public void GenerateDictionaryWithEnumeration()
+        {
+            var amountOfEnumValues = Enum.GetValues(typeof(TestEnum)).Length;
+            var filler = new Filler<Dictionary<TestEnum, string>>();
+            var result = filler.Create();
+
+            Assert.AreEqual(amountOfEnumValues, result.Count);
+        }
+
         private Entity[] GetArray()
         {
             Filler<Entity> of = new Filler<Entity>();
@@ -146,9 +158,7 @@ namespace ObjectFiller.Test
             entities.Add(of.Create());
             entities.Add(of.Create());
 
-
             return entities.ToArray();
         }
-
     }
 }

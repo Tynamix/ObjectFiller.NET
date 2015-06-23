@@ -635,13 +635,30 @@ namespace Tynamix.ObjectFiller
             Type keyType = propertyType.GetGenericArguments()[0];
             Type valueType = propertyType.GetGenericArguments()[1];
 
-            int maxDictionaryItems = Random.Next(
+            int maxDictionaryItems = 0;
+
+            if (keyType.IsEnum)
+            {
+                maxDictionaryItems = Enum.GetValues(keyType).Length;
+            }
+            else
+            {
+                maxDictionaryItems = Random.Next(
                 currentSetupItem.DictionaryKeyMinCount,
                 currentSetupItem.DictionaryKeyMaxCount);
+            }
 
             for (int i = 0; i < maxDictionaryItems; i++)
             {
-                object keyObject = this.CreateAndFillObject(keyType, currentSetupItem, typeTracker);
+                object keyObject = null;
+                if (keyType.IsEnum)
+                {
+                    keyObject = Enum.GetValues(keyType).GetValue(i);
+                }
+                else
+                {
+                    keyObject = this.CreateAndFillObject(keyType, currentSetupItem, typeTracker);
+                }
 
                 if (dictionary.Contains(keyObject))
                 {
