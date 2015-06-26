@@ -86,22 +86,9 @@ namespace Tynamix.ObjectFiller
         public IEnumerable<T> Create(int count)
         {
             IList<T> items = new List<T>();
-            var typeStack = new HashStack<Type>();
-            Type targetType = typeof(T);
             for (int n = 0; n < count; n++)
             {
-                T objectToFill;
-                if (!TypeIsClrType(targetType))
-                {
-                    objectToFill = (T)this.CreateInstanceOfType(targetType, this.setupManager.GetFor<T>(), typeStack);
-                    this.Fill(objectToFill);
-                }
-                else
-                {
-                    objectToFill = (T)this.CreateAndFillObject(typeof(T), this.setupManager.GetFor<T>(), typeStack);
-                }
-
-                items.Add(objectToFill);
+                items.Add(this.Create());
             }
 
             return items;
