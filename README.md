@@ -33,6 +33,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and
    - [Lipsum String Plugin](#lipsum-string-plugin)
    - [Sequence Generator Plugin](#sequencegenerator-plugins)
  - [Write your own plugin](#write-your-own-plugin)
+ - [License](#license)
  - [Thank you](#thank-you-for-using-objectfillernet)
    
 
@@ -815,6 +816,9 @@ Here is a very simple example:
 ```
 
 **```MyFirstPlugin```** does basically the same thing as the **```RandomListItem```** plugin, but it is a good way to show you how easy it is to implement your own plugin.
+
+##License
+The Tynamix ObjectFiller.NET is released under the terms of the MIT license.
 
 ##Thank you for using ObjectFiller.NET
 
