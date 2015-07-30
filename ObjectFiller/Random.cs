@@ -10,6 +10,8 @@
 
 namespace Tynamix.ObjectFiller
 {
+    using System;
+
     /// <summary>
     /// Class wraps the <see cref="System.Random"/> class. 
     /// This is to have a static instance of the random class
@@ -91,6 +93,31 @@ namespace Tynamix.ObjectFiller
         internal static void NextByte(byte[] buffer)
         {
             Rnd.NextBytes(buffer);
+        }
+
+        /// <summary>
+        /// Gets a random value between to source long values
+        /// </summary>
+        /// <param name="min">Min long value</param>
+        /// <param name="max">Max long value</param>
+        /// <returns>A Long between <see cref="min"/> and <see cref="max"/></returns>
+        internal static long NextLong(long min, long max)
+        {
+            long longRand = NextLong();
+            return (Math.Abs(longRand % (max - min)) + min);
+        }
+
+        /// <summary>
+        /// Gets a random value between to source long values
+        /// </summary>
+        /// <param name="min">Min long value</param>
+        /// <param name="max">Max long value</param>
+        /// <returns>A Long between <see cref="min"/> and <see cref="max"/></returns>
+        internal static long NextLong()
+        {
+            byte[] buf = new byte[8];
+            Rnd.NextBytes(buf);
+            return BitConverter.ToInt64(buf, 0);
         }
     }
 }

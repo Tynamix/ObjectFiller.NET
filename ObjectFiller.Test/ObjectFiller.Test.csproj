@@ -49,6 +49,7 @@
     <Compile Include="CountryNamesPlugin.cs" />
     <Compile Include="CityNamesPluginTest.cs" />
     <Compile Include="CreateInstanceTest.cs" />
+    <Compile Include="DateTimeRangeTest.cs" />
     <Compile Include="DefaultDatatypeMappingsTest.cs" />
     <Compile Include="EnumTest.cs" />
     <Compile Include="StreetNamesPluginTest.cs" />
