@@ -120,8 +120,8 @@ namespace Tynamix.ObjectFiller
             this.TypeToRandomFunc[typeof(short?)] = () => (short)Random.Next(-32767, 32767);
             this.TypeToRandomFunc[typeof(int)] = () => Random.Next();
             this.TypeToRandomFunc[typeof(int?)] = () => Random.Next();
-            this.TypeToRandomFunc[typeof(long)] = () => (long)Random.Next();
-            this.TypeToRandomFunc[typeof(long?)] = () => (long)Random.Next();
+            this.TypeToRandomFunc[typeof(long)] = () => Random.NextLong();
+            this.TypeToRandomFunc[typeof(long?)] = () => Random.NextLong();
             this.TypeToRandomFunc[typeof(float)] = () => (float)doublePlugin.GetValue();
             this.TypeToRandomFunc[typeof(float?)] = () => (float?)doublePlugin.GetValue();
             this.TypeToRandomFunc[typeof(double)] = () => doublePlugin.GetValue();

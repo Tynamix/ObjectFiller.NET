@@ -14,20 +14,23 @@ namespace Tynamix.ObjectFiller
 
         public DateTimeRange(DateTime earliestDate, DateTime latestDate)
         {
+            if (earliestDate > latestDate)
+            {
+                var latestD = latestDate;
+                latestDate = earliestDate;
+                earliestDate = latestD;
+            }
             _earliestDate = earliestDate;
             _latestDate = latestDate;
         }
 
         public DateTime GetValue()
         {
-            int seconds = Random.Next(0, 60);
-            int minute = Random.Next(0, 60);
-            int hour = Random.Next(0, 24);
-            int month = Random.Next(_earliestDate.Month, _latestDate.Month + 1);
-            int day = Random.Next(_earliestDate.Day, month == 2 && _latestDate.Day > 28 ? 29 : _latestDate.Day);
-            int year = Random.Next(_earliestDate.Year, _latestDate.Year + 1);
+            var timeSpan = _latestDate.Subtract(_earliestDate);
 
-            return new DateTime(year, month, day, hour, minute, seconds);
+            var diff = Random.NextLong(0, timeSpan.Ticks);
+
+             return _latestDate.AddTicks(diff * -1);
         }
 
         DateTime? IRandomizerPlugin<DateTime?>.GetValue()
