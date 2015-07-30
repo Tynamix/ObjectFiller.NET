@@ -6,6 +6,8 @@ using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
+    using System.Collections.Generic;
+
     [TestClass]
     public class LoremIpsumPluginTest
     {
@@ -73,6 +75,23 @@ namespace ObjectFiller.Test
             Assert.IsNotNull(b);
             Assert.IsNotNull(b1);
             Assert.AreEqual(b.ISBN, b1.ISBN);
+        }
+
+        [TestMethod]
+        public void LoremIpsum_should_provide_different_data()
+        {
+            var alowedDelta = 2;
+
+            var filler = new Filler<Book>();
+            filler.Setup()
+                .OnProperty(foo => foo.Description)
+                .Use(new Lipsum(LipsumFlavor.LoremIpsum));
+
+            var resultElements = filler.Create(100);
+
+            var groupedResult = resultElements.GroupBy(x => x.Description);
+
+            Assert.AreEqual(100, groupedResult.Count(), alowedDelta);
         }
     }
 }

@@ -10,7 +10,9 @@
 namespace Tynamix.ObjectFiller
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     /// <summary>
     /// This class is a easy way to get random values. 
@@ -63,6 +65,22 @@ namespace Tynamix.ObjectFiller
             }
 
             return (T)Setup.TypeToRandomFunc[typeof(T)]();
+        }
+
+        /// <summary>
+        /// Creates a set of random items of the given type. It will use a <see cref="IRandomizerPlugin{T}"/> for that.
+        /// </summary>
+        /// <param name="amount">Amount of items created.</param>
+        /// <returns>Set of random items of the given type.</returns>
+        public static IEnumerable<T> Create(int amount)
+        {
+            var resultSet = new List<T>();
+            for (int i = 0; i < amount; i++)
+            {
+                resultSet.Add(Create());
+            }
+
+            return resultSet;
         }
 
         /// <summary>

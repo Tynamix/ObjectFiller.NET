@@ -1,6 +1,7 @@
 ﻿namespace ObjectFiller.Test
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -45,7 +46,16 @@
                 Assert.IsNotNull(ex.InnerException);
                 throw;
             }
-            
+        }
+
+        [TestMethod]
+        public void RandomizerCreatesAListOfRandomItemsIfNeeded()
+        {
+            int amount = 5;
+
+            IEnumerable<int> result = Randomizer<int>.Create(amount);
+
+            Assert.AreEqual(amount, result.Count());
         }
 
     }

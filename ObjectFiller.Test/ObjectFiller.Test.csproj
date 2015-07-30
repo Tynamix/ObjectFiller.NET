@@ -82,6 +82,7 @@
     <Compile Include="TestPoco\SimpleList.cs" />
     <Compile Include="SaveFillerSetupTest.cs" />
     <Compile Include="EmailAddressesPluginTest.cs" />
+    <Compile Include="TestPoco\TestEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ObjectFiller\ObjectFiller.csproj">

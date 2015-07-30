@@ -39,7 +39,7 @@ namespace Tynamix.ObjectFiller
         private readonly int maxSentences;
         private readonly int minWords;
         private readonly int maxWords;
-        private readonly int seed;
+        private readonly int? seed;
 
         /// <summary>
         /// Words for the standard lorem ipsum text.
@@ -130,6 +130,8 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         private readonly Dictionary<LipsumFlavor, string[]> map;
 
+        private System.Random random;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Lipsum"/> class.
         /// </summary>
@@ -152,7 +154,7 @@ namespace Tynamix.ObjectFiller
         /// The max words of the generated text.
         /// </param>
         /// <param name="seed">
-        /// The seed for the random to get the same result with the same seed.
+        /// The seed for randomizer to get the same result with the same seed.
         /// </param>
         public Lipsum(LipsumFlavor flavor, int paragraphs = 3, int minSentences = 3, int maxSentences = 8,
             int minWords = 10, int maxWords = 50, int? seed = null)
@@ -172,7 +174,8 @@ namespace Tynamix.ObjectFiller
                                { LipsumFlavor.LeMasque, LeMasque }
             };
 
-            this.seed = seed.HasValue ? seed.Value : Environment.TickCount;
+            this.seed = seed;
+            this.random = new System.Random();
         }
 
         /// <summary>
@@ -181,20 +184,23 @@ namespace Tynamix.ObjectFiller
         /// <returns>Random data for type <see cref="T"/></returns>
         public string GetValue()
         {
-            System.Random rnd = new System.Random(this.seed);
-            var array = this.map[this.flavor];
+            if (this.seed.HasValue)
+            {
+                this.random = new System.Random(this.seed.Value);
+            }
 
+            var array = this.map[this.flavor];
             var result = new StringBuilder();
 
             for (var i = 0; i < this.paragraphs; i++)
             {
-                var sentences = rnd.Next(this.minSentences, this.maxSentences + 1);
+                var sentences = this.random.Next(this.minSentences, this.maxSentences + 1);
                 for (var j = 0; j < sentences; j++)
                 {
-                    var words = rnd.Next(this.minWords, this.maxWords + 1);
+                    var words = this.random.Next(this.minWords, this.maxWords + 1);
                     for (var k = 0; k < words; k++)
                     {
-                        var word = array[rnd.Next(array.Length)];
+                        var word = array[this.random.Next(array.Length)];
                         if (k == 0)
                         {
                             word = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(word);
