@@ -34,9 +34,10 @@ namespace ObjectFiller.Test
             Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
             eFiller.Setup()
                 .ListItemCount(20)
-                .OnProperty(x => x.EntityArray, x => x.EntityICollection,
+                .OnProperty(x => x.EntityICollection,
                             x => x.EntityIList, x => x.ObservableCollection,
                             x => x.EntityIEnumerable).IgnoreIt()
+            .OnProperty(x => x.EntityArray).IgnoreIt()
                 .SetupFor<Entity>()
                 .OnProperty(x => x.Id).Use(Enumerable.Range(1, 22).Select(x => (int)Math.Pow(2, x)));
 
@@ -143,22 +144,12 @@ namespace ObjectFiller.Test
             Assert.AreEqual(amountOfEnumValues, result.Count);
         }
 
-        private Entity[] GetArray()
+        private Entity[,] GetArray()
         {
             Filler<Entity> of = new Filler<Entity>();
+            var entity = new Entity[,] { { of.Create() } };
 
-            List<Entity> entities = new List<Entity>();
-            entities.Add(of.Create());
-            entities.Add(of.Create());
-            entities.Add(of.Create());
-            entities.Add(of.Create());
-            entities.Add(of.Create());
-            entities.Add(of.Create());
-            entities.Add(of.Create());
-            entities.Add(of.Create());
-            entities.Add(of.Create());
-
-            return entities.ToArray();
+            return entity;
         }
     }
 }

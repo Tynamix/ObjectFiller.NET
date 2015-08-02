@@ -1,7 +1,9 @@
 using System;
+using System.Reflection.Emit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
@@ -15,8 +17,8 @@ namespace ObjectFiller.Test
             var filler = new Filler<ClassWithPrivateStuffSealed>();
             filler.Setup()
                 .OnProperty(x => x.NameStyle).DoIt(At.TheEnd).Use(() => NameStyle.FirstNameLastName)
-                .OnProperty(x=>x.WithPrivateSetter);
-                
+                .OnProperty(x => x.WithPrivateSetter);
+
 
             var obj = filler.Create();
 
@@ -37,7 +39,7 @@ namespace ObjectFiller.Test
             Assert.AreNotEqual(0, obj.SealedOverrideNormalNumber);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void Must_be_able_to_handle_arrays()
         {
             var filler = new Filler<WithArrays>();
@@ -47,7 +49,10 @@ namespace ObjectFiller.Test
 
             Assert.IsNotNull(obj.Ints);
             Assert.IsNotNull(obj.Strings);
-            Assert.IsNotNull(obj.Interfaces);
+            Assert.IsNotNull(obj.JaggedStrings);
+            Assert.IsNotNull(obj.ThreeJaggedDimensional);
+            Assert.IsNotNull(obj.ThreeJaggedPoco);
+
         }
 
         [TestMethod]
@@ -274,6 +279,9 @@ namespace ObjectFiller.Test
     {
         public int[] Ints { get; set; }
         public string[] Strings { get; set; }
-        public IDisposable[] Interfaces { get; set; }
+        public string[][] JaggedStrings { get; set; }
+        public string[][][] ThreeJaggedDimensional { get; set; }
+
+        public Address[][][] ThreeJaggedPoco { get; set; }
     }
 }
