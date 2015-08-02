@@ -405,7 +405,14 @@ namespace Tynamix.ObjectFiller
             if (TypeIsList(type))
             {
                 IList list = this.GetFilledList(type, currentSetupItem, typeTracker);
+
                 return list;
+            }
+
+            if (TypeIsArray(type))
+            {
+                Array array = this.GetFilledArray(type, currentSetupItem, typeTracker);
+                return array;
             }
 
             if (type.IsInterface || type.IsAbstract)
@@ -428,6 +435,29 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// Creates and filles an array or jagged array
+        /// </summary>
+        /// <param name="type">Array type to create and fill</param>
+        /// <param name="currentSetupItem">Current ObjectFiller.NET Setup item</param>
+        /// <param name="typeTracker">
+        /// The type tracker to find circular dependencies
+        /// </param>
+        /// <returns>Created and filled array</returns>
+        private Array GetFilledArray(Type type, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
+        {
+            var listType = typeof(List<>);
+            var constructedListType = listType.MakeGenericType(type.GetElementType());
+
+            var list = GetFilledList(constructedListType, currentSetupItem, typeTracker);
+
+            var array = (Array)Activator.CreateInstance(type, new object[] { list.Count });
+
+            list.CopyTo(array, 0);
+
+            return array;
+        }
+
+        /// <summary>
         /// Creates a instance of an interface or abstract class. Like an IoC-Framework
         /// </summary>
         /// <param name="interfaceType">
@@ -437,7 +467,7 @@ namespace Tynamix.ObjectFiller
         /// The setup item.
         /// </param>
         /// <param name="typeTracker">
-        /// The dictionaryType tracker to find circular dependencies
+        /// The type tracker to find circular dependencies
         /// </param>
         /// <returns>
         /// The created and filled instance of the <see cref="interfaceType"/>
@@ -943,6 +973,17 @@ namespace Tynamix.ObjectFiller
             Type u = Nullable.GetUnderlyingType(type);
             return (u != null) && u.IsEnum;
         }
+
+        /// <summary>
+        /// Checks if the given <see cref="type"/> is a supported array
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        /// <returns>True if the type is a array</returns>
+        private bool TypeIsArray(Type type)
+        {
+            return type.IsArray && type.GetArrayRank() == 1;
+        }
+
 
         #endregion
     }

@@ -15,6 +15,6 @@ namespace ObjectFiller.Test.TestPoco.ListTest
 
         public IList<Entity> EntityIList { get; set; }
 
-        public Entity[] EntityArray { get; set; }
+        public Entity[,] EntityArray { get; set; }
     }
 }
