@@ -73,6 +73,18 @@ namespace ObjectFiller.Test
             }
         }
 
+        [TestMethod]
+        public void FillNullableEnum()
+        {
+            var filler = new Filler<ClassWithNullableEnum>();
+
+            var c = filler.Create();
+            Assert.IsTrue(
+                c.NullableEnum == StandardEnum.A ||
+                c.NullableEnum == StandardEnum.B ||
+                c.NullableEnum == StandardEnum.C);
+        }
+
 
         public enum StandardEnum
         {
@@ -119,7 +131,7 @@ namespace ObjectFiller.Test
 
         public class MyClassWithCstr
         {
-            public MyClassWithCstr(StandardEnum standard ,NumberedEnum numbered, FlagsEnum flags, ManualSetupEnum manual, IgnoredEnum ignored)
+            public MyClassWithCstr(StandardEnum standard, NumberedEnum numbered, FlagsEnum flags, ManualSetupEnum manual, IgnoredEnum ignored)
             {
                 this.Standard = standard;
                 this.Numbered = numbered;
@@ -134,6 +146,11 @@ namespace ObjectFiller.Test
             public NastyEmptyEnum Nasty { get; set; }
             public ManualSetupEnum Manual { get; set; }
             public IgnoredEnum Ignored { get; set; }
+        }
+
+        public class ClassWithNullableEnum
+        {
+            public StandardEnum? NullableEnum { get; set; }
         }
     }
 }

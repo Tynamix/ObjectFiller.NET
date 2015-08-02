@@ -300,7 +300,7 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsValidForObjectFiller(Type type, FillerSetupItem currentSetupItem)
         {
-            var result= HasTypeARandomFunc(type, currentSetupItem)
+            var result = HasTypeARandomFunc(type, currentSetupItem)
                    || (TypeIsList(type) && ListParamTypeIsValid(type, currentSetupItem))
                    || (TypeIsDictionary(type) && DictionaryParamTypesAreValid(type, currentSetupItem))
                    || TypeIsPoco(type)
@@ -342,7 +342,7 @@ namespace Tynamix.ObjectFiller
                     {
                         throw new InvalidOperationException(
                             string.Format(
-                                "The dictionaryType {0} was already encountered before, which probably means you have a circular reference in your model. Either ignore the properties which cause this or specify explicit creation rules for them which do not rely on types.",
+                                "The type {0} was already encountered before, which probably means you have a circular reference in your model. Either ignore the properties which cause this or specify explicit creation rules for them which do not rely on types.",
                                 targetType.Name));
                     }
 
@@ -413,7 +413,7 @@ namespace Tynamix.ObjectFiller
                 return this.CreateInstanceOfInterfaceOrAbstractClass(type, currentSetupItem, typeTracker);
             }
 
-            if (TypeIsEnum(type))
+            if (TypeIsEnum(type) || TypeIsNullableEnum(type))
             {
                 return this.GetRandomEnumValue(type);
             }
@@ -467,7 +467,7 @@ namespace Tynamix.ObjectFiller
                 {
                     string message =
                         string.Format(
-                            "ObjectFiller Interface mocker missing and dictionaryType [{0}] not registered",
+                            "ObjectFiller Interface mocker missing and type [{0}] not registered",
                             interfaceType.Name);
                     throw new InvalidOperationException(message);
                 }
@@ -525,7 +525,7 @@ namespace Tynamix.ObjectFiller
 
                     if (constructorArgs.Count == 0)
                     {
-                        var message = "Could not found a constructor for dictionaryType [" + type.Name
+                        var message = "Could not found a constructor for type [" + type.Name
                                       + "] where the parameters can be filled with the current objectfiller setup";
                         throw new InvalidOperationException(message);
                     }
@@ -779,7 +779,10 @@ namespace Tynamix.ObjectFiller
         private object GetRandomEnumValue(Type type)
         {
             // performance: Enum.GetValues() is slow due to reflection, should cache it
-            Array values = Enum.GetValues(type);
+
+            var enumType = type.IsEnum ? type : Nullable.GetUnderlyingType(type);
+
+            Array values = Enum.GetValues(enumType);
             if (values.Length > 0)
             {
                 int index = Random.Next() % values.Length;
@@ -816,7 +819,7 @@ namespace Tynamix.ObjectFiller
                 return GetDefaultValueOfType(propertyType);
             }
 
-            string message = "The dictionaryType [" + propertyType.Name + "] was not registered in the randomizer.";
+            string message = "The type [" + propertyType.Name + "] was not registered in the randomizer.";
             throw new TypeInitializationException(propertyType.FullName, new Exception(message));
         }
 
@@ -928,6 +931,17 @@ namespace Tynamix.ObjectFiller
         private static bool TypeIsEnum(Type type)
         {
             return type.IsEnum;
+        }
+
+        /// <summary>
+        /// Checks if the given <see cref="type"/> is a nullable enum
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        /// <returns>True if the type is a nullable enum</returns>
+        private static bool TypeIsNullableEnum(Type type)
+        {
+            Type u = Nullable.GetUnderlyingType(type);
+            return (u != null) && u.IsEnum;
         }
 
         #endregion
