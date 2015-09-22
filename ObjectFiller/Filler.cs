@@ -536,13 +536,13 @@ namespace Tynamix.ObjectFiller
             if (type.GetConstructors().All(ctor => ctor.GetParameters().Length != 0))
             {
                 IEnumerable<ConstructorInfo> ctorInfos;
-                if ((ctorInfos = type.GetConstructors().Where(ctr => ctr.GetParameters().Length != 0)).Count() != 0)
+                if ((ctorInfos = type.GetConstructors().Where(ctr => ctr.GetParameters().Length != 0)).Any())
                 {
                     foreach (ConstructorInfo ctorInfo in ctorInfos.OrderBy(x => x.GetParameters().Length))
                     {
                         Type[] paramTypes = ctorInfo.GetParameters().Select(p => p.ParameterType).ToArray();
 
-                        if (paramTypes.All(t => TypeIsValidForObjectFiller(t, currentSetupItem)))
+                        if (paramTypes.All(ctorParamType => TypeIsValidForObjectFiller(ctorParamType, currentSetupItem) && ctorParamType != type))
                         {
                             foreach (Type paramType in paramTypes)
                             {

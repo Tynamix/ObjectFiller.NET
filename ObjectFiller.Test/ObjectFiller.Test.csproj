@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressFillingTest.cs" />
+    <Compile Include="CopyConstructorTest.cs" />
     <Compile Include="CountryNamesPlugin.cs" />
     <Compile Include="CityNamesPluginTest.cs" />
     <Compile Include="CreateInstanceTest.cs" />
