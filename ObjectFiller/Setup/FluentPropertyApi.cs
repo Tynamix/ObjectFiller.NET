@@ -108,6 +108,21 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// Defines which <see cref="FillerSetup"/> is used to generate a value for the given <see cref="TTargetType"/>
+        /// </summary>
+        /// <param name="setup">The setup which is used for configuration.</param>
+        public FluentFillerApi<TTargetObject> Use(FillerSetup setup)
+        {
+            foreach (PropertyInfo propertyInfo in this.affectedProperties)
+            {
+                var factoryMethod = Randomizer<TTargetType>.CreateFactoryMethod(setup);
+                this.setupManager.GetFor<TTargetObject>().PropertyToRandomFunc[propertyInfo] = () => factoryMethod();
+            }
+
+            return this.callback;
+        }
+
+        /// <summary>
         /// Defines which implementation of the <see cref="IRandomizerPlugin{T}"/> interface will be used to generate a value for the given <see cref="TTargetType"/>
         /// </summary>
         /// <param name="randomizerPlugin">A <see cref="IRandomizerPlugin{TTargetType}"/> which will be used to generate a value of the <see cref="TTargetType"/></param>

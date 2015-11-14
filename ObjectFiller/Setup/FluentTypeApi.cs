@@ -90,6 +90,19 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// With this method you can use a previously defined setup for specific types.
+        /// </summary>
+        /// <param name="setup">The setup for the type.</param>
+        /// <returns>Main FluentFiller API</returns>
+        public FluentFillerApi<TTargetObject> Use(FillerSetup setup)
+        {
+            var factoryMethod = Randomizer<TTargetType>.CreateFactoryMethod(setup);
+            this.setupManager.GetFor<TTargetObject>().TypeToRandomFunc[typeof(TTargetType)] = () => factoryMethod();
+
+            return this.callback;
+        }
+
+        /// <summary>
         /// Ignores the entity for which the fluent setup is made (Type, Property)
         /// </summary>
         /// <returns>Main FluentFiller API</returns>
@@ -108,7 +121,8 @@ namespace Tynamix.ObjectFiller
         public FluentFillerApi<TTargetObject> CreateInstanceOf<TImplementation>()
             where TImplementation : class, TTargetType
         {
-            this.setupManager.GetFor<TTargetObject>().InterfaceToImplementation.Add(typeof(TTargetType), typeof(TImplementation));
+            this.setupManager.GetFor<TTargetObject>()
+                .InterfaceToImplementation.Add(typeof(TTargetType), typeof(TImplementation));
 
             return this.callback;
         }
