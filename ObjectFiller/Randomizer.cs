@@ -39,32 +39,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>A value of type <see cref="T"/></returns>
         public static T Create()
         {
-            Type targetType = typeof(T);
-            if (!Setup.TypeToRandomFunc.ContainsKey(targetType))
-            {
-                if (targetType.IsClass)
-                {
-                    var fillerType = typeof(Filler<>).MakeGenericType(typeof(T));
-                    var objectFiller = Activator.CreateInstance(fillerType);
-                    var methodInfo = objectFiller.GetType().GetMethods().Single(x => !x.GetParameters().Any() && x.Name == "Create");
-
-                    try
-                    {
-                        return (T)methodInfo.Invoke(objectFiller, null);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new InvalidOperationException(
-                            "The type " + typeof(T).FullName + " needs additional information to get created. "
-                            + "Please use the Filler class and call \"Setup\" to create a setup for that type. See Innerexception for more details.",
-                            ex);
-                    }
-                }
-
-                return default(T);
-            }
-
-            return (T)Setup.TypeToRandomFunc[typeof(T)]();
+            return Create(null as FillerSetup);
         }
 
         /// <summary>
@@ -92,6 +67,57 @@ namespace Tynamix.ObjectFiller
         {
             Setup.TypeToRandomFunc[typeof(T)] = () => randomizerPlugin.GetValue();
             return randomizerPlugin.GetValue();
+        }
+
+        /// <summary>
+        /// Creates a factory method for the given type.
+        /// </summary>
+        /// <param name="setup">The setup which is used for the type.</param>
+        /// <returns>A function with which the given type can be instantiated.</returns>
+        internal static Func<T> CreateFactoryMethod(FillerSetup setup)
+        {
+            Type targetType = typeof(T);
+            if (!Setup.TypeToRandomFunc.ContainsKey(targetType))
+            {
+                if (targetType.IsClass)
+                {
+                    var fillerType = typeof(Filler<>).MakeGenericType(typeof(T));
+                    var objectFiller = Activator.CreateInstance(fillerType);
+
+                    if (setup != null)
+                    {
+                        var setupMethod = objectFiller.GetType().GetMethods().Single(x => x.Name == "Setup" && x.GetParameters().Any());
+                        setupMethod.Invoke(objectFiller, new[] { setup });
+                    }
+
+                    var createMethod = objectFiller.GetType().GetMethods().Single(x => !x.GetParameters().Any() && x.Name == "Create");
+                    return () => (T)createMethod.Invoke(objectFiller, null);
+                }
+
+                return () => default(T);
+            }
+
+            return () => (T)Setup.TypeToRandomFunc[typeof(T)]();
+        }
+
+        public static T Create(FillerSetup setup)
+        {
+            var creationMethod = CreateFactoryMethod(setup);
+
+            T result;
+            try
+            {
+                result = creationMethod();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(
+                    "The type " + typeof(T).FullName + " needs additional information to get created. "
+                    + "Please use the Filler class and call \"Setup\" to create a setup for that type. See Innerexception for more details.",
+                    ex);
+            }
+
+            return result;
         }
     }
 }
