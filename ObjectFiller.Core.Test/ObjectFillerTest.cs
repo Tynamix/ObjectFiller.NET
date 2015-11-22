@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-    [TestClass]
+
     public class ObjectFillerTest
     {
-        [TestMethod]
+        [Fact]
         public void TestFillPerson()
         {
-            var r = new Random();
             Person p = new Person();
             Filler<Person> filler = new Filler<Person>();
             filler.Setup()
@@ -21,26 +20,26 @@ namespace ObjectFiller.Test
                 .OnType<string>().Use(new MnemonicString(10))
                 .OnProperty(person => person.FirstName).Use(new MnemonicString(1))
                 .OnProperty(person => person.LastName).Use(new RandomListItem<string>("Maik", "Tom", "Anton"))
-                .OnProperty(person => person.Age).Use(() => r.Next(12, 83))
+                .OnProperty(person => person.Age).Use(() => Tynamix.ObjectFiller.Random.Next(12, 83))
                 .SetupFor<Address>()
                 .OnProperty(x => x.City, x => x.Country).IgnoreIt();
 
             Person pFilled = filler.Fill(p);
 
-            Assert.IsTrue(new List<string>() { "Maik", "Tom", "Anton" }.Contains(pFilled.LastName));
+            Assert.True(new List<string>() { "Maik", "Tom", "Anton" }.Contains(pFilled.LastName));
         }
 
 
 
 
-        [TestMethod]
+        [Fact]
         public void CreateMultipleInstances()
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
             IEnumerable<LibraryFillingTest.Person> pList = filler.Create(10);
 
-            Assert.IsNotNull(pList);
-            Assert.AreEqual(10, pList.Count());
+            Assert.NotNull(pList);
+            Assert.Equal(10, pList.Count());
         }
     }
 }
