@@ -6,8 +6,6 @@
     ".NETFramework,Version=v4.5": {},
     ".NETFramework,Version=v3.5": {},
     "DNX,Version=v4.5.1": {},
-    ".NETCore,Version=v4.5.1": {},
-    ".NETCore,Version=v4.5": {},
     ".NETPlatform,Version=v5.0": {
       "System.Collections/4.0.10": {
         "type": "package",
@@ -330,10 +328,6 @@
     ".NETFramework,Version=v3.5/win7-x64": {},
     "DNX,Version=v4.5.1/win7-x86": {},
     "DNX,Version=v4.5.1/win7-x64": {},
-    ".NETCore,Version=v4.5.1/win7-x86": {},
-    ".NETCore,Version=v4.5.1/win7-x64": {},
-    ".NETCore,Version=v4.5/win7-x86": {},
-    ".NETCore,Version=v4.5/win7-x64": {},
     ".NETPlatform,Version=v5.0/win7-x86": {
       "System.Collections/4.0.10": {
         "type": "package",
@@ -1678,28 +1672,6 @@
     ".NETFramework,Version=v4.5": [],
     ".NETFramework,Version=v3.5": [],
     "DNX,Version=v4.5.1": [],
-    ".NETCore,Version=v4.5.1": [
-      "fx/System ",
-      "fx/System.Linq ",
-      "fx/System.Linq.Expressions ",
-      "fx/System.Runtime.Extensions ",
-      "fx/System.Collections ",
-      "fx/System.Text.RegularExpressions ",
-      "fx/System.Runtime ",
-      "fx/System.Reflection ",
-      "fx/System.Diagnostics.Debug "
-    ],
-    ".NETCore,Version=v4.5": [
-      "fx/System ",
-      "fx/System.Linq ",
-      "fx/System.Linq.Expressions ",
-      "fx/System.Runtime.Extensions ",
-      "fx/System.Collections ",
-      "fx/System.Text.RegularExpressions ",
-      "fx/System.Runtime ",
-      "fx/System.Reflection ",
-      "fx/System.Diagnostics.Debug "
-    ],
     ".NETPlatform,Version=v5.0": [
       "System.Linq >= 4.0.0-*",
       "System.Linq.Expressions >= 4.0.10-*",

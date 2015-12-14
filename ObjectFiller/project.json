@@ -15,34 +15,6 @@
     "net45": { },
     "net35": { },
     "dnx451": { },
-    "netcore451": {
-      "compilationOptions": { "define": [ "NETCORE45" ] },
-      "frameworkAssemblies": {
-        "System": "",
-        "System.Linq": "",
-        "System.Linq.Expressions": "",
-        "System.Runtime.Extensions": "",
-        "System.Collections": "",
-        "System.Text.RegularExpressions": "",
-        "System.Runtime": "",
-        "System.Reflection": "",
-        "System.Diagnostics.Debug": ""
-      }
-    },
-    "netcore45": {
-      "compilationOptions": { "define": [ "NETCORE45" ] },
-      "frameworkAssemblies": {
-        "System": "",
-        "System.Linq": "",
-        "System.Linq.Expressions": "",
-        "System.Runtime.Extensions": "",
-        "System.Collections": "",
-        "System.Text.RegularExpressions": "",
-        "System.Runtime": "",
-        "System.Reflection": "",
-        "System.Diagnostics.Debug": ""
-      }
-    },
     "dotnet": {
       "compilationOptions": { "define": [ "DOTNET" ] },
       "dependencies": {

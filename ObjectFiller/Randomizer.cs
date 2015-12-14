@@ -12,6 +12,7 @@ namespace Tynamix.ObjectFiller
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.CompilerServices;
 
     /// <summary>
@@ -79,7 +80,8 @@ namespace Tynamix.ObjectFiller
             Type targetType = typeof(T);
             if (!Setup.TypeToRandomFunc.ContainsKey(targetType))
             {
-                if (targetType.IsClass)
+                
+                if (targetType.IsClass())
                 {
                     var fillerType = typeof(Filler<>).MakeGenericType(typeof(T));
                     var objectFiller = Activator.CreateInstance(fillerType);

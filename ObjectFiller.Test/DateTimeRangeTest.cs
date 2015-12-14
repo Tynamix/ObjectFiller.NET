@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 
     using Tynamix.ObjectFiller;
 
@@ -12,10 +12,10 @@
         public DateTime Date { get; set; }
     }
 
-    [TestClass]
+
     public class DateTimeRangeTest
     {
-        [TestMethod]
+        [Fact]
         public void WhenGettingDatesBetweenNowAnd31DaysAgo()
         {
             Filler<DateRangeTestClass> filler = new Filler<DateRangeTestClass>();
@@ -25,10 +25,10 @@
 
             var d = filler.Create(1000);
 
-            Assert.IsTrue(d.All(x => x.Date < DateTime.Now && x.Date > DateTime.Now.AddDays(-31)));
+            Assert.True(d.All(x => x.Date < DateTime.Now && x.Date > DateTime.Now.AddDays(-31)));
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenStartDateIsBiggerThenEndDateTheDatesShouldBeSwitched()
         {
             Filler<DateRangeTestClass> filler = new Filler<DateRangeTestClass>();
@@ -38,10 +38,10 @@
 
             var d = filler.Create(1000);
 
-            Assert.IsTrue(d.All(x => x.Date < DateTime.Now && x.Date > DateTime.Now.AddDays(-31)));
+            Assert.True(d.All(x => x.Date < DateTime.Now && x.Date > DateTime.Now.AddDays(-31)));
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenStartDateAndEndDateIsSetItShouldFindOnlyDatesInBetweenThisTwoDates()
         {
             var startDate = new DateTime(2000, 11, 10);
@@ -53,7 +53,20 @@
 
             var d = filler.Create(1000);
             d.ToList().ForEach(x => Console.WriteLine(x.Date));
-            Assert.IsTrue(d.All(x => x.Date < endDate && x.Date > startDate));
+            Assert.True(d.All(x => x.Date < endDate && x.Date > startDate));
+        }
+
+        [Fact]
+        public void WhenConstructorWithDateTimeNowWillBeCalledNoExceptionShouldBeThrown()
+        {
+            Filler<DateRangeTestClass> filler = new Filler<DateRangeTestClass>();
+
+            filler.Setup().OnProperty(x => x.Date).Use(new DateTimeRange(DateTime.Now));
+
+            var dateTime = filler.Create();
+
+            Assert.True(dateTime.Date > DateTime.MinValue);
+            Assert.True(dateTime.Date < DateTime.MaxValue);
         }
     }
 }

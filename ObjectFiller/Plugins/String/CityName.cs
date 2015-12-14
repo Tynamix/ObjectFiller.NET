@@ -11,8 +11,7 @@ namespace Tynamix.ObjectFiller
 {
     using System.Collections.Generic;
     using System.Linq;
-
-    using Tynamix.ObjectFiller.Properties;
+    
 
     /// <summary>
     /// Generate city names for type <see cref="string"/>. The Top 1000 cities with the most population will be used
@@ -29,7 +28,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         static CityName()
         {
-            AllCityNames = Resources.cityNames.Split(';').ToList();
+            AllCityNames = Resources.CityNames.Split(';').ToList();
         }
 
         /// <summary>

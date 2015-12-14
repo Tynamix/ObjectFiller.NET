@@ -1,28 +1,27 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-    [TestClass]
+
     public class CopyConstructorTest
     {
 
-        [TestMethod]
+        [Fact]
         public void WhenClassWithCopyConstructorIsCreatedNoExceptionShallBeThrown()
         {
             var f = new Filler<ClassWithCopyConstructorAndNormalConstructor>();
             var cc = f.Create();
 
-            Assert.IsNotNull(cc);
+            Assert.NotNull(cc);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Fact]
         public void WhenClassWithJustCopyConstructorIsCreatedAExceptionShallBeThrown()
         {
             var f = new Filler<ClassWithCopyConstructor>();
-            var cc = f.Create();
+            Assert.Throws<InvalidOperationException>(() => f.Create());
 
         }
     }

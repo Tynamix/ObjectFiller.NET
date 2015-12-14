@@ -4,37 +4,36 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+        using Xunit;
 
     using ObjectFiller.Test.TestPoco.Library;
     using ObjectFiller.Test.TestPoco.Person;
 
     using Tynamix.ObjectFiller;
 
-    [TestClass]
+
     public class RandomizerTest
     {
-        [TestMethod]
+        [Fact]
         public void GetRandomInt()
         {
             var number = Randomizer<int>.Create(new IntRange(1, 2));
 
-            Assert.IsTrue(number == 1 || number == 2);
+            Assert.True(number == 1 || number == 2);
         }
 
-        [TestMethod]
+        [Fact]
         public void FillAllAddressProperties()
         {
             var a = Randomizer<Address>.Create();
-            Assert.IsNotNull(a.City);
-            Assert.IsNotNull(a.Country);
-            Assert.AreNotEqual(0, a.HouseNumber);
-            Assert.IsNotNull(a.PostalCode);
-            Assert.IsNotNull(a.Street);
+            Assert.NotNull(a.City);
+            Assert.NotNull(a.Country);
+            Assert.NotEqual(0, a.HouseNumber);
+            Assert.NotNull(a.PostalCode);
+            Assert.NotNull(a.Street);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Fact]
         public void TryingToCreateAnObjectWithAnInterfaceShallFailAndHaveAnInnerexception()
         {
             try
@@ -43,19 +42,22 @@
             }
             catch (InvalidOperationException ex)
             {
-                Assert.IsNotNull(ex.InnerException);
-                throw;
+                Assert.NotNull(ex.InnerException);
+                return;
             }
+
+            ///Should not come here!
+            Assert.False(true);
         }
 
-        [TestMethod]
+        [Fact]
         public void RandomizerCreatesAListOfRandomItemsIfNeeded()
         {
             int amount = 5;
 
             IEnumerable<int> result = Randomizer<int>.Create(amount);
 
-            Assert.AreEqual(amount, result.Count());
+            Assert.Equal(amount, result.Count());
         }
 
     }

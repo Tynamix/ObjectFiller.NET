@@ -162,8 +162,8 @@ namespace Tynamix.ObjectFiller
                 return false;
             }
 
-            Type keyType = dictionaryType.GetGenericArguments()[0];
-            Type valueType = dictionaryType.GetGenericArguments()[1];
+            Type keyType = dictionaryType.GetGenericTypeArguments()[0];
+            Type valueType = dictionaryType.GetGenericTypeArguments()[1];
 
             return TypeIsValidForObjectFiller(keyType, currentSetupItem)
                    && TypeIsValidForObjectFiller(valueType, currentSetupItem);
@@ -180,7 +180,7 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static object GetDefaultValueOfType(Type propertyType)
         {
-            if (propertyType.IsValueType)
+            if (propertyType.IsValueType())
             {
                 return Activator.CreateInstance(propertyType);
             }
@@ -224,7 +224,7 @@ namespace Tynamix.ObjectFiller
                 return false;
             }
 
-            Type genType = listType.GetGenericArguments()[0];
+            Type genType = listType.GetGenericTypeArguments()[0];
 
             return TypeIsValidForObjectFiller(genType, currentSetupItem);
         }
@@ -240,7 +240,7 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsDictionary(Type type)
         {
-            return type.GetInterfaces().Any(x => x == typeof(IDictionary));
+            return type.GetImplementedInterfaces().Any(x => x == typeof(IDictionary));
         }
 
         /// <summary>
@@ -254,9 +254,9 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsList(Type type)
         {
-            return !type.IsArray && type.IsGenericType && type.GetGenericArguments().Length != 0
+            return !type.IsArray && type.IsGenericType() && type.GetGenericTypeArguments().Length != 0
                    && (type.GetGenericTypeDefinition() == typeof(IEnumerable<>)
-                       || type.GetInterfaces().Any(x => x == typeof(IEnumerable)));
+                       || type.GetImplementedInterfaces().Any(x => x == typeof(IEnumerable)));
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsPoco(Type type)
         {
-            return !type.IsValueType && !type.IsArray && type.IsClass && type.GetProperties().Length > 0
+            return !type.IsValueType() && !type.IsArray && type.IsClass() && type.GetProperties().Any()
                    && (type.Namespace == null
                        || (!type.Namespace.StartsWith("System") && !type.Namespace.StartsWith("Microsoft")));
         }
@@ -283,7 +283,7 @@ namespace Tynamix.ObjectFiller
         private static bool TypeIsClrType(Type type)
         {
             return (type.Namespace != null && (type.Namespace.StartsWith("System") || type.Namespace.StartsWith("Microsoft")))
-                    || type.Module.ScopeName == "CommonLanguageRuntimeLibrary";
+                    || type.GetModuleName() == "CommonLanguageRuntimeLibrary";
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Tynamix.ObjectFiller
                    || (TypeIsDictionary(type) && DictionaryParamTypesAreValid(type, currentSetupItem))
                    || TypeIsPoco(type)
                    || TypeIsEnum(type)
-                   || (type.IsInterface && currentSetupItem.InterfaceToImplementation.ContainsKey(type)
+                   || (type.IsInterface() && currentSetupItem.InterfaceToImplementation.ContainsKey(type)
                        || currentSetupItem.InterfaceMocker != null);
 
             return result;
@@ -415,7 +415,7 @@ namespace Tynamix.ObjectFiller
                 return array;
             }
 
-            if (type.IsInterface || type.IsAbstract)
+            if (type.IsInterface() || type.IsAbstract())
             {
                 return this.CreateInstanceOfInterfaceOrAbstractClass(type, currentSetupItem, typeTracker);
             }
@@ -649,12 +649,12 @@ namespace Tynamix.ObjectFiller
             HashStack<Type> typeTracker)
         {
             IDictionary dictionary = (IDictionary)Activator.CreateInstance(propertyType);
-            Type keyType = propertyType.GetGenericArguments()[0];
-            Type valueType = propertyType.GetGenericArguments()[1];
+            Type keyType = propertyType.GetGenericTypeArguments()[0];
+            Type valueType = propertyType.GetGenericTypeArguments()[1];
 
             int maxDictionaryItems = 0;
 
-            if (keyType.IsEnum)
+            if (keyType.IsEnum())
             {
                 maxDictionaryItems = Enum.GetValues(keyType).Length;
             }
@@ -668,7 +668,7 @@ namespace Tynamix.ObjectFiller
             for (int i = 0; i < maxDictionaryItems; i++)
             {
                 object keyObject = null;
-                if (keyType.IsEnum)
+                if (keyType.IsEnum())
                 {
                     keyObject = Enum.GetValues(keyType).GetValue(i);
                 }
@@ -710,7 +710,7 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private IList GetFilledList(Type propertyType, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
-            Type genType = propertyType.GetGenericArguments()[0];
+            Type genType = propertyType.GetGenericTypeArguments()[0];
 
             if (this.CheckForCircularReference(genType, typeTracker, currentSetupItem))
             {
@@ -718,13 +718,13 @@ namespace Tynamix.ObjectFiller
             }
 
             IList list;
-            if (!propertyType.IsInterface
-                && propertyType.GetInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
+            if (!propertyType.IsInterface()
+                && propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
             {
                 list = (IList)Activator.CreateInstance(propertyType);
             }
-            else if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(IEnumerable<>)
-                     || propertyType.GetInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
+            else if (propertyType.IsGenericType() && propertyType.GetGenericTypeDefinition() == typeof(IEnumerable<>)
+                     || propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
             {
                 Type openListType = typeof(List<>);
                 Type genericListType = openListType.MakeGenericType(genType);
@@ -794,7 +794,7 @@ namespace Tynamix.ObjectFiller
             IEnumerable<PropertyInfo> properties,
             PropertyInfo property)
         {
-            return properties.Where(x => x.MetadataToken == property.MetadataToken && x.Module.Equals(property.Module));
+            return properties.Where(x => x.Name == property.Name && x.Module.Equals(property.Module));
         }
 
         /// <summary>
@@ -810,7 +810,7 @@ namespace Tynamix.ObjectFiller
         {
             // performance: Enum.GetValues() is slow due to reflection, should cache it
 
-            var enumType = type.IsEnum ? type : Nullable.GetUnderlyingType(type);
+            var enumType = type.IsEnum() ? type : Nullable.GetUnderlyingType(type);
 
             Array values = Enum.GetValues(enumType);
             if (values.Length > 0)
@@ -864,11 +864,11 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private MethodInfo GetSetMethodOnDeclaringType(PropertyInfo propInfo)
         {
-            var methodInfo = propInfo.GetSetMethod(true);
+            var methodInfo = propInfo.GetSetterMethod();
 
             if (propInfo.DeclaringType != null)
             {
-                return methodInfo ?? propInfo.DeclaringType.GetProperty(propInfo.Name).GetSetMethod(true);
+                return methodInfo ?? propInfo.DeclaringType.GetProperty(propInfo.Name).GetSetterMethod();
             }
 
             return null;
@@ -960,7 +960,7 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsEnum(Type type)
         {
-            return type.IsEnum;
+            return type.IsEnum();
         }
 
         /// <summary>
@@ -971,7 +971,7 @@ namespace Tynamix.ObjectFiller
         private static bool TypeIsNullableEnum(Type type)
         {
             Type u = Nullable.GetUnderlyingType(type);
-            return (u != null) && u.IsEnum;
+            return (u != null) && u.IsEnum();
         }
 
         /// <summary>
@@ -984,7 +984,181 @@ namespace Tynamix.ObjectFiller
             return type.IsArray && type.GetArrayRank() == 1;
         }
 
-
         #endregion
     }
+
+    internal static class TypeExtension
+    {
+        public static bool IsEnum(this Type source)
+        {
+
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.IsEnum;
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().IsEnum;
+#endif
+        }
+
+        public static PropertyInfo GetProperty(this Type source, string name)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.GetProperty(name);
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().GetDeclaredProperty(name);
+#endif
+        }
+
+        public static IEnumerable<MethodInfo> GetMethods(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.GetMethods();
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().DeclaredMethods;
+#endif
+        }
+
+        public static MethodInfo GetSetterMethod(this PropertyInfo source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.GetSetMethod(true);
+#else
+            return source.SetMethod;
+#endif
+        }
+
+        public static bool IsGenericType(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.IsGenericType;
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().IsGenericType;
+#endif
+        }
+
+        public static bool IsValueType(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.IsValueType;
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().IsValueType;
+#endif
+        }
+
+        public static bool IsClass(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.IsClass;
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().IsClass;
+#endif
+        }
+
+        public static bool IsInterface(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.IsInterface;
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().IsInterface;
+#endif
+        }
+
+        public static bool IsAbstract(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.IsAbstract;
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().IsAbstract;
+#endif
+        }
+
+        public static IEnumerable<Type> GetImplementedInterfaces(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.GetInterfaces();
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().ImplementedInterfaces;
+#endif
+        }
+
+        public static IEnumerable<PropertyInfo> GetProperties(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.GetProperties();
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().DeclaredProperties;
+#endif
+        }
+
+        public static Type[] GetGenericTypeArguments(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.GetGenericArguments();
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().GenericTypeArguments;
+#endif
+        }
+
+        public static IEnumerable<ConstructorInfo> GetConstructors(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.GetConstructors();
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().DeclaredConstructors;
+#endif
+        }
+
+        public static MethodInfo GetMethod(this Type source, string name)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.GetMethod(name);
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().GetDeclaredMethod(name);
+#endif
+        }
+
+        public static string GetModuleName(this Type source)
+        {
+#if (NET35 || NET45 || NET40 || DNX451)
+            return source.Module.ScopeName;
+#endif
+
+#if (DOTNET || NETCORE45)
+            return source.GetTypeInfo().Module.Name;
+#endif
+        }
+
+#if (NET35 || NET40)
+        public static Type GetTypeInfo(this Type source)
+        {
+            return source;
+        }
+#endif
+    }
+
 }

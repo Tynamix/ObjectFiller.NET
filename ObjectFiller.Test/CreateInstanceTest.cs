@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
@@ -50,11 +49,11 @@ namespace ObjectFiller.Test
     }
 
 
-    [TestClass]
+
     public class CreateInstanceTest
     {
 
-        [TestMethod]
+        [Fact]
         public void TestCreateInstanceOfChildOne()
         {
             Filler<ParentOfParent> p = new Filler<ParentOfParent>();
@@ -65,12 +64,12 @@ namespace ObjectFiller.Test
 
             var pop = p.Create();
 
-            Assert.IsNotNull(pop);
-            Assert.IsNotNull(pop.Parents);
-            Assert.IsTrue(pop.Parents.All(x => x is ChildOne));
-            Assert.IsFalse(pop.Parents.Any(x => x is ChildTwo));
+            Assert.NotNull(pop);
+            Assert.NotNull(pop.Parents);
+            Assert.True(pop.Parents.All(x => x is ChildOne));
+            Assert.False(pop.Parents.Any(x => x is ChildTwo));
 
-            Assert.IsTrue(pop.Parents.Cast<ChildOne>().All(x => x.Name == "TEST"));
+            Assert.True(pop.Parents.Cast<ChildOne>().All(x => x.Name == "TEST"));
 
 
         }

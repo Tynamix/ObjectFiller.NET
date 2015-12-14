@@ -11,6 +11,7 @@
 namespace Tynamix.ObjectFiller
 {
     using System;
+    using System.Threading;
 
     /// <summary>
     /// Class wraps the <see cref="System.Random"/> class. 
@@ -28,7 +29,11 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         static Random()
         {
+#if NET35 || NETCORE45
             Rnd = new System.Random();
+#else
+            Rnd = ThreadSafeRandomProvider.GetThreadRandom();
+#endif
         }
 
         /// <summary>
@@ -120,4 +125,20 @@ namespace Tynamix.ObjectFiller
             return BitConverter.ToInt64(buf, 0);
         }
     }
+
+#if (!NET35 && !NETCORE45)
+    public static class ThreadSafeRandomProvider
+    {
+        private static int _seed = Environment.TickCount;
+
+        private static readonly ThreadLocal<System.Random> _randomWrapper = new ThreadLocal<System.Random>(() =>
+                        new System.Random(Interlocked.Increment(ref _seed))
+       );
+
+        public static System.Random GetThreadRandom()
+        {
+            return _randomWrapper.Value;
+        }
+    }
+#endif
 }

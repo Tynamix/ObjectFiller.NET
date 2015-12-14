@@ -7,9 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+
 namespace Tynamix.ObjectFiller
 {
-    using Tynamix.ObjectFiller.Properties;
 
     /// <summary>
     /// Style of the Name
@@ -69,12 +69,12 @@ namespace Tynamix.ObjectFiller
 
             if (this.nameStyle != NameStyle.LastName)
             {
-                this.firstNames = Resources.firstNames.Split(';');
+                this.firstNames = Resources.FirstNames.Split(';');
             }
 
             if (this.nameStyle != NameStyle.FirstName)
             {
-                this.lastNames = Resources.lastNames.Split(';');
+                this.lastNames = Resources.LastNames.Split(';');
             }
         }
 
