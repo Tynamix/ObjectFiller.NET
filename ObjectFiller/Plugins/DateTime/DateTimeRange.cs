@@ -14,14 +14,22 @@ namespace Tynamix.ObjectFiller
 
         public DateTimeRange(DateTime earliestDate, DateTime latestDate)
         {
+
             if (earliestDate > latestDate)
             {
-                var latestD = latestDate;
-                latestDate = earliestDate;
-                earliestDate = latestD;
+                this._latestDate = earliestDate;
+                this._earliestDate = latestDate;
             }
-            _earliestDate = earliestDate;
-            _latestDate = latestDate;
+            else if (earliestDate == latestDate)
+            {
+                this._latestDate = latestDate.AddMonths(Random.Next(1, 120));
+                this._earliestDate = earliestDate;
+            }
+            else
+            {
+                this._earliestDate = earliestDate;
+                this._latestDate = latestDate;
+            }
         }
 
         public DateTime GetValue()
@@ -30,7 +38,7 @@ namespace Tynamix.ObjectFiller
 
             var diff = Random.NextLong(0, timeSpan.Ticks);
 
-             return _latestDate.AddTicks(diff * -1);
+            return _latestDate.AddTicks(diff * -1);
         }
 
         DateTime? IRandomizerPlugin<DateTime?>.GetValue()

@@ -1,14 +1,14 @@
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 using ObjectFiller.Test.TestPoco;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-    [TestClass]
+
     public class RangePluginTest
     {
-        [TestMethod]
+        [Fact]
         public void TestRangeWithMaxValue()
         {
             int max = 100;
@@ -17,13 +17,13 @@ namespace ObjectFiller.Test
             filler.Setup().OnType<int>().Use(new IntRange(max));
             var sl = filler.Create();
 
-            Assert.IsNotNull(sl);
-            Assert.IsNotNull(sl.IntegerList);
-            Assert.IsTrue(sl.IntegerList.All(x => x < 100));
-            Assert.IsFalse(sl.IntegerList.All(x => x == sl.IntegerList[0]));
+            Assert.NotNull(sl);
+            Assert.NotNull(sl.IntegerList);
+            Assert.True(sl.IntegerList.All(x => x < 100));
+            Assert.False(sl.IntegerList.All(x => x == sl.IntegerList[0]));
         }
 
-        [TestMethod]
+        [Fact]
         public void TestRangeWithMinMaxValue()
         {
             int max = 100;
@@ -33,9 +33,9 @@ namespace ObjectFiller.Test
             filler.Setup().OnType<int>().Use(new IntRange(min, max));
             var sl = filler.Create();
 
-            Assert.IsNotNull(sl);
-            Assert.IsNotNull(sl.IntegerList);
-            Assert.IsTrue(sl.IntegerList.All(x => x >= min && x <= max));
+            Assert.NotNull(sl);
+            Assert.NotNull(sl.IntegerList);
+            Assert.True(sl.IntegerList.All(x => x >= min && x <= max));
         }
     }
 }

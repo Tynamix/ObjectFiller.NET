@@ -1,36 +1,35 @@
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-    [TestClass]
+
     public class HashStackTests
     {
-        [TestMethod]
+        [Fact]
         public void HashStack_PushSameItem_ReturnsFalse()
         {
             var s = new HashStack<int>();
             s.Push(1);
             var added = s.Push(1);
 
-            Assert.IsFalse(added);
+            Assert.False(added);
         }
 
-        [TestMethod]
+        [Fact]
         public void HashStack_ContainsTest()
         {
             var s = new HashStack<int>();
             s.Push(5);
-            Assert.AreEqual(true, s.Contains(5));
+            Assert.Equal(true, s.Contains(5));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Fact]
         public void HashStack_PopWithNoElements_Throws()
         {
             var s = new HashStack<int>();
-            s.Pop();
+            Assert.Throws<InvalidOperationException>(()=> s.Pop());
         }
     }
 }

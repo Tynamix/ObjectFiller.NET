@@ -11,6 +11,7 @@
 namespace Tynamix.ObjectFiller
 {
     using System;
+    using System.Threading;
 
     /// <summary>
     /// Class wraps the <see cref="System.Random"/> class. 
@@ -21,6 +22,7 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// A instance of <see cref="Random"/>
         /// </summary>
+        [ThreadStatic]
         private static readonly System.Random Rnd;
 
         /// <summary>
@@ -28,7 +30,12 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         static Random()
         {
+#if NETSTD
             Rnd = new System.Random();
+#else
+            int seed = Environment.TickCount;
+            Rnd = new System.Random(Interlocked.Increment(ref seed));
+#endif
         }
 
         /// <summary>

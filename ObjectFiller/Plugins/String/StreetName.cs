@@ -12,7 +12,6 @@ namespace Tynamix.ObjectFiller
     using System.Collections.Generic;
     using System.Linq;
 
-    using Tynamix.ObjectFiller.Properties;
 
     /// <summary>
     /// The city of which the street names  shall come from
@@ -71,22 +70,22 @@ namespace Tynamix.ObjectFiller
             switch (targetCity)
             {
                 case City.Dresden:
-                    this.AllStreetNames = Resources.germanStreetNames.Split(';').ToList();
+                    this.AllStreetNames = Resources.GermanStreetNames.Split(';').ToList();
                     break;
                 case City.Moscow:
-                    this.AllStreetNames = Resources.moscowStreetNames.Split(';').ToList();
+                    this.AllStreetNames = Resources.MoscowStreetNames.Split(';').ToList();
                     break;
                 case City.NewYork:
-                    this.AllStreetNames = Resources.newYorkStreetNames.Split(';').ToList();
+                    this.AllStreetNames = Resources.NewYorkStreetNames.Split(';').ToList();
                     break;
                 case City.Tokyo:
-                    this.AllStreetNames = Resources.tokyoStreetNames.Split(';').ToList();
+                    this.AllStreetNames = Resources.TokyoStreetNames.Split(';').ToList();
                     break;
                 case City.Paris:
-                    this.AllStreetNames = Resources.parisStreetNames.Split(';').ToList();
+                    this.AllStreetNames = Resources.ParisStreetNames.Split(';').ToList();
                     break;
                 case City.London:
-                    this.AllStreetNames = Resources.londonStreetNames.Split(';').ToList();
+                    this.AllStreetNames = Resources.LondonStreetNames.Split(';').ToList();
                     break;
             }
         }

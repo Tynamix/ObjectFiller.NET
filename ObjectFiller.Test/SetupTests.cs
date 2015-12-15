@@ -1,11 +1,11 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 
 namespace ObjectFiller.Test
 {
     using Tynamix.ObjectFiller;
 
-    [TestClass]
+
     public class SetupTests
     {
         public class Parent
@@ -20,7 +20,7 @@ namespace ObjectFiller.Test
             public string StringValue { get; set; }
         }
 
-        [TestMethod]
+        [Fact]
         public void RandomizerCreatesObjectsBasedOnPreviouseSetups()
         {
             int givenValue = Randomizer<int>.Create();
@@ -29,10 +29,10 @@ namespace ObjectFiller.Test
             var childSetup = childFiller.Setup().OnProperty(x => x.IntValue).Use(givenValue).Result;
             
             var child = Randomizer<Child>.Create(childSetup);
-            Assert.AreEqual(givenValue, child.IntValue);
+            Assert.Equal(givenValue, child.IntValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void UseSetupsAgainForPropertyConfigurations()
         {
             int givenValue = Randomizer<int>.Create();
@@ -44,10 +44,10 @@ namespace ObjectFiller.Test
             parentFiller.Setup().OnProperty(x => x.Child).Use(childSetup);
 
             var parent = parentFiller.Create();
-            Assert.AreEqual(givenValue, parent.Child.IntValue);
+            Assert.Equal(givenValue, parent.Child.IntValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void UseSetupsAgainForTypeConfigurations()
         {
             int givenValue = Randomizer<int>.Create();
@@ -59,10 +59,10 @@ namespace ObjectFiller.Test
             parentFiller.Setup().OnType<Child>().Use(childSetup);
 
             var parent = parentFiller.Create();
-            Assert.AreEqual(givenValue, parent.Child.IntValue);
+            Assert.Equal(givenValue, parent.Child.IntValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void UseSetupsAgain()
         {
             int givenValue = Randomizer<int>.Create();
@@ -75,27 +75,27 @@ namespace ObjectFiller.Test
 
             var child = secondChildFiller.Create();
 
-            Assert.AreEqual(givenValue, child.IntValue);
+            Assert.Equal(givenValue, child.IntValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void SetupsCanBeCreatedWithFactoryMethod()
         {
             var childSetup = FillerSetup.Create<Child>().OnProperty(x => x.IntValue).Use(42).Result;
 
             var child = Randomizer<Child>.Create(childSetup);
-            Assert.AreEqual(42, child.IntValue);
+            Assert.Equal(42, child.IntValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void SetupsCanBeCreatedWithFactoryMethodBasedOnExistingSetupManager()
         {
             var childSetup = FillerSetup.Create<Child>().OnProperty(x => x.IntValue).Use(42).Result;
             childSetup = FillerSetup.Create<Child>(childSetup).OnProperty(x => x.StringValue).Use("Juchu").Result;
 
             var child = Randomizer<Child>.Create(childSetup);
-            Assert.AreEqual(42, child.IntValue);
-            Assert.AreEqual("Juchu", child.StringValue);
+            Assert.Equal(42, child.IntValue);
+            Assert.Equal("Juchu", child.StringValue);
         }
     }
 }

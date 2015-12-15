@@ -1,13 +1,13 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-    [TestClass]
+
     public class EnumTest
     {
-        [TestMethod]
+        [Fact]
         public void Must_support_enums_out_of_the_box()
         {
             var filler = new Filler<MyClass>();
@@ -19,30 +19,30 @@ namespace ObjectFiller.Test
             {
                 var c = filler.Create();
 
-                Assert.IsTrue(
+                Assert.True(
                     c.Standard == StandardEnum.A ||
                     c.Standard == StandardEnum.B ||
                     c.Standard == StandardEnum.C);
 
-                Assert.IsTrue(
+                Assert.True(
                     c.Numbered == NumberedEnum.A ||
                     c.Numbered == NumberedEnum.B ||
                     c.Numbered == NumberedEnum.C);
 
-                Assert.IsTrue(
+                Assert.True(
                     c.Flags == FlagsEnum.A ||
                     c.Flags == FlagsEnum.B ||
                     c.Flags == FlagsEnum.C);
 
-                Assert.IsTrue((int)c.Nasty == 0);
+                Assert.True((int)c.Nasty == 0);
 
-                Assert.IsTrue(c.Manual == ManualSetupEnum.B);
+                Assert.True(c.Manual == ManualSetupEnum.B);
 
-                Assert.IsTrue((int)c.Ignored == 0);
+                Assert.True((int)c.Ignored == 0);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void Must_support_class_with_enums_as_ctor_out_of_the_box()
         {
             var filler = new Filler<MyClassWithCstr>();
@@ -52,34 +52,34 @@ namespace ObjectFiller.Test
             {
                 var c = filler.Create();
 
-                Assert.IsTrue(
+                Assert.True(
                     c.Standard == StandardEnum.A ||
                     c.Standard == StandardEnum.B ||
                     c.Standard == StandardEnum.C);
 
-                Assert.IsTrue(
+                Assert.True(
                     c.Numbered == NumberedEnum.A ||
                     c.Numbered == NumberedEnum.B ||
                     c.Numbered == NumberedEnum.C);
 
-                Assert.IsTrue(
+                Assert.True(
                     c.Flags == FlagsEnum.A ||
                     c.Flags == FlagsEnum.B ||
                     c.Flags == FlagsEnum.C);
 
-                Assert.IsTrue((int)c.Nasty == 0);
+                Assert.True((int)c.Nasty == 0);
 
-                Assert.IsTrue(c.Manual == ManualSetupEnum.B);
+                Assert.True(c.Manual == ManualSetupEnum.B);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void FillNullableEnum()
         {
             var filler = new Filler<ClassWithNullableEnum>();
 
             var c = filler.Create();
-            Assert.IsTrue(
+            Assert.True(
                 c.NullableEnum == StandardEnum.A ||
                 c.NullableEnum == StandardEnum.B ||
                 c.NullableEnum == StandardEnum.C);

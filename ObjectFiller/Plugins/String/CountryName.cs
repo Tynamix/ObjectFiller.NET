@@ -12,7 +12,6 @@ namespace Tynamix.ObjectFiller
     using System.Collections.Generic;
     using System.Linq;
 
-    using Tynamix.ObjectFiller.Properties;
 
     /// <summary>
     /// Generate country names for type <see cref="string"/>
@@ -29,7 +28,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         static CountryName()
         {
-            AllCountryNames = Resources.countryNames.Split(';').ToList();
+            AllCountryNames = Resources.CountryNames.Split(';').ToList();
         }
 
         /// <summary>

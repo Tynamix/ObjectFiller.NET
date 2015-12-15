@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0-*",
+  "description": "ObjectFiller.Test Class Library",
+  "authors": [ "Roman" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "commands": {
+    "test": "xunit.runner.dnx"
+  },
+
+  "frameworks": {
+    "dnxcore50": {
+      "compilationOptions": {"define": ["NETSTD"]}
+    },
+    "dnx451": {
+      "compilationOptions": { "define": [ "NET4X" ] }
+    }
+
+  },
+
+  "dependencies": {
+    "xunit": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-rc1-build204",
+    "ObjectFiller": "1.4.0-*",
+    "System.Text.RegularExpressions": "4.0.11-beta-23516"
+  }
+}

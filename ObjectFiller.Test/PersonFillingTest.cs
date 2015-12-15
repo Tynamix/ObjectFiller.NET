@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
 using Random = Tynamix.ObjectFiller.Random;
 
 namespace ObjectFiller.Test
 {
-    [TestClass]
+
     public class PersonFillingTest
     {
-        [TestMethod]
+        [Fact]
         public void TestFillPerson()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -21,14 +21,14 @@ namespace ObjectFiller.Test
 
             Person filledPerson = pFiller.Create();
 
-            Assert.IsNotNull(filledPerson.Address);
-            Assert.IsNotNull(filledPerson.Addresses);
-            Assert.IsNotNull(filledPerson.StringToIAddress);
-            Assert.IsNotNull(filledPerson.SureNames);
+            Assert.NotNull(filledPerson.Address);
+            Assert.NotNull(filledPerson.Addresses);
+            Assert.NotNull(filledPerson.StringToIAddress);
+            Assert.NotNull(filledPerson.SureNames);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void TestFillPersonWithEnumerable()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -40,14 +40,14 @@ namespace ObjectFiller.Test
 
             Person filledPerson = pFiller.Create();
 
-            Assert.IsNotNull(filledPerson.Address);
-            Assert.IsNotNull(filledPerson.Addresses);
-            Assert.IsNotNull(filledPerson.StringToIAddress);
-            Assert.IsNotNull(filledPerson.SureNames);
+            Assert.NotNull(filledPerson.Address);
+            Assert.NotNull(filledPerson.Addresses);
+            Assert.NotNull(filledPerson.StringToIAddress);
+            Assert.NotNull(filledPerson.SureNames);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void TestNameListStringRandomizer()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -58,12 +58,12 @@ namespace ObjectFiller.Test
 
             Person filledPerson = pFiller.Create();
 
-            Assert.IsNotNull(filledPerson.FirstName);
-            Assert.IsNotNull(filledPerson.LastName);
+            Assert.NotNull(filledPerson.FirstName);
+            Assert.NotNull(filledPerson.LastName);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void TestFirstNameAsConstantLastNameAsRealName()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -75,13 +75,13 @@ namespace ObjectFiller.Test
 
             Person filledPerson = pFiller.Create();
 
-            Assert.IsNotNull(filledPerson.FirstName);
-            Assert.AreEqual("John", filledPerson.FirstName);
-            Assert.IsNotNull(filledPerson.LastName);
+            Assert.NotNull(filledPerson.FirstName);
+            Assert.Equal("John", filledPerson.FirstName);
+            Assert.NotNull(filledPerson.LastName);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void GeneratePersonWithGivenSetOfNamesAndAges()
         {
             List<string> names = new List<string> { "Tom", "Maik", "John", "Leo" };
@@ -95,32 +95,32 @@ namespace ObjectFiller.Test
 
             var pF = pFiller.Create();
 
-            Assert.IsTrue(names.Contains(pF.FirstName));
-            Assert.IsTrue(ages.Contains(pF.Age));
+            Assert.True(names.Contains(pF.FirstName));
+            Assert.True(ages.Contains(pF.Age));
         }
 
 
-        [TestMethod]
+        [Fact]
         public void BigComplicated()
         {
             Filler<Person> pFiller = new Filler<Person>();
             pFiller.Setup()
                 .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnProperty(p => p.LastName, p => p.FirstName).DoIt(At.TheEnd).Use(new RealNames(NameStyle.FirstName))
-                .OnProperty(p => p.Age).Use(() => Random.Next(10, 32))
+                .OnProperty(p => p.Age).Use(() =>Random.Next(10, 32))
                 .SetupFor<Address>()
                 .OnProperty(a => a.City).Use(new MnemonicString(1))
                 .OnProperty(a => a.Street).IgnoreIt();
 
             var pF = pFiller.Create();
 
-            Assert.IsNotNull(pF);
-            Assert.IsNotNull(pF.Address);
-            Assert.IsNull(pF.Address.Street);
+            Assert.NotNull(pF);
+            Assert.NotNull(pF.Address);
+            Assert.Null(pF.Address.Street);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void FluentTest()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -129,12 +129,12 @@ namespace ObjectFiller.Test
                 .OnType<IAddress>().CreateInstanceOf<Address>();
 
             Person p = pFiller.Create();
-            Assert.IsNotNull(p);
-            Assert.AreEqual(18, p.Age);
+            Assert.NotNull(p);
+            Assert.Equal(18, p.Age);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void TestSetupForTypeOverrideSettings()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -144,11 +144,11 @@ namespace ObjectFiller.Test
                 .SetupFor<Address>(true);
 
             Person p = pFiller.Create();
-            Assert.AreEqual(1, p.Age);
-            Assert.AreNotEqual(1, p.Address.HouseNumber);
+            Assert.Equal(1, p.Age);
+            Assert.NotEqual(1, p.Address.HouseNumber);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestSetupForTypeWithoutOverrideSettings()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -158,11 +158,11 @@ namespace ObjectFiller.Test
                 .SetupFor<Address>();
 
             Person p = pFiller.Create();
-            Assert.AreEqual(1, p.Age);
-            Assert.AreEqual(1, p.Address.HouseNumber);
+            Assert.Equal(1, p.Age);
+            Assert.Equal(1, p.Address.HouseNumber);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestIgnoreAllOfType()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -173,13 +173,13 @@ namespace ObjectFiller.Test
 
             Person p = pFiller.Create();
 
-            Assert.IsNotNull(p);
-            Assert.IsNull(p.FirstName);
-            Assert.IsNotNull(p.Address);
-            Assert.IsNull(p.Address.City);
+            Assert.NotNull(p);
+            Assert.Null(p.FirstName);
+            Assert.NotNull(p.Address);
+            Assert.Null(p.Address.City);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestIgnoreAllOfComplexType()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -190,11 +190,11 @@ namespace ObjectFiller.Test
 
             Person p = pFiller.Create();
 
-            Assert.IsNotNull(p);
-            Assert.IsNull(p.Address);
+            Assert.NotNull(p);
+            Assert.Null(p.Address);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestIgnoreAllOfTypeDictionary()
         {
             Filler<Person> pFiller = new Filler<Person>();
@@ -206,12 +206,12 @@ namespace ObjectFiller.Test
 
             Person p = pFiller.Create();
 
-            Assert.IsNotNull(p);
-            Assert.IsNull(p.Address);
-            Assert.IsNull(p.StringToIAddress);
+            Assert.NotNull(p);
+            Assert.Null(p.Address);
+            Assert.Null(p.StringToIAddress);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestPropertyOrderDoNameLast()
         {
             Filler<OrderedPersonProperties> filler = new Filler<OrderedPersonProperties>();
@@ -220,11 +220,11 @@ namespace ObjectFiller.Test
 
             var p = filler.Create();
 
-            Assert.IsNotNull(p);
-            Assert.AreEqual(3, p.NameCount);
+            Assert.NotNull(p);
+            Assert.Equal(3, p.NameCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestPropertyOrderDoNameFirst()
         {
             Filler<OrderedPersonProperties> filler = new Filler<OrderedPersonProperties>();
@@ -233,8 +233,8 @@ namespace ObjectFiller.Test
 
             var p = filler.Create();
 
-            Assert.IsNotNull(p);
-            Assert.AreEqual(1, p.NameCount);
+            Assert.NotNull(p);
+            Assert.Equal(1, p.NameCount);
         }
 
     }

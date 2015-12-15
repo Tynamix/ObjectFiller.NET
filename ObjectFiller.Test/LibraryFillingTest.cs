@@ -1,16 +1,15 @@
 using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using ObjectFiller.Test.TestPoco.Library;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-    [TestClass]
+
     public class LibraryFillingTest
     {
-        [TestMethod]
+        [Fact]
         public void TestFillLibraryWithSimpleTypes()
         {
             Filler<LibraryConstructorWithSimple> lib = new Filler<LibraryConstructorWithSimple>();
@@ -18,13 +17,13 @@ namespace ObjectFiller.Test
                 .OnProperty(x => x.Books).IgnoreIt();
             LibraryConstructorWithSimple filledLib = lib.Create();
 
-            Assert.IsNull(filledLib.Books);
-            Assert.IsNotNull(filledLib);
-            Assert.IsNotNull(filledLib.City);
-            Assert.IsNotNull(filledLib.Name);
+            Assert.Null(filledLib.Books);
+            Assert.NotNull(filledLib);
+            Assert.NotNull(filledLib.City);
+            Assert.NotNull(filledLib.Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestFillLibraryWithListOfBooks()
         {
             Filler<LibraryConstructorList> lib = new Filler<LibraryConstructorList>();
@@ -34,12 +33,12 @@ namespace ObjectFiller.Test
 
             LibraryConstructorList filledLib = lib.Create();
 
-            Assert.IsNotNull(filledLib);
-            Assert.IsNotNull(filledLib.Books);
-            Assert.IsNotNull(filledLib.Name);
+            Assert.NotNull(filledLib);
+            Assert.NotNull(filledLib.Books);
+            Assert.NotNull(filledLib.Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestFillLibraryWithListOfIBooks()
         {
             Filler<LibraryConstructorList> lib = new Filler<LibraryConstructorList>();
@@ -49,10 +48,10 @@ namespace ObjectFiller.Test
 
             LibraryConstructorList filledLib = lib.Create();
 
-            Assert.IsNotNull(filledLib.Books);
+            Assert.NotNull(filledLib.Books);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestFillLibraryWithPocoOfABook()
         {
             Filler<LibraryConstructorPoco> lib = new Filler<LibraryConstructorPoco>();
@@ -60,11 +59,11 @@ namespace ObjectFiller.Test
                 .OnProperty(x => x.Books).IgnoreIt();
 
             LibraryConstructorPoco filledLib = lib.Create();
-            Assert.IsNotNull(filledLib.Books);
-            Assert.AreEqual(1, filledLib.Books.Count);
+            Assert.NotNull(filledLib.Books);
+            Assert.Equal(1, filledLib.Books.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestFillLibraryWithConfiguredPocoOfABook()
         {
             Filler<LibraryConstructorPoco> lib = new Filler<LibraryConstructorPoco>();
@@ -76,11 +75,11 @@ namespace ObjectFiller.Test
 
             var l = lib.Create();
 
-            Assert.AreEqual("ABook", ((Book)l.Books.ToList()[0]).Name);
+            Assert.Equal("ABook", ((Book)l.Books.ToList()[0]).Name);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void TestFillLibraryWithDictionary()
         {
             Filler<LibraryConstructorDictionary> lib = new Filler<LibraryConstructorDictionary>();
@@ -89,10 +88,10 @@ namespace ObjectFiller.Test
                 .OnProperty(x => x.Books).IgnoreIt();
 
             LibraryConstructorDictionary filledLib = lib.Create();
-            Assert.IsNotNull(filledLib.Books);
+            Assert.NotNull(filledLib.Books);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestFillLibraryWithDictionaryAndPoco()
         {
             Filler<LibraryConstructorDictionary> lib = new Filler<LibraryConstructorDictionary>();
@@ -102,8 +101,8 @@ namespace ObjectFiller.Test
 
 
             LibraryConstructorDictionary filledLib = lib.Create();
-            Assert.IsNotNull(filledLib.Books);
-            Assert.IsNotNull(filledLib.Name);
+            Assert.NotNull(filledLib.Books);
+            Assert.NotNull(filledLib.Name);
 
         }
 
