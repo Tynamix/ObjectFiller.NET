@@ -22,6 +22,7 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// A instance of <see cref="Random"/>
         /// </summary>
+        [ThreadStatic]
         private static readonly System.Random Rnd;
 
         /// <summary>
@@ -29,10 +30,11 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         static Random()
         {
-#if NET3X || NETSTD
+#if NETSTD
             Rnd = new System.Random();
 #else
-            Rnd = ThreadSafeRandomProvider.GetThreadRandom();
+            int seed = Environment.TickCount;
+            Rnd = new System.Random(Interlocked.Increment(ref seed));
 #endif
         }
 
@@ -125,20 +127,4 @@ namespace Tynamix.ObjectFiller
             return BitConverter.ToInt64(buf, 0);
         }
     }
-
-#if (!NET3X && !NETSTD)
-    public static class ThreadSafeRandomProvider
-    {
-        private static int _seed = Environment.TickCount;
-
-        private static readonly ThreadLocal<System.Random> _randomWrapper = new ThreadLocal<System.Random>(() =>
-                        new System.Random(Interlocked.Increment(ref _seed))
-       );
-
-        public static System.Random GetThreadRandom()
-        {
-            return _randomWrapper.Value;
-        }
-    }
-#endif
 }
