@@ -29,7 +29,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         static Random()
         {
-#if NET35 || NETCORE45
+#if NET3X || NETSTD
             Rnd = new System.Random();
 #else
             Rnd = ThreadSafeRandomProvider.GetThreadRandom();
@@ -126,7 +126,7 @@ namespace Tynamix.ObjectFiller
         }
     }
 
-#if (!NET35 && !NETCORE45)
+#if (!NET3X && !NETSTD)
     public static class ThreadSafeRandomProvider
     {
         private static int _seed = Environment.TickCount;
