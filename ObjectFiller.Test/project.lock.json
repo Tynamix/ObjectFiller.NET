@@ -153,16 +153,16 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
+      "ObjectFiller/1.4.0.3": {
         "type": "project",
         "framework": ".NETPlatform,Version=v5.1",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Diagnostics.Debug": "4.0.11",
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
           "System.Linq": "4.0.1",
-          "System.Linq.Expressions": "4.0.11",
-          "System.Runtime.Extensions": "4.0.11",
-          "System.Text.RegularExpressions": "4.0.11"
+          "System.Linq.Expressions": "4.0.10",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10"
         }
       },
       "System.Collections/4.0.11-beta-23516": {
@@ -1025,7 +1025,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
+      "ObjectFiller/1.4.0.3": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5"
       },
@@ -1317,16 +1317,16 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
+      "ObjectFiller/1.4.0.3": {
         "type": "project",
         "framework": ".NETPlatform,Version=v5.1",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Diagnostics.Debug": "4.0.11",
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
           "System.Linq": "4.0.1",
-          "System.Linq.Expressions": "4.0.11",
-          "System.Runtime.Extensions": "4.0.11",
-          "System.Text.RegularExpressions": "4.0.11"
+          "System.Linq.Expressions": "4.0.10",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10"
         }
       },
       "runtime.any.System.Linq.Expressions/4.0.11-beta-23516": {
@@ -2574,16 +2574,16 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
+      "ObjectFiller/1.4.0.3": {
         "type": "project",
         "framework": ".NETPlatform,Version=v5.1",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Diagnostics.Debug": "4.0.11",
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
           "System.Linq": "4.0.1",
-          "System.Linq.Expressions": "4.0.11",
-          "System.Runtime.Extensions": "4.0.11",
-          "System.Text.RegularExpressions": "4.0.11"
+          "System.Linq.Expressions": "4.0.10",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10"
         }
       },
       "runtime.any.System.Linq.Expressions/4.0.11-beta-23516": {
@@ -3793,7 +3793,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
+      "ObjectFiller/1.4.0.3": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5"
       },
@@ -4047,7 +4047,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
+      "ObjectFiller/1.4.0.3": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5"
       },
@@ -4172,7 +4172,7 @@
     }
   },
   "libraries": {
-    "ObjectFiller/1.4.0": {
+    "ObjectFiller/1.4.0.3": {
       "type": "project",
       "path": "../ObjectFiller/project.json"
     },
@@ -5824,7 +5824,7 @@
     "System.Reflection.TypeExtensions/4.0.1-beta-23409": {
       "type": "package",
       "serviceable": true,
-      "sha512": "Q3FiCsJ/4s2nuyhOHAFhc0Te10LzPjv6QzVcywA3oWI1msfDg583RIXQ9YifDfOuig+wg+SX0p133qV71HVfyw==",
+      "sha512": "n8m144jjCwhN/qtLih35a2sO33fLWm1U3eg51KxqAcAjJcw0nq1zWie8FZognBTPv7BXdW/G8xGbbvDGFoJwZA==",
       "files": [
         "lib/DNXCore50/de/System.Reflection.TypeExtensions.xml",
         "lib/DNXCore50/es/System.Reflection.TypeExtensions.xml",
