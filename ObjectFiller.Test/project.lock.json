@@ -153,7 +153,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0.3": {
+      "ObjectFiller/1.4.0": {
         "type": "project",
         "framework": ".NETPlatform,Version=v5.1",
         "dependencies": {
@@ -1025,7 +1025,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0.3": {
+      "ObjectFiller/1.4.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5"
       },
@@ -1317,7 +1317,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0.3": {
+      "ObjectFiller/1.4.0": {
         "type": "project",
         "framework": ".NETPlatform,Version=v5.1",
         "dependencies": {
@@ -2574,7 +2574,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0.3": {
+      "ObjectFiller/1.4.0": {
         "type": "project",
         "framework": ".NETPlatform,Version=v5.1",
         "dependencies": {
@@ -3793,7 +3793,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0.3": {
+      "ObjectFiller/1.4.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5"
       },
@@ -4047,7 +4047,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0.3": {
+      "ObjectFiller/1.4.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5"
       },
@@ -4172,7 +4172,7 @@
     }
   },
   "libraries": {
-    "ObjectFiller/1.4.0.3": {
+    "ObjectFiller/1.4.0": {
       "type": "project",
       "path": "../ObjectFiller/project.json"
     },
