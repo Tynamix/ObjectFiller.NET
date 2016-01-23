@@ -1,15 +1,10 @@
 ﻿namespace ObjectFiller.Test
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-        using Xunit;
-
-    using ObjectFiller.Test.TestPoco.Library;
-    using ObjectFiller.Test.TestPoco.Person;
-
+    using Xunit;
     using Tynamix.ObjectFiller;
 
 
@@ -43,8 +38,8 @@
                 TaskCreationOptions.LongRunning
             );
             var results = Task.WhenAll(task1, task2).Result;
-            List<int> firstResults = results[0];
-            List<int> secondResults = results[1];
+            var firstResults = results[0].Sum();
+            var secondResults = results[1].Sum();
             Assert.NotEqual(firstResults, secondResults);
         }
     }
