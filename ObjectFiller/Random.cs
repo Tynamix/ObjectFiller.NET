@@ -19,24 +19,47 @@ namespace Tynamix.ObjectFiller
     /// </summary>
     internal static class Random
     {
+
+        private static int RandomSeed;
+        /// <summary>
+        /// Initializes static members of the <see cref="Random"/> class.
+        /// A instance of <see cref="Random"/>
+        /// </summary>
+        static Random()
+        {
+            RandomSeed = Environment.TickCount;
+        }
+
+#if NET3X
         /// <summary>
         /// A instance of <see cref="Random"/>
         /// </summary>
         [ThreadStatic]
-        private static readonly System.Random Rnd;
+        private static System.Random RndStorage;
+
+        private static System.Random Rnd
+        {
+            get
+            {
+                if (RndStorage == null)
+                {
+                    RndStorage = new System.Random(Interlocked.Increment(ref RandomSeed));
+                }
+                return RndStorage;
+            }
+        }
+#else
+        private static readonly ThreadLocal<System.Random> RndStorage = new ThreadLocal<System.Random>(() =>
+            new System.Random(Interlocked.Increment(ref RandomSeed)));
 
         /// <summary>
-        /// Initializes static members of the <see cref="Random"/> class.
+        /// A instance of <see cref="Random"/>
         /// </summary>
-        static Random()
+        private static System.Random Rnd
         {
-#if NETSTD
-            Rnd = new System.Random();
-#else
-            int seed = Environment.TickCount;
-            Rnd = new System.Random(Interlocked.Increment(ref seed));
-#endif
+            get { return RndStorage.Value; }
         }
+#endif
 
         /// <summary>
         /// Returns a nonnegative number
