@@ -153,18 +153,6 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
-        "type": "project",
-        "framework": ".NETPlatform,Version=v5.1",
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Linq": "4.0.0",
-          "System.Linq.Expressions": "4.0.10",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10"
-        }
-      },
       "System.Collections/4.0.11-beta-23516": {
         "type": "package",
         "dependencies": {
@@ -731,6 +719,18 @@
           "lib/dotnet5.4/System.Xml.XDocument.dll": {}
         }
       },
+      "Tynamix.ObjectFiller/1.4.1": {
+        "type": "project",
+        "framework": ".NETPlatform,Version=v5.1",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10"
+        }
+      },
       "xunit/2.1.0": {
         "type": "package",
         "dependencies": {
@@ -1025,10 +1025,6 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5"
-      },
       "System.Text.RegularExpressions/4.0.11-beta-23516": {
         "type": "package",
         "compile": {
@@ -1037,6 +1033,10 @@
         "runtime": {
           "lib/net45/_._": {}
         }
+      },
+      "Tynamix.ObjectFiller/1.4.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5"
       },
       "xunit/2.1.0": {
         "type": "package",
@@ -1315,18 +1315,6 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
-        }
-      },
-      "ObjectFiller/1.4.0": {
-        "type": "project",
-        "framework": ".NETPlatform,Version=v5.1",
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Linq": "4.0.0",
-          "System.Linq.Expressions": "4.0.10",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10"
         }
       },
       "runtime.any.System.Linq.Expressions/4.0.11-beta-23516": {
@@ -2242,6 +2230,18 @@
           "lib/dotnet5.4/System.Xml.XDocument.dll": {}
         }
       },
+      "Tynamix.ObjectFiller/1.4.1": {
+        "type": "project",
+        "framework": ".NETPlatform,Version=v5.1",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10"
+        }
+      },
       "xunit/2.1.0": {
         "type": "package",
         "dependencies": {
@@ -2572,18 +2572,6 @@
         },
         "runtime": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
-        }
-      },
-      "ObjectFiller/1.4.0": {
-        "type": "project",
-        "framework": ".NETPlatform,Version=v5.1",
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Linq": "4.0.0",
-          "System.Linq.Expressions": "4.0.10",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10"
         }
       },
       "runtime.any.System.Linq.Expressions/4.0.11-beta-23516": {
@@ -3499,6 +3487,18 @@
           "lib/dotnet5.4/System.Xml.XDocument.dll": {}
         }
       },
+      "Tynamix.ObjectFiller/1.4.1": {
+        "type": "project",
+        "framework": ".NETPlatform,Version=v5.1",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10"
+        }
+      },
       "xunit/2.1.0": {
         "type": "package",
         "dependencies": {
@@ -3793,10 +3793,6 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5"
-      },
       "System.Text.RegularExpressions/4.0.11-beta-23516": {
         "type": "package",
         "compile": {
@@ -3805,6 +3801,10 @@
         "runtime": {
           "lib/net45/_._": {}
         }
+      },
+      "Tynamix.ObjectFiller/1.4.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5"
       },
       "xunit/2.1.0": {
         "type": "package",
@@ -4047,10 +4047,6 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ObjectFiller/1.4.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5"
-      },
       "System.Text.RegularExpressions/4.0.11-beta-23516": {
         "type": "package",
         "compile": {
@@ -4059,6 +4055,10 @@
         "runtime": {
           "lib/net45/_._": {}
         }
+      },
+      "Tynamix.ObjectFiller/1.4.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5"
       },
       "xunit/2.1.0": {
         "type": "package",
@@ -4172,9 +4172,9 @@
     }
   },
   "libraries": {
-    "ObjectFiller/1.4.0": {
+    "Tynamix.ObjectFiller/1.4.1": {
       "type": "project",
-      "path": "../ObjectFiller/project.json"
+      "path": "../Tynamix.ObjectFiller/project.json"
     },
     "Microsoft.Dnx.Compilation.Abstractions/1.0.0-rc1-final": {
       "type": "package",
@@ -6852,8 +6852,8 @@
     "": [
       "xunit >= 2.1.0",
       "xunit.runner.dnx >= 2.1.0-rc1-build204",
-      "ObjectFiller >= 1.4.0-*",
-      "System.Text.RegularExpressions >= 4.0.11-beta-23516"
+      "System.Text.RegularExpressions >= 4.0.11-beta-23516",
+      "Tynamix.ObjectFiller >= 1.4.1"
     ],
     "DNXCore,Version=v5.0": [],
     "DNX,Version=v4.5.1": []
