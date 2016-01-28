@@ -6,3 +6,9 @@ install:
 
 build:
   verbosity: minimal
+  
+test_script: 
+  - ps: >-
+    cd Tynamix.ObjectFiller.Test
+
+    dnx test
