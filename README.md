@@ -1,3 +1,6 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/3sk25qg31wsamaa5/branch/master?svg=true)](https://ci.appveyor.com/project/HerrLoesch/objectfiller-net/branch/master)
+
+
 #ObjectFiller.NET
 <img align="left" src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/logo.png" alt="Logo" />
 The **.NET ObjectFiller** fills the properties of your .NET objects with random data!
