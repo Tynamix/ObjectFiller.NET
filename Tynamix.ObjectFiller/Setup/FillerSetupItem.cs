@@ -110,7 +110,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         private void SetDefaultRandomizer()
         {
-            var mnemonic = new MnemonicString(20);
+            var mnemonic = new MnemonicString(1);
             var doublePlugin = new DoubleRange();
             var dateTimeRandomizer = new DateTimeRange(new DateTime(1970, 1, 1));
             this.TypeToRandomFunc[typeof(string)] = mnemonic.GetValue;
