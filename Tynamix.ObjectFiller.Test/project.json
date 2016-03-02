@@ -5,25 +5,18 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-
   "commands": {
     "test": "xunit.runner.dnx"
   },
-
   "frameworks": {
-    "dnxcore50": {
-      "compilationOptions": {"define": ["NETSTD"]}
-    },
     "dnx451": {
-      "compilationOptions": { "define": [ "NET4X" ] }
+      "compilationOptions": { "define": [ "NET4X" ] },
+      "dependencies": {
+        "xunit": "2.1.0",
+        "xunit.runner.dnx": "2.1.0-rc1-build204",
+        "System.Text.RegularExpressions": "4.0.11-beta-23516",
+        "Tynamix.ObjectFiller": "1.4.2"
+      }
     }
-
-  },
-
-  "dependencies": {
-    "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build204",
-    "System.Text.RegularExpressions": "4.0.11-beta-23516",
-    "Tynamix.ObjectFiller": "1.4.1"
   }
 }
