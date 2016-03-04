@@ -9,33 +9,48 @@ namespace ObjectFiller.Test
     public class RangePluginTest
     {
         [Fact]
-        public void TestRangeWithMaxValue()
+        public void TestIntRangeWithMaxValue()
         {
             int max = 100;
-            Filler<SimpleList> filler = new Filler<SimpleList>();
+            Filler<SimpleList<int>> filler = new Filler<SimpleList<int>>();
 
             filler.Setup().OnType<int>().Use(new IntRange(max));
             var sl = filler.Create();
 
             Assert.NotNull(sl);
-            Assert.NotNull(sl.IntegerList);
-            Assert.True(sl.IntegerList.All(x => x < 100));
-            Assert.False(sl.IntegerList.All(x => x == sl.IntegerList[0]));
+            Assert.NotNull(sl.ChildList);
+            Assert.True(sl.ChildList.All(x => x < 100));
+            Assert.False(sl.ChildList.All(x => x == sl.ChildList[0]));
         }
 
         [Fact]
-        public void TestRangeWithMinMaxValue()
+        public void TestIntRangeWithMinMaxValue()
         {
             int max = 100;
             int min = 50;
-            Filler<SimpleList> filler = new Filler<SimpleList>();
+            Filler<SimpleList<int>> filler = new Filler<SimpleList<int>>();
 
             filler.Setup().OnType<int>().Use(new IntRange(min, max));
             var sl = filler.Create();
 
             Assert.NotNull(sl);
-            Assert.NotNull(sl.IntegerList);
-            Assert.True(sl.IntegerList.All(x => x >= min && x <= max));
+            Assert.NotNull(sl.ChildList);
+            Assert.True(sl.ChildList.All(x => x >= min && x <= max));
+        }
+
+        [Fact]
+        public void TestFloateRangeWithMinMaxValue()
+        {
+            int max = 100;
+            int min = 50;
+            Filler<SimpleList<float>> filler = new Filler<SimpleList<float>>();
+
+            filler.Setup().OnType<float>().Use(new FloatRange(min, max));
+            var sl = filler.Create();
+
+            Assert.NotNull(sl);
+            Assert.NotNull(sl.ChildList);
+            Assert.True(sl.ChildList.All(x => x >= min && x <= max));
         }
     }
 }

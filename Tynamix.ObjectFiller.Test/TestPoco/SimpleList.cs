@@ -2,8 +2,8 @@
 
 namespace ObjectFiller.Test.TestPoco
 {
-    public class SimpleList
+    public class SimpleList<T>
     {
-        public List<int> IntegerList { get; set; } 
+        public List<T> ChildList { get; set; } 
     }
 }
