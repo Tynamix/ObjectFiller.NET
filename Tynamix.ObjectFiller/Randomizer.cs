@@ -66,15 +66,15 @@ namespace Tynamix.ObjectFiller
             }
 
             return resultSet;
-        } 
+        }
 
         /// <summary>
         /// Creates a set of random items of the given type and will use a <see cref="IRandomizerPlugin{T}"/> for that.
         /// </summary>
-        /// <param name="amount">Amount of items created.</param>
         /// <param name="randomizerPlugin">Plugin to use.</param>
+        /// <param name="amount">Amount of items created.</param>
         /// <returns>Set of random items of the given type.</returns>
-        public static IEnumerable<T> Create(int amount, IRandomizerPlugin<T> randomizerPlugin)
+        public static IEnumerable<T> Create(IRandomizerPlugin<T> randomizerPlugin, int amount)
         {
             return Create(amount, () => Create(randomizerPlugin));
         }
@@ -82,10 +82,10 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Creates a set of random items of the given type and will use a <see cref="FillerSetup"/> for that.
         /// </summary>
-        /// <param name="amount">Amount of items created.</param>
         /// <param name="setup">Setup to use.</param>
+        /// <param name="amount">Amount of items created.</param>
         /// <returns>Set of random items of the given type.</returns>
-        public static IEnumerable<T> Create(int amount, FillerSetup setup)
+        public static IEnumerable<T> Create(FillerSetup setup, int amount)
         {
             return Create(amount, () => Create(setup));
         }
@@ -111,7 +111,7 @@ namespace Tynamix.ObjectFiller
             Type targetType = typeof(T);
             if (!Setup.TypeToRandomFunc.ContainsKey(targetType))
             {
-                
+
                 if (targetType.IsClass())
                 {
                     var fillerType = typeof(Filler<>).MakeGenericType(typeof(T));
