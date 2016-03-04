@@ -50,7 +50,7 @@ namespace Tynamix.ObjectFiller
         /// Use this to generate a double value between double.MinValue and double.MaxValue
         /// </summary>
         public DoubleRange()
-            : this(int.MinValue, int.MaxValue)
+            : this(double.MinValue, double.MaxValue)
         {
 
         }
