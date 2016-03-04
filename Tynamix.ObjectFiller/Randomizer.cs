@@ -42,19 +42,52 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Creates a set of random items of the given type. It will use a <see cref="IRandomizerPlugin{T}"/> for that.
+        /// Creates a set of random items of the given type.
         /// </summary>
         /// <param name="amount">Amount of items created.</param>
         /// <returns>Set of random items of the given type.</returns>
         public static IEnumerable<T> Create(int amount)
         {
+            return Create(amount, Create);
+        }
+
+        /// <summary>
+        /// Creates the specified amount of elements using the given factory.
+        /// </summary>
+        /// <param name="amount">The amount to create.</param>
+        /// <param name="factory">The factory which provides the instance to add.</param>
+        /// <returns>Set of items created by the factory.</returns>
+        public static IEnumerable<T> Create(int amount, Func<T> factory)
+        {
             var resultSet = new List<T>();
             for (int i = 0; i < amount; i++)
             {
-                resultSet.Add(Create());
+                resultSet.Add(factory());
             }
 
             return resultSet;
+        }
+
+        /// <summary>
+        /// Creates a set of random items of the given type and will use a <see cref="IRandomizerPlugin{T}"/> for that.
+        /// </summary>
+        /// <param name="randomizerPlugin">Plugin to use.</param>
+        /// <param name="amount">Amount of items created.</param>
+        /// <returns>Set of random items of the given type.</returns>
+        public static IEnumerable<T> Create(IRandomizerPlugin<T> randomizerPlugin, int amount)
+        {
+            return Create(amount, () => Create(randomizerPlugin));
+        }
+
+        /// <summary>
+        /// Creates a set of random items of the given type and will use a <see cref="FillerSetup"/> for that.
+        /// </summary>
+        /// <param name="setup">Setup to use.</param>
+        /// <param name="amount">Amount of items created.</param>
+        /// <returns>Set of random items of the given type.</returns>
+        public static IEnumerable<T> Create(FillerSetup setup, int amount)
+        {
+            return Create(amount, () => Create(setup));
         }
 
         /// <summary>
@@ -69,6 +102,31 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// Creates a value base on a filler setup
+        /// </summary>
+        /// <param name="setup">Setup for the objectfiller</param>
+        /// <returns>Created value</returns>
+        public static T Create(FillerSetup setup)
+        {
+            var creationMethod = CreateFactoryMethod(setup);
+
+            T result;
+            try
+            {
+                result = creationMethod();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(
+                    "The type " + typeof(T).FullName + " needs additional information to get created. "
+                    + "Please use the Filler class and call \"Setup\" to create a setup for that type. See Innerexception for more details.",
+                    ex);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Creates a factory method for the given type.
         /// </summary>
         /// <param name="setup">The setup which is used for the type.</param>
@@ -78,7 +136,7 @@ namespace Tynamix.ObjectFiller
             Type targetType = typeof(T);
             if (!Setup.TypeToRandomFunc.ContainsKey(targetType))
             {
-                
+
                 if (targetType.IsClass())
                 {
                     var fillerType = typeof(Filler<>).MakeGenericType(typeof(T));
@@ -98,26 +156,6 @@ namespace Tynamix.ObjectFiller
             }
 
             return () => (T)Setup.TypeToRandomFunc[typeof(T)]();
-        }
-
-        public static T Create(FillerSetup setup)
-        {
-            var creationMethod = CreateFactoryMethod(setup);
-
-            T result;
-            try
-            {
-                result = creationMethod();
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(
-                    "The type " + typeof(T).FullName + " needs additional information to get created. "
-                    + "Please use the Filler class and call \"Setup\" to create a setup for that type. See Innerexception for more details.",
-                    ex);
-            }
-
-            return result;
         }
     }
 }
