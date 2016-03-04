@@ -46,7 +46,7 @@
                 return;
             }
 
-            ///Should not come here!
+            // Should not reach this!
             Assert.False(true);
         }
 
@@ -60,5 +60,39 @@
             Assert.Equal(amount, result.Count());
         }
 
+        [Fact]
+        public void RandomizerCreatesAListOfRandomItemsWithAPlugin()
+        {
+            int amount = 5;
+
+            IEnumerable<int> result = Randomizer<int>.Create(amount, new IntRange(1,1));
+
+            Assert.Equal(amount, result.Count());
+            Assert.True(result.Count(x => x == 1) == amount);
+        }
+
+        [Fact]
+        public void RandomizerCreatesAListOfItemBasedOnAFactory()
+        {
+            int amount = 5;
+
+            IEnumerable<int> result = Randomizer<int>.Create(amount, () => 1);
+
+            Assert.Equal(amount, result.Count());
+            Assert.True(result.Count(x => x == 1) == amount);
+        }
+        
+        [Fact]
+        public void RandomizerCreatesAListOfItemBasedOnASetup()
+        {
+            int amount = 5;
+
+            var setup = FillerSetup.Create<Person>().OnType<int>().Use(1).Result;
+
+            IEnumerable<Person> result = Randomizer<Person>.Create(amount, setup);
+
+            Assert.Equal(amount, result.Count());
+            Assert.True(result.Count(x => x.Age == 1) == amount);
+        }
     }
 }

@@ -42,19 +42,52 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Creates a set of random items of the given type. It will use a <see cref="IRandomizerPlugin{T}"/> for that.
+        /// Creates a set of random items of the given type.
         /// </summary>
         /// <param name="amount">Amount of items created.</param>
         /// <returns>Set of random items of the given type.</returns>
         public static IEnumerable<T> Create(int amount)
         {
+            return Create(amount, Create);
+        }
+
+        /// <summary>
+        /// Creates the specified amount of elements using the given factory.
+        /// </summary>
+        /// <param name="amount">The amount to create.</param>
+        /// <param name="factory">The factory which provides the instance to add.</param>
+        /// <returns>Set of items created by the factory.</returns>
+        public static IEnumerable<T> Create(int amount, Func<T> factory)
+        {
             var resultSet = new List<T>();
             for (int i = 0; i < amount; i++)
             {
-                resultSet.Add(Create());
+                resultSet.Add(factory());
             }
 
             return resultSet;
+        } 
+
+        /// <summary>
+        /// Creates a set of random items of the given type and will use a <see cref="IRandomizerPlugin{T}"/> for that.
+        /// </summary>
+        /// <param name="amount">Amount of items created.</param>
+        /// <param name="randomizerPlugin">Plugin to use.</param>
+        /// <returns>Set of random items of the given type.</returns>
+        public static IEnumerable<T> Create(int amount, IRandomizerPlugin<T> randomizerPlugin)
+        {
+            return Create(amount, () => Create(randomizerPlugin));
+        }
+
+        /// <summary>
+        /// Creates a set of random items of the given type and will use a <see cref="FillerSetup"/> for that.
+        /// </summary>
+        /// <param name="amount">Amount of items created.</param>
+        /// <param name="setup">Setup to use.</param>
+        /// <returns>Set of random items of the given type.</returns>
+        public static IEnumerable<T> Create(int amount, FillerSetup setup)
+        {
+            return Create(amount, () => Create(setup));
         }
 
         /// <summary>
