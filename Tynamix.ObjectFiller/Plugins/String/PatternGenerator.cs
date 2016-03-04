@@ -87,6 +87,14 @@ namespace Tynamix.ObjectFiller
         #region PatternGenerator class implementation
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PatternGenerator"/> class.
+        /// </summary>
+        public PatternGenerator()
+            : this("{A:3-22}")
+        {
+        }
+
+        /// <summary>
         /// Creates values based on a pattern. <para/>
         /// <para/>
         /// Character patterns:<para/>

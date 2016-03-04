@@ -2,48 +2,87 @@ using System;
 
 namespace Tynamix.ObjectFiller
 {
+    /// <summary>
+    /// The date time range plugin.
+    /// </summary>
     public class DateTimeRange : IRandomizerPlugin<DateTime>, IRandomizerPlugin<DateTime?>
     {
-        private readonly DateTime _earliestDate;
-        private readonly DateTime _latestDate;
+        /// <summary>
+        /// The earliest date.
+        /// </summary>
+        private readonly DateTime earliestDate;
 
+        /// <summary>
+        /// The latest date.
+        /// </summary>
+        private readonly DateTime latestDate;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DateTimeRange"/> class.
+        /// </summary>
+        public DateTimeRange()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DateTimeRange"/> class.
+        /// </summary>
+        /// <param name="earliestDate">
+        /// The earliest date.
+        /// </param>
         public DateTimeRange(DateTime earliestDate)
             : this(earliestDate, DateTime.Now)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DateTimeRange"/> class.
+        /// </summary>
+        /// <param name="earliestDate">
+        /// The earliest date.
+        /// </param>
+        /// <param name="latestDate">
+        /// The latest date.
+        /// </param>
         public DateTimeRange(DateTime earliestDate, DateTime latestDate)
         {
-
             if (earliestDate > latestDate)
             {
-                this._latestDate = earliestDate;
-                this._earliestDate = latestDate;
+                this.latestDate = earliestDate;
+                this.earliestDate = latestDate;
             }
             else if (earliestDate == latestDate)
             {
-                this._latestDate = latestDate.AddMonths(Random.Next(1, 120));
-                this._earliestDate = earliestDate;
+                this.latestDate = latestDate.AddMonths(Random.Next(1, 120));
+                this.earliestDate = earliestDate;
             }
             else
             {
-                this._earliestDate = earliestDate;
-                this._latestDate = latestDate;
+                this.earliestDate = earliestDate;
+                this.latestDate = latestDate;
             }
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
         public DateTime GetValue()
         {
-            var timeSpan = _latestDate.Subtract(_earliestDate);
+            var timeSpan = this.latestDate.Subtract(this.earliestDate);
 
             var diff = Random.NextLong(0, timeSpan.Ticks);
 
-            return _latestDate.AddTicks(diff * -1);
+            return this.latestDate.AddTicks(diff * -1);
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
         DateTime? IRandomizerPlugin<DateTime?>.GetValue()
         {
-            return GetValue();
+            return this.GetValue();
         }
     }
 }

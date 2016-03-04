@@ -26,6 +26,8 @@ namespace ObjectFiller.Test
             Assert.NotNull(entity.EntityICollection);
             Assert.NotNull(entity.EntityIEnumerable);
             Assert.NotNull(entity.EntityIList);
+            Assert.NotNull(entity.EntityHashset);
+
         }
 
         [Fact]
@@ -64,7 +66,7 @@ namespace ObjectFiller.Test
             Assert.NotNull(entity.EntityIEnumerable);
             Assert.NotNull(entity.EntityIList);
             Assert.NotNull(entity.EntityArray);
-
+            Assert.NotNull(entity.EntityHashset);
         }
 
         [Fact]
@@ -79,6 +81,7 @@ namespace ObjectFiller.Test
             Assert.NotNull(entity.EntityICollection);
             Assert.NotNull(entity.EntityIEnumerable);
             Assert.NotNull(entity.EntityIList);
+            Assert.NotNull(entity.EntityHashset);
         }
 
         [Fact]
@@ -117,6 +120,7 @@ namespace ObjectFiller.Test
                 Assert.True(entityCollection.EntityIEnumerable.Any());
                 Assert.True(entityCollection.EntityIList.Any());
                 Assert.True(entityCollection.EntityList.Any());
+                Assert.NotNull(entityCollection.EntityHashset.Any());
             }
         }
 

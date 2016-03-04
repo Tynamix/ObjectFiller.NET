@@ -13,6 +13,7 @@ namespace Tynamix.ObjectFiller
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Reflection;
 
@@ -254,9 +255,29 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsList(Type type)
         {
-            return !type.IsArray && type.IsGenericType() && type.GetGenericTypeArguments().Length != 0
+            return !type.IsArray
+                   && type.IsGenericType()
+                   && type.GetGenericTypeArguments().Length != 0
                    && (type.GetGenericTypeDefinition() == typeof(IEnumerable<>)
-                       || type.GetImplementedInterfaces().Any(x => x == typeof(IEnumerable)));
+                       || type.GetImplementedInterfaces().Any(x => x == typeof(IList)));
+        }
+
+        /// <summary>
+        /// Checks if the given <see cref="type"/> is a list
+        /// </summary>
+        /// <param name="type">
+        /// The type to check
+        /// </param>
+        /// <returns>
+        /// True if the target <see cref="type"/>  is a list
+        /// </returns>
+        private static bool TypeIsCollection(Type type)
+        {
+            return !type.IsArray
+                   && type.IsGenericType()
+                   && type.GetGenericTypeArguments().Length != 0
+                   && (type.GetGenericTypeDefinition() == typeof(ICollection<>)
+                       || type.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)));
         }
 
         /// <summary>
@@ -407,6 +428,13 @@ namespace Tynamix.ObjectFiller
                 IList list = this.GetFilledList(type, currentSetupItem, typeTracker);
 
                 return list;
+            }
+
+            if (TypeIsCollection(type))
+            {
+                IEnumerable collection = this.GetFilledCollection(type, currentSetupItem, typeTracker);
+
+                return collection;
             }
 
             if (TypeIsArray(type))
@@ -720,7 +748,7 @@ namespace Tynamix.ObjectFiller
 
             IList list;
             if (!propertyType.IsInterface()
-                && propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
+                && propertyType.GetImplementedInterfaces().Any(x => x == typeof(IList)))
             {
                 list = (IList)Activator.CreateInstance(propertyType);
             }
@@ -744,6 +772,60 @@ namespace Tynamix.ObjectFiller
             }
 
             return list;
+        }
+
+        /// <summary>
+        /// Creates and fills a list of the given <see cref="propertyType"/>
+        /// </summary>
+        /// <param name="propertyType">
+        /// Type of the list
+        /// </param>
+        /// <param name="currentSetupItem">
+        /// The current setup item.
+        /// </param>
+        /// <param name="typeTracker">
+        /// The dictionaryType tracker to find circular dependencies
+        /// </param>
+        /// <returns>
+        /// Created and filled list of the given <see cref="propertyType"/>
+        /// </returns>
+        private IEnumerable GetFilledCollection(Type propertyType, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
+        {
+            Type genType = propertyType.GetGenericTypeArguments()[0];
+
+            if (this.CheckForCircularReference(genType, typeTracker, currentSetupItem))
+            {
+                return null;
+            }
+
+            IEnumerable target;
+
+            if (!propertyType.IsInterface()
+                && propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
+            {
+                target = (IEnumerable)Activator.CreateInstance(propertyType);
+            }
+            else if (propertyType.IsGenericType() && propertyType.GetGenericTypeDefinition() == typeof(ICollection<>)
+                     || propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
+            {
+                Type openListType = typeof(List<>);
+                Type genericListType = openListType.MakeGenericType(genType);
+                target = (IEnumerable)Activator.CreateInstance(genericListType);
+            }
+            else
+            {
+                target = (IEnumerable)Activator.CreateInstance(propertyType);
+            }
+
+            int maxListItems = Random.Next(currentSetupItem.ListMinCount, currentSetupItem.ListMaxCount);
+            for (int i = 0; i < maxListItems; i++)
+            {
+                object listObject = this.CreateAndFillObject(genType, currentSetupItem, typeTracker);
+                MethodInfo method = target.GetType().GetMethod("Add");
+                method.Invoke(target, new object[] { listObject });
+            }
+
+            return target;
         }
 
         /// <summary>
