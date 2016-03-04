@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-    using Xunit;
+using Xunit;
 using ObjectFiller.Test.TestPoco.Library;
 using Tynamix.ObjectFiller;
 
@@ -17,7 +17,7 @@ namespace ObjectFiller.Test
         {
             Filler<Book> book = new Filler<Book>();
             book.Setup()
-                .OnProperty(x => x.ISBN).Use(new Lipsum(LipsumFlavor.InDerFremde, 3, 9, minWords: 51));
+                .OnProperty(x => x.ISBN).Use(new Lipsum(LipsumFlavor.InDerFremde, 51, 100, 100));
 
             var b = book.Create();
 
@@ -67,7 +67,7 @@ namespace ObjectFiller.Test
         {
             Filler<Book> book = new Filler<Book>();
             book.Setup()
-                .OnProperty(x => x.ISBN).Use(new Lipsum(LipsumFlavor.LoremIpsum, seed: 1234));
+                .OnProperty(x => x.ISBN).Use(new Lipsum(LipsumFlavor.LoremIpsum, 3, 5, 1, 5, 3, 1234));
 
             var b = book.Create();
             var b1 = book.Create();

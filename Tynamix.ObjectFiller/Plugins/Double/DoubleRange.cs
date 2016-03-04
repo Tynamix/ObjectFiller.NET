@@ -1,16 +1,27 @@
-using System;
-
 namespace Tynamix.ObjectFiller
 {
-    public class DoubleRange : IRandomizerPlugin<double>, IRandomizerPlugin<double?>,IRandomizerPlugin<decimal>, IRandomizerPlugin<decimal?>
+    /// <summary>
+    /// The double range plugin
+    /// </summary>
+    public class DoubleRange : IRandomizerPlugin<double>, IRandomizerPlugin<double?>, IRandomizerPlugin<decimal>, IRandomizerPlugin<decimal?>
     {
-        private readonly double _minValue;
-        private readonly double _maxValue;
+        /// <summary>
+        /// The min value.
+        /// </summary>
+        private readonly double minValue;
 
         /// <summary>
+        /// The max value.
+        /// </summary>
+        private readonly double maxValue;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DoubleRange"/> class. 
         /// Use to define just a max value for the double randomizer. Min value will be 0!
         /// </summary>
-        /// <param name="maxValue">Maximum double value</param>
+        /// <param name="maxValue">
+        /// Maximum double value
+        /// </param>
         public DoubleRange(double maxValue)
             : this(0, maxValue)
         {
@@ -19,17 +30,23 @@ namespace Tynamix.ObjectFiller
 
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DoubleRange"/> class. 
         /// Use to define a min and max double value for the randomizer
         /// </summary>
-        /// <param name="minValue">Min value</param>
-        /// <param name="maxValue">Max value</param>
+        /// <param name="minValue">
+        /// Min value
+        /// </param>
+        /// <param name="maxValue">
+        /// Max value
+        /// </param>
         public DoubleRange(double minValue, double maxValue)
         {
-            _minValue = minValue;
-            _maxValue = maxValue;
+            this.minValue = minValue;
+            this.maxValue = maxValue;
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DoubleRange"/> class. 
         /// Use this to generate a double value between double.MinValue and double.MaxValue
         /// </summary>
         public DoubleRange()
@@ -38,21 +55,37 @@ namespace Tynamix.ObjectFiller
 
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
         public double GetValue()
         {
-            return Random.NextDouble() * (_maxValue - _minValue) + _minValue;
+            return Random.NextDouble() * (this.maxValue - this.minValue) + this.minValue;
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
         double? IRandomizerPlugin<double?>.GetValue()
         {
-            return GetValue();
+            return this.GetValue();
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
         decimal IRandomizerPlugin<decimal>.GetValue()
         {
-            return (decimal) GetValue();
+            return (decimal)GetValue();
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
         decimal? IRandomizerPlugin<decimal?>.GetValue()
         {
             return (decimal)GetValue();

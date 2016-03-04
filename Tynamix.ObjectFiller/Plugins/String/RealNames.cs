@@ -60,6 +60,14 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Initializes a new instance of the <see cref="RealNames"/> class.
         /// </summary>
+        public RealNames()
+            : this(NameStyle.FirstNameLastName)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RealNames"/> class.
+        /// </summary>
         /// <param name="nameStyle">
         /// The style how the name shall be generated.
         /// </param>

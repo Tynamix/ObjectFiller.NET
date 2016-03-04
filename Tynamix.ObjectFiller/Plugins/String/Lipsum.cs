@@ -4,7 +4,11 @@ using System.Text;
 
 namespace Tynamix.ObjectFiller
 {
+    using System.Runtime.CompilerServices;
 
+    /// <summary>
+    /// The lipsum flavor.
+    /// </summary>
     public enum LipsumFlavor
     {
         /// <summary>
@@ -130,22 +134,51 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         private readonly Dictionary<LipsumFlavor, string[]> map;
 
+        /// <summary>
+        /// The random.
+        /// </summary>
         private System.Random random;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Lipsum"/> class.
         /// </summary>
-        /// <param name="flavor">
+        public Lipsum()
+            : this(LipsumFlavor.LoremIpsum)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lipsum"/> class.
+        /// </summary>
+        /// <param name="lipsumFlavor">
         /// The flavor for the generated text
         /// </param>
-        /// <param name="paragraphs">
-        /// The count of generated paragraphs.
+        public Lipsum(LipsumFlavor lipsumFlavor)
+            : this(lipsumFlavor, 10)
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lipsum"/> class.
+        /// </summary>
+        /// <param name="lipsumFlavor">
+        /// The flavor for the generated text
         /// </param>
-        /// <param name="minSentences">
-        /// The min sentences of the generated text
+        /// <param name="minWords">
+        /// The min words of the generated text.
         /// </param>
-        /// <param name="maxSentences">
-        /// The max sentences of the generated text
+        public Lipsum(LipsumFlavor lipsumFlavor, int minWords)
+            : this(lipsumFlavor, minWords, 50)
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lipsum"/> class.
+        /// </summary>
+        /// <param name="lipsumFlavor">
+        /// The flavor for the generated text
         /// </param>
         /// <param name="minWords">
         /// The min words of the generated text.
@@ -153,13 +186,112 @@ namespace Tynamix.ObjectFiller
         /// <param name="maxWords">
         /// The max words of the generated text.
         /// </param>
-        /// <param name="seed">
+        public Lipsum(LipsumFlavor lipsumFlavor, int minWords, int maxWords)
+            : this(lipsumFlavor, minWords, maxWords, 3)
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lipsum"/> class.
+        /// </summary>
+        /// <param name="lipsumFlavor">
+        /// The flavor for the generated text
+        /// </param>
+        /// <param name="minWords">
+        /// The min words of the generated text.
+        /// </param>
+        /// <param name="maxWords">
+        /// The max words of the generated text.
+        /// </param>
+        /// <param name="minSentences">
+        /// The min sentences of the generated text
+        /// </param>
+        public Lipsum(LipsumFlavor lipsumFlavor, int minWords, int maxWords, int minSentences)
+                    : this(lipsumFlavor, minWords, maxWords, minSentences, 8)
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lipsum"/> class.
+        /// </summary>
+        /// <param name="lipsumFlavor">
+        /// The flavor for the generated text
+        /// </param>
+        /// <param name="minWords">
+        /// The min words of the generated text.
+        /// </param>
+        /// <param name="maxWords">
+        /// The max words of the generated text.
+        /// </param>
+        /// <param name="minSentences">
+        /// The min sentences of the generated text
+        /// </param>
+        /// <param name="maxSentences">
+        /// The max sentences of the generated text
+        /// </param>
+        public Lipsum(LipsumFlavor lipsumFlavor, int minWords, int maxWords, int minSentences, int maxSentences)
+            : this(lipsumFlavor, minWords, maxWords, minSentences, maxSentences, 3)
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lipsum"/> class.
+        /// </summary>
+        /// <param name="lipsumFlavor">
+        /// The flavor for the generated text
+        /// </param>
+        /// <param name="minWords">
+        /// The min words of the generated text.
+        /// </param>
+        /// <param name="maxWords">
+        /// The max words of the generated text.
+        /// </param>
+        /// <param name="minSentences">
+        /// The min sentences of the generated text
+        /// </param>
+        /// <param name="maxSentences">
+        /// The max sentences of the generated text
+        /// </param>
+        /// <param name="paragraphs">
+        /// The count of generated paragraphs.
+        /// </param>
+        public Lipsum(LipsumFlavor lipsumFlavor, int minWords, int maxWords, int minSentences, int maxSentences, int paragraphs)
+            : this(lipsumFlavor, minWords, maxWords, minSentences, maxSentences, paragraphs, null)
+
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lipsum"/> class.
+        /// </summary>
+        /// <param name="lipsumFlavor">
+        /// The flavor for the generated text
+        /// </param>
+        /// <param name="minWords">
+        /// The min words of the generated text.
+        /// </param>
+        /// <param name="maxWords">
+        /// The max words of the generated text.
+        /// </param>
+        /// <param name="minSentences">
+        /// The min sentences of the generated text
+        /// </param>
+        /// <param name="maxSentences">
+        /// The max sentences of the generated text
+        /// </param>
+        /// <param name="paragraphs">
+        /// The count of generated paragraphs.
+        /// </param>
+        /// <param name="randomSeed">
         /// The seed for randomizer to get the same result with the same seed.
         /// </param>
-        public Lipsum(LipsumFlavor flavor, int paragraphs = 3, int minSentences = 3, int maxSentences = 8,
-            int minWords = 10, int maxWords = 50, int? seed = null)
+        public Lipsum(LipsumFlavor lipsumFlavor, int minWords, int maxWords, int minSentences, int maxSentences, int paragraphs, int? randomSeed)
         {
-            this.flavor = flavor;
+            this.flavor = lipsumFlavor;
             this.paragraphs = paragraphs;
             this.minSentences = minSentences;
             this.maxSentences = maxSentences < minSentences ? minSentences : maxSentences;
@@ -174,7 +306,7 @@ namespace Tynamix.ObjectFiller
                                { LipsumFlavor.LeMasque, LeMasque }
             };
 
-            this.seed = seed;
+            this.seed = randomSeed;
             this.random = new System.Random();
         }
 
