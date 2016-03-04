@@ -1,6 +1,6 @@
-﻿{
+{
   "title": ".NET ObjectFiller - Fill .NET objects with customized random data - by Tynamix",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "The Tynamix ObjectFiller.NET fills the properties of your objects with random data. Use it for unittest, prototyping and whereever you need some random testdata. It has a fluent API and is highly customizable. It supports also IEnumerables and Dictionaries and constructors WITH parameters. It is also possible to fill instances and to write private properties.",
   "summary": "The Tynamix ObjectFiller.NET fills the properties of your objects with customized random data. Use it for unittests, prototyping and whereever you need some random testdata.",
   "authors": [ "Roman Köhler", "Hendrik L.", "Christian Harlass", "GothikX" ],
@@ -39,6 +39,7 @@
         "System.Linq.Expressions": "4.0.10-*",
         "System.Runtime.Extensions": "4.0.10-*",
         "System.Text.RegularExpressions": "4.0.10-*"
+        
       }
 
     }

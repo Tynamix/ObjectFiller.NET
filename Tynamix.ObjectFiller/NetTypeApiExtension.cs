@@ -115,16 +115,23 @@ namespace Tynamix.ObjectFiller
 #endif
         }
 
-        internal static IEnumerable<PropertyInfo> GetProperties(this Type source)
+        internal static IEnumerable<PropertyInfo> GetProperties(this Type source, bool ignoreInheritance)
         {
 #if (NET3X || NET4X)
+
+            if (ignoreInheritance)
+            {
+                return source.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
+            }
+
             return source.GetProperties();
 #endif
 
 #if (NETSTD)
 
             var propertyInfos = source.GetTypeInfo().DeclaredProperties.ToList();
-            if (source.GetTypeInfo().BaseType != null)
+
+            if (ignoreInheritance == false && source.GetTypeInfo().BaseType != null)
             {
                 foreach (var property in source.GetTypeInfo().BaseType.GetTypeInfo().DeclaredProperties)
                 {
