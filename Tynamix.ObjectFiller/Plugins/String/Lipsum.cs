@@ -156,7 +156,6 @@ namespace Tynamix.ObjectFiller
         public Lipsum(LipsumFlavor lipsumFlavor)
             : this(lipsumFlavor, 10)
         {
-
         }
 
         /// <summary>
@@ -171,7 +170,6 @@ namespace Tynamix.ObjectFiller
         public Lipsum(LipsumFlavor lipsumFlavor, int minWords)
             : this(lipsumFlavor, minWords, 50)
         {
-
         }
 
         /// <summary>
@@ -189,7 +187,6 @@ namespace Tynamix.ObjectFiller
         public Lipsum(LipsumFlavor lipsumFlavor, int minWords, int maxWords)
             : this(lipsumFlavor, minWords, maxWords, 3)
         {
-
         }
 
         /// <summary>
@@ -210,7 +207,6 @@ namespace Tynamix.ObjectFiller
         public Lipsum(LipsumFlavor lipsumFlavor, int minWords, int maxWords, int minSentences)
                     : this(lipsumFlavor, minWords, maxWords, minSentences, 8)
         {
-
         }
 
         /// <summary>
@@ -234,7 +230,6 @@ namespace Tynamix.ObjectFiller
         public Lipsum(LipsumFlavor lipsumFlavor, int minWords, int maxWords, int minSentences, int maxSentences)
             : this(lipsumFlavor, minWords, maxWords, minSentences, maxSentences, 3)
         {
-
         }
 
         /// <summary>
@@ -262,7 +257,6 @@ namespace Tynamix.ObjectFiller
             : this(lipsumFlavor, minWords, maxWords, minSentences, maxSentences, paragraphs, null)
 
         {
-
         }
 
         /// <summary>
@@ -289,7 +283,7 @@ namespace Tynamix.ObjectFiller
         /// <param name="randomSeed">
         /// The seed for randomizer to get the same result with the same seed.
         /// </param>
-        public Lipsum(LipsumFlavor lipsumFlavor, int minWords, int maxWords, int minSentences, int maxSentences, int paragraphs, int? randomSeed)
+        public Lipsum(LipsumFlavor lipsumFlavor, int minWords = 10, int maxWords = 50, int minSentences = 3, int maxSentences = 8, int paragraphs = 3, int? randomSeed = null)
         {
             this.flavor = lipsumFlavor;
             this.paragraphs = paragraphs;
