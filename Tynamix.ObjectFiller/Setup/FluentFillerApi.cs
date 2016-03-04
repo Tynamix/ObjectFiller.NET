@@ -145,6 +145,19 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// Call this if the ObjectFiller should ignore all properties of the base class. For example you have a class
+        /// 'Student' which derives from class 'Person' and the class Person has a property 'Name'. If you want to use ObjectFiller
+        /// to fill/create a student and you call this method, the name will be null because it is defined in the base class 'Person'
+        /// </summary>
+        /// <returns>The <see cref="FluentFillerApi{TTargetObject}"/></returns>
+        public FluentFillerApi<TTargetObject> IgnoreInheritance()
+        {
+            this.setupManager.GetFor<TTargetObject>().IgnoreInheritance = true;
+
+            return this;
+        }
+
+        /// <summary>
         /// Setup the minimum and maximum item count for lists. The ObjectFiller will not generate more or less list items then this limits.
         /// The default value for <see cref="minCount"/> is 1. The default value for <see cref="maxCount"/> is 25.
         /// </summary>

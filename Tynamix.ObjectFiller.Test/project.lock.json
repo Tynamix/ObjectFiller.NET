@@ -142,7 +142,7 @@
           "lib/net45/_._": {}
         }
       },
-      "Tynamix.ObjectFiller/1.4.2": {
+      "Tynamix.ObjectFiller/1.5.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5"
       },
@@ -396,7 +396,7 @@
           "lib/net45/_._": {}
         }
       },
-      "Tynamix.ObjectFiller/1.4.2": {
+      "Tynamix.ObjectFiller/1.5.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5"
       },
@@ -650,7 +650,7 @@
           "lib/net45/_._": {}
         }
       },
-      "Tynamix.ObjectFiller/1.4.2": {
+      "Tynamix.ObjectFiller/1.5.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5"
       },
@@ -766,7 +766,7 @@
     }
   },
   "libraries": {
-    "Tynamix.ObjectFiller/1.4.2": {
+    "Tynamix.ObjectFiller/1.5.0": {
       "type": "project",
       "path": "../Tynamix.ObjectFiller/project.json"
     },
@@ -1123,12 +1123,12 @@
     }
   },
   "projectFileDependencyGroups": {
-    "": [],
-    "DNX,Version=v4.5.1": [
+    "": [
       "xunit >= 2.1.0",
       "xunit.runner.dnx >= 2.1.0-rc1-build204",
       "System.Text.RegularExpressions >= 4.0.11-beta-23516",
-      "Tynamix.ObjectFiller >= 1.4.2"
-    ]
+      "Tynamix.ObjectFiller >= 1.5.0-*"
+    ],
+    "DNX,Version=v4.5.1": []
   }
 }

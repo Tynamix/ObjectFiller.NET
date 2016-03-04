@@ -291,7 +291,7 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsPoco(Type type)
         {
-            return !type.IsValueType() && !type.IsArray && type.IsClass() && type.GetProperties().Any()
+            return !type.IsValueType() && !type.IsArray && type.IsClass() && type.GetProperties(false).Any()
                    && (type.Namespace == null
                        || (!type.Namespace.StartsWith("System") && !type.Namespace.StartsWith("Microsoft")));
         }
@@ -616,8 +616,9 @@ namespace Tynamix.ObjectFiller
                 return;
             }
 
-            var properties =
-                targetType.GetProperties().Where(prop => this.GetSetMethodOnDeclaringType(prop) != null).ToArray();
+            var properties = targetType.GetProperties(currentSetup.IgnoreInheritance)
+                                       .Where(prop => this.GetSetMethodOnDeclaringType(prop) != null)
+                                       .ToArray();
 
             if (properties.Length == 0)
             {

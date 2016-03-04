@@ -36,6 +36,7 @@ namespace Tynamix.ObjectFiller
             this.TypesToIgnore = new List<Type>();
             this.InterfaceToImplementation = new Dictionary<Type, Type>();
             this.IgnoreAllUnknownTypes = false;
+            this.IgnoreInheritance = false;
 
             this.SetDefaultRandomizer();
         }
@@ -99,6 +100,11 @@ namespace Tynamix.ObjectFiller
         /// Gets or sets a value indicating whether all unknown types shall be ignored.
         /// </summary>
         internal bool IgnoreAllUnknownTypes { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the properties of the base type will be filled or not.
+        /// </summary>
+        internal bool IgnoreInheritance { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether a e exception shall be thrown on circular reference.
