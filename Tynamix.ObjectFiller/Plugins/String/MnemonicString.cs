@@ -34,6 +34,14 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Initializes a new instance of the <see cref="MnemonicString"/> class.
         /// </summary>
+        public MnemonicString()
+            : this(1)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MnemonicString"/> class.
+        /// </summary>
         /// <param name="wordCount">
         /// The count of words which will be generated
         /// </param>

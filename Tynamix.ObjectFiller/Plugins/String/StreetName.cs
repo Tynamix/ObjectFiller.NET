@@ -61,6 +61,15 @@ namespace Tynamix.ObjectFiller
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreetName"/> class.
+        /// It will use streets of London by default
+        /// </summary>
+        public StreetName()
+            : this(City.London)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StreetName"/> class.
         /// </summary>
         /// <param name="targetCity">
         /// The city for which the street names will be get from
