@@ -65,7 +65,7 @@
         {
             int amount = 5;
 
-            IEnumerable<int> result = Randomizer<int>.Create(amount, new IntRange(1,1));
+            IEnumerable<int> result = Randomizer<int>.Create(new IntRange(1,1), amount);
 
             Assert.Equal(amount, result.Count());
             Assert.True(result.Count(x => x == 1) == amount);
@@ -87,12 +87,12 @@
         {
             int amount = 5;
 
-            var setup = FillerSetup.Create<Person>().OnType<int>().Use(1).Result;
+            var setup = FillerSetup.Create<Address>().OnType<int>().Use(1).Result;
 
-            IEnumerable<Person> result = Randomizer<Person>.Create(amount, setup);
+            IEnumerable<Address> result = Randomizer<Address>.Create(setup, amount);
 
             Assert.Equal(amount, result.Count());
-            Assert.True(result.Count(x => x.Age == 1) == amount);
+            Assert.True(result.Count(x => x.HouseNumber == 1) == amount);
         }
     }
 }

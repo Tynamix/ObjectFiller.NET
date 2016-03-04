@@ -102,6 +102,31 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// Creates a value base on a filler setup
+        /// </summary>
+        /// <param name="setup">Setup for the objectfiller</param>
+        /// <returns>Created value</returns>
+        public static T Create(FillerSetup setup)
+        {
+            var creationMethod = CreateFactoryMethod(setup);
+
+            T result;
+            try
+            {
+                result = creationMethod();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(
+                    "The type " + typeof(T).FullName + " needs additional information to get created. "
+                    + "Please use the Filler class and call \"Setup\" to create a setup for that type. See Innerexception for more details.",
+                    ex);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Creates a factory method for the given type.
         /// </summary>
         /// <param name="setup">The setup which is used for the type.</param>
@@ -131,26 +156,6 @@ namespace Tynamix.ObjectFiller
             }
 
             return () => (T)Setup.TypeToRandomFunc[typeof(T)]();
-        }
-
-        public static T Create(FillerSetup setup)
-        {
-            var creationMethod = CreateFactoryMethod(setup);
-
-            T result;
-            try
-            {
-                result = creationMethod();
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(
-                    "The type " + typeof(T).FullName + " needs additional information to get created. "
-                    + "Please use the Filler class and call \"Setup\" to create a setup for that type. See Innerexception for more details.",
-                    ex);
-            }
-
-            return result;
         }
     }
 }
