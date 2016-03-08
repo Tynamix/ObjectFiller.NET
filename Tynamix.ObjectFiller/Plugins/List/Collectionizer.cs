@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Tynamix.ObjectFiller
 {
@@ -8,6 +9,9 @@ namespace Tynamix.ObjectFiller
     /// <typeparam name="T">Typeparameter of of the target List</typeparam>
     /// <typeparam name="TRandomizer">Plugin which will be used to create the List</typeparam>
     public class Collectionizer<T, TRandomizer> : IRandomizerPlugin<List<T>>
+#if !NETSTD
+        , IRandomizerPlugin<ArrayList>
+#endif
         where TRandomizer : IRandomizerPlugin<T>, new()
     {
         private readonly IRandomizerPlugin<T> randomizerToUse;
@@ -105,5 +109,20 @@ namespace Tynamix.ObjectFiller
 
             return result;
         }
+
+#if !NETSTD
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
+        ArrayList IRandomizerPlugin<ArrayList>.GetValue()
+        {
+            ArrayList arrayList = new ArrayList();
+            arrayList.AddRange(this.GetValue());
+
+            return arrayList;
+        }
+#endif
     }
+
 }

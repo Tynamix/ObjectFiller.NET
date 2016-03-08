@@ -8,6 +8,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections;
+
 namespace Tynamix.ObjectFiller
 {
     using System;
@@ -152,6 +154,9 @@ namespace Tynamix.ObjectFiller
             this.TypeToRandomFunc[typeof(IntPtr?)] = () => default(IntPtr);
             this.TypeToRandomFunc[typeof(TimeSpan)] = () => new TimeSpan(Random.Next());
             this.TypeToRandomFunc[typeof(TimeSpan?)] = () => new TimeSpan(Random.Next());
+#if !NETSTD
+            this.TypeToRandomFunc[typeof(ArrayList)] = () => ((IRandomizerPlugin<ArrayList>)new Collectionizer<string, MnemonicString>()).GetValue();
+#endif
         }
     }
 }
