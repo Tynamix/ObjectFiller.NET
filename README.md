@@ -2,6 +2,8 @@
 
 
 #ObjectFiller.NET
+
+[![Join the chat at https://gitter.im/Tynamix/ObjectFiller.NET](https://badges.gitter.im/Tynamix/ObjectFiller.NET.svg)](https://gitter.im/Tynamix/ObjectFiller.NET?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <img align="left" src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/logo.png" alt="Logo" />
 The **.NET ObjectFiller** fills the properties of your .NET objects with random data!
 It has a very comfortable Fluent API.
