@@ -18,7 +18,7 @@ namespace ObjectFiller.Test
             filler.Setup()
                 .OnType<IAddress>().CreateInstanceOf<Address>()
                 .OnType<string>().Use(new MnemonicString(10))
-                .OnProperty(person => person.FirstName).Use(new MnemonicString(1))
+                .OnProperty(person => person.FirstName).Use<MnemonicString>()
                 .OnProperty(person => person.LastName).Use(new RandomListItem<string>("Maik", "Tom", "Anton"))
                 .OnProperty(person => person.Age).Use(() => Tynamix.ObjectFiller.Random.Next(12, 83))
                 .SetupFor<Address>()

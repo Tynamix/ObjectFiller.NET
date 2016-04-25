@@ -13,7 +13,7 @@ namespace ObjectFiller.Test
         public void FillAllAddressProperties()
         {
             Filler<Address> addressFiller = new Filler<Address>();
-            Address a = addressFiller.Create();
+                        Address a = addressFiller.Create();
 
             Assert.NotNull(a.City);
             Assert.NotNull(a.Country);

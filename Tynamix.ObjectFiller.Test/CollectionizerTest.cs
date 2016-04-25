@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Tynamix.ObjectFiller;
 using Xunit;
@@ -43,6 +44,23 @@ namespace ObjectFiller.Test
             var collection = filler.Create();
             Assert.True(collection.MnemonicStrings.Count() >= 3 && collection.MnemonicStrings.Count() <= 10);
             Assert.True(collection.MnemonicStrings.All(x => x.Length >= 20 && x.Length <= 25));
+        }
+
+        [Fact]
+        public void TestMnemonicStringPluginTest()
+        {
+            var filler = new Filler<CollectionizerPoco>();
+
+            filler.Setup()
+                .OnProperty(x => x.MnemonicStrings).Use<Collectionizer<string, MnemonicString>>();
+
+            var collection = filler.Create();
+
+            Assert.NotNull(collection);
+            Assert.NotNull(collection.MnemonicStrings);
+            Assert.NotEmpty(collection.MnemonicStrings);
+
+            collection.MnemonicStrings.ToList().ForEach(s => Debug.WriteLine(s));
         }
 
         [Fact]

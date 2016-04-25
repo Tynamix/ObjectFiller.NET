@@ -78,6 +78,18 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
+        /// Defines which implementation of the <see cref="IRandomizerPlugin{T}"/> interface will be used to generate a value for the given <see cref="TTargetType"/>
+        /// </summary>
+        /// <typeparam name="TRandomizerPlugin">A <see cref="IRandomizerPlugin{TTargetType}"/> which will be used to generate a value of the <see cref="TTargetType"/></param>
+        /// <returns>Main FluentFiller API</returns>
+        public FluentFillerApi<TTargetObject> Use<TRandomizerPlugin>()
+            where TRandomizerPlugin : IRandomizerPlugin<TTargetType>, new()
+        {
+            this.Use(new TRandomizerPlugin());
+            return this.callback;
+        }
+
+        /// <summary>
         /// Use this function if you want to use an IEnumerable for the data generation.
         /// With that you can generate random data in a specific order, with include, exclude and all the other stuff
         /// what is possible with <see cref="IEnumerable{T}"/> and LINQ
