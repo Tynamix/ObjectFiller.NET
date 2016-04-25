@@ -7,9 +7,9 @@
 The **.NET ObjectFiller** fills the properties of your .NET objects with random data!
 It has a very comfortable Fluent API.
 You are able to fill object instances or you just let them create for you. 
-It is possible to create instances of classes which have constructors with parameters.
-You can also fill properties which are derived by a interface.
-The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) and Dictionaries.
+It is also possible to create instances of classes which have constructors with parameters.
+You can also fill properties which are derived by an interface.
+The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) as well as Dictionaries.
 
 
 ### Get it on NuGet!
