@@ -1,3 +1,5 @@
+using System;
+
 namespace Tynamix.ObjectFiller
 {
     /// <summary>
@@ -50,7 +52,7 @@ namespace Tynamix.ObjectFiller
         /// Use this to generate a double value between double.MinValue and double.MaxValue
         /// </summary>
         public DoubleRange()
-            : this(double.MinValue, double.MaxValue)
+            : this(-999999999, 999999999)
         {
 
         }
@@ -61,7 +63,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>Random data for type <see cref="T"/></returns>
         public double GetValue()
         {
-            return Random.NextDouble() * (this.maxValue - this.minValue) + this.minValue;
+            return Random.NextDouble() * Math.Abs(this.maxValue - this.minValue) + this.minValue;
         }
 
         /// <summary>

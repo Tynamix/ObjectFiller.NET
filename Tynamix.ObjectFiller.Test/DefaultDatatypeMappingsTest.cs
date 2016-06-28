@@ -15,6 +15,8 @@ namespace ObjectFiller.Test
             var filler = new Filler<MyClass>();
             var myClass = filler.Create();
             Assert.False(double.IsInfinity(myClass._double));
+
+            Assert.False(float.IsInfinity(myClass._float));
         }
 
         [Fact]
