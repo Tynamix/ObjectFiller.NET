@@ -144,7 +144,10 @@ namespace Tynamix.ObjectFiller
 
                     if (setup != null)
                     {
-                        var setupMethod = objectFiller.GetType().GetMethods().Single(x => x.Name == "Setup" && x.GetParameters().Any());
+                        var setupMethod = objectFiller.GetType().GetMethods()
+                                                      .Where(x => x.Name == "Setup" && x.GetParameters().Length == 1)
+                                                      .Single(x => x.GetParameters().First().ParameterType == typeof(FillerSetup));
+
                         setupMethod.Invoke(objectFiller, new[] { setup });
                     }
 

@@ -34,6 +34,11 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         private readonly SetupManager setupManager;
 
+        /// <summary>
+        /// True when the filler will just fill properties which are set up explicit
+        /// </summary>
+        private bool justConfiguredProperties;
+
         #endregion
 
         #region Constructors and Destructors
@@ -117,7 +122,17 @@ namespace Tynamix.ObjectFiller
         /// <returns>Fluent API setup</returns>
         public FluentFillerApi<T> Setup()
         {
-            return this.Setup(null);
+            return this.Setup(false);
+        }
+
+        /// <summary>
+        /// Call this to start the setup for the <see cref="Filler{T}"/>
+        /// </summary>
+        /// <param name="explicitSetup">True if just properties shall get filled which configured in filler setup.</param>
+        /// <returns>Fluent API setup</returns>
+        public FluentFillerApi<T> Setup(bool explicitSetup)
+        {
+            return this.Setup(null, explicitSetup);
         }
 
         /// <summary>
@@ -132,11 +147,28 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         public FluentFillerApi<T> Setup(FillerSetup fillerSetupToUse)
         {
+            return this.Setup(fillerSetupToUse, false);
+        }
+
+        /// <summary>
+        /// Call this to start the setup for the <see cref="Filler{T}"/> and use a setup which you created
+        /// before with the <see cref="IFluentApi{TTargetObject,TTargetType}"/>
+        /// </summary>
+        /// <param name="fillerSetupToUse">
+        /// FillerSetup to use
+        /// </param>
+        /// <param name="explicitSetup">True if just properties shall get filled which configured in filler setup.</param>
+        /// <returns>
+        /// Fluent API Setup
+        /// </returns>
+        public FluentFillerApi<T> Setup(FillerSetup fillerSetupToUse, bool explicitSetup)
+        {
             if (fillerSetupToUse != null)
             {
                 this.setupManager.FillerSetup = fillerSetupToUse;
             }
 
+            this.justConfiguredProperties = explicitSetup;
             return new FluentFillerApi<T>(this.setupManager);
         }
 
@@ -645,6 +677,12 @@ namespace Tynamix.ObjectFiller
                     PropertyInfo propertyInfo =
                         this.GetPropertyFromProperties(currentSetup.PropertyToRandomFunc.Keys, property).Single();
                     this.SetPropertyValue(property, objectToFill, currentSetup.PropertyToRandomFunc[propertyInfo]());
+                    continue;
+                }
+
+                if (this.justConfiguredProperties
+                    && !this.setupManager.FillerSetup.TypeToFillerSetup.ContainsKey(property.PropertyType))
+                {
                     continue;
                 }
 
