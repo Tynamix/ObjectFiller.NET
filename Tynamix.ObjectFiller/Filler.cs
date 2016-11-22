@@ -287,11 +287,13 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsList(Type type)
         {
-            return !type.IsArray
-                   && type.IsGenericType()
-                   && type.GetGenericTypeArguments().Length != 0
-                   && (type.GetGenericTypeDefinition() == typeof(IEnumerable<>)
-                       || type.GetImplementedInterfaces().Any(x => x == typeof(IList)));
+            Predicate<Type> typeIsList = (typeToCheck) => !typeToCheck.IsArray
+                   && typeToCheck.IsGenericType()
+                   && typeToCheck.GetGenericTypeArguments().Length != 0
+                   && (typeToCheck.GetGenericTypeDefinition() == typeof(IEnumerable<>)
+                       || typeToCheck.GetImplementedInterfaces().Any(x => x == typeof(IList)));
+
+            return typeIsList(type) || (type.GetTypeInfo().BaseType !=null && typeIsList(type.GetTypeInfo().BaseType));
         }
 
         /// <summary>
@@ -508,7 +510,7 @@ namespace Tynamix.ObjectFiller
             var listType = typeof(List<>);
             var constructedListType = listType.MakeGenericType(type.GetElementType());
 
-            var list = GetFilledList(constructedListType, currentSetupItem, typeTracker);
+            var list = this.GetFilledList(constructedListType, currentSetupItem, typeTracker);
 
             var array = (Array)Activator.CreateInstance(type, new object[] { list.Count });
 
@@ -652,6 +654,11 @@ namespace Tynamix.ObjectFiller
                                        .Where(prop => this.GetSetMethodOnDeclaringType(prop) != null)
                                        .ToArray();
 
+            this.FillPropertiesOfObject(objectToFill, properties, currentSetup, typeTracker);
+        }
+
+        private void FillPropertiesOfObject(object objectToFill, PropertyInfo[] properties, FillerSetupItem currentSetup, HashStack<Type> typeTracker)
+        {
             if (properties.Length == 0)
             {
                 return;
@@ -777,7 +784,9 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private IList GetFilledList(Type propertyType, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
-            Type genType = propertyType.GetGenericTypeArguments()[0];
+            bool derivedList = !propertyType.GetGenericTypeArguments().Any();
+            Type genType = !derivedList ? propertyType.GetGenericTypeArguments()[0]
+                                   : propertyType.GetTypeInfo().BaseType.GetGenericTypeArguments()[0];
 
             if (this.CheckForCircularReference(genType, typeTracker, currentSetupItem))
             {
@@ -807,6 +816,16 @@ namespace Tynamix.ObjectFiller
             {
                 object listObject = this.CreateAndFillObject(genType, currentSetupItem, typeTracker);
                 list.Add(listObject);
+            }
+
+            if (derivedList)
+            {
+           
+               var remainingProperties = propertyType.GetProperties(true)
+                                         .Where(prop => this.GetSetMethodOnDeclaringType(prop) != null)
+                                         .ToArray();
+
+                this.FillPropertiesOfObject(list, remainingProperties, currentSetupItem, typeTracker);
             }
 
             return list;
