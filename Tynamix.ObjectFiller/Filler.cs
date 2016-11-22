@@ -293,7 +293,7 @@ namespace Tynamix.ObjectFiller
                    && (typeToCheck.GetGenericTypeDefinition() == typeof(IEnumerable<>)
                        || typeToCheck.GetImplementedInterfaces().Any(x => x == typeof(IList)));
 
-            return typeIsList(type) || (type.GetTypeInfo().BaseType !=null && typeIsList(type.GetTypeInfo().BaseType));
+            return typeIsList(type) || (type.GetTypeInfo().BaseType != null && typeIsList(type.GetTypeInfo().BaseType));
         }
 
         /// <summary>
@@ -734,8 +734,16 @@ namespace Tynamix.ObjectFiller
             HashStack<Type> typeTracker)
         {
             IDictionary dictionary = (IDictionary)Activator.CreateInstance(propertyType);
-            Type keyType = propertyType.GetGenericTypeArguments()[0];
-            Type valueType = propertyType.GetGenericTypeArguments()[1];
+
+            bool derivedType = !propertyType.GetGenericTypeArguments().Any();
+
+            Type keyType = !derivedType 
+                            ? propertyType.GetGenericTypeArguments()[0] 
+                            : propertyType.GetTypeInfo().BaseType.GetGenericTypeArguments()[0];
+
+            Type valueType = !derivedType
+                            ? propertyType.GetGenericTypeArguments()[1]
+                            : propertyType.GetTypeInfo().BaseType.GetGenericTypeArguments()[1];
 
             int maxDictionaryItems = 0;
 
@@ -773,6 +781,16 @@ namespace Tynamix.ObjectFiller
 
                 object valueObject = this.CreateAndFillObject(valueType, currentSetupItem, typeTracker);
                 dictionary.Add(keyObject, valueObject);
+            }
+
+            if (derivedType)
+            {
+
+                var remainingProperties = propertyType.GetProperties(true)
+                                          .Where(prop => this.GetSetMethodOnDeclaringType(prop) != null)
+                                          .ToArray();
+
+                this.FillProperties(dictionary, remainingProperties, currentSetupItem, typeTracker);
             }
 
             return dictionary;
@@ -831,10 +849,10 @@ namespace Tynamix.ObjectFiller
 
             if (derivedList)
             {
-           
-               var remainingProperties = propertyType.GetProperties(true)
-                                         .Where(prop => this.GetSetMethodOnDeclaringType(prop) != null)
-                                         .ToArray();
+
+                var remainingProperties = propertyType.GetProperties(true)
+                                          .Where(prop => this.GetSetMethodOnDeclaringType(prop) != null)
+                                          .ToArray();
 
                 this.FillProperties(list, remainingProperties, currentSetupItem, typeTracker);
             }

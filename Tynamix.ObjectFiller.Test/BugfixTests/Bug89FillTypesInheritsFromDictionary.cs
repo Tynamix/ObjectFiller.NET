@@ -10,7 +10,7 @@ namespace ObjectFiller.Test.BugfixTests
     using Xunit;
 
 
-    public class Bug89FillTypesInheritsFromList
+    public class Bug89FillTypesInheritsFromDictionary
     {
         public class EntityA
         {
@@ -23,13 +23,13 @@ namespace ObjectFiller.Test.BugfixTests
             public string Name { get; set; }
             public Guid ID { get; set; }
         }
-        public class EntityBList : List<EntityB>
+        public class EntityBList : Dictionary<string, EntityB>
         {
             public DateTime SomeDate { get; set; }
         }
 
         [Fact]
-        public void ADerivedListShallGetFilledAllProperties()
+        public void ADerivedDictionaryShallGetFilledAllProperties()
         {
             Filler<EntityA> filler = new Filler<EntityA>();
 
