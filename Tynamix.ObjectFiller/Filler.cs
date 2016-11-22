@@ -654,10 +654,21 @@ namespace Tynamix.ObjectFiller
                                        .Where(prop => this.GetSetMethodOnDeclaringType(prop) != null)
                                        .ToArray();
 
-            this.FillPropertiesOfObject(objectToFill, properties, currentSetup, typeTracker);
+            this.FillProperties(objectToFill, properties, currentSetup, typeTracker);
         }
 
-        private void FillPropertiesOfObject(object objectToFill, PropertyInfo[] properties, FillerSetupItem currentSetup, HashStack<Type> typeTracker)
+        /// <summary>
+        /// This method will fill the given <see cref="properties"/> of the given <see cref="objectToFill"/>
+        /// </summary>
+        /// <param name="objectToFill">The object to fill</param>
+        /// <param name="properties">The properties of the <see cref="objectToFill"/> which shall get filled</param>
+        /// <param name="currentSetup">
+        /// The setup for the current object 
+        /// </param>
+        /// <param name="typeTracker">
+        /// The dictionaryType tracker to find circular dependencies
+        /// </param>
+        private void FillProperties(object objectToFill, PropertyInfo[] properties, FillerSetupItem currentSetup, HashStack<Type> typeTracker)
         {
             if (properties.Length == 0)
             {
@@ -825,7 +836,7 @@ namespace Tynamix.ObjectFiller
                                          .Where(prop => this.GetSetMethodOnDeclaringType(prop) != null)
                                          .ToArray();
 
-                this.FillPropertiesOfObject(list, remainingProperties, currentSetupItem, typeTracker);
+                this.FillProperties(list, remainingProperties, currentSetupItem, typeTracker);
             }
 
             return list;
