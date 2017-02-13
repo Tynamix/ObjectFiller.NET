@@ -1,11 +1,11 @@
 ﻿using System;
-    using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-
+    [TestClass]
     public class SaveFillerSetupTest
     {
 
@@ -24,7 +24,7 @@ namespace ObjectFiller.Test
 
         }
 
-        [Fact]
+        [TestMethod]
         public void UseSavedFillerDefaultSetup()
         {
             Filler<Person> filler = new Filler<Person>();
@@ -32,12 +32,12 @@ namespace ObjectFiller.Test
 
             Person p = filler.Create();
 
-            Assert.True(p.Age < 35 && p.Age >= 18);
-            Assert.True(p.Address.HouseNumber < 100 && p.Age >= 1);
+            Assert.IsTrue(p.Age < 35 && p.Age >= 18);
+            Assert.IsTrue(p.Address.HouseNumber < 100 && p.Age >= 1);
         }
 
 
-        [Fact]
+        [TestMethod]
         public void UseSavedFillerSetupWithExtensions()
         {
             var dateNow = DateTime.Now;
@@ -47,13 +47,13 @@ namespace ObjectFiller.Test
 
             Person p = filler.Create();
 
-            Assert.True(p.Age < 35 && p.Age >= 18);
-            Assert.True(p.Address.HouseNumber < 100 && p.Age >= 1);
-            Assert.Equal(p.Birthdate, dateNow);
+            Assert.IsTrue(p.Age < 35 && p.Age >= 18);
+            Assert.IsTrue(p.Address.HouseNumber < 100 && p.Age >= 1);
+            Assert.AreEqual(p.Birthdate, dateNow);
 
         }
 
-        [Fact]
+        [TestMethod]
         public void UseSavedFillerSetupWithOverrides()
         {
             Filler<Person> filler = new Filler<Person>();
@@ -64,8 +64,8 @@ namespace ObjectFiller.Test
 
             Person p = filler.Create();
 
-            Assert.Equal(p.Age, 1000);
-            Assert.Equal(p.Address.HouseNumber, 9999);
+            Assert.AreEqual(p.Age, 1000);
+            Assert.AreEqual(p.Address.HouseNumber, 9999);
 
         }
 

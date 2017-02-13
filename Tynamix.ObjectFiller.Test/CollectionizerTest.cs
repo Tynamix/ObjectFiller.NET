@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tynamix.ObjectFiller;
-using Xunit;
+
 
 namespace ObjectFiller.Test
 {
@@ -16,9 +17,10 @@ namespace ObjectFiller.Test
         public ArrayList ArrayList { get; set; }
     }
 
+    [TestClass]
     public class CollectionizerTest
     {
-        [Fact]
+        [TestMethod]
         public void TestCityNames()
         {
             var filler = new Filler<CollectionizerPoco>();
@@ -28,11 +30,11 @@ namespace ObjectFiller.Test
                 .Use(new Collectionizer<string, MnemonicString>(new MnemonicString(1, 20, 25), 3, 10));
 
             var arrayList = filler.Create();
-            Assert.True(arrayList.ArrayList.Count >= 3 && arrayList.ArrayList.Count <= 10);
-            Assert.True(arrayList.ArrayList.ToArray().Cast<string>().All(x => x.Length >= 20 && x.Length <= 25));
+            Assert.IsTrue(arrayList.ArrayList.Count >= 3 && arrayList.ArrayList.Count <= 10);
+            Assert.IsTrue(arrayList.ArrayList.ToArray().Cast<string>().All(x => x.Length >= 20 && x.Length <= 25));
         }
 
-        [Fact]
+        [TestMethod]
         public void TestMnemonicStringPlugin()
         {
             var filler = new Filler<CollectionizerPoco>();
@@ -42,11 +44,11 @@ namespace ObjectFiller.Test
                 .Use(new Collectionizer<string, MnemonicString>(new MnemonicString(1, 20, 25), 3, 10));
 
             var collection = filler.Create();
-            Assert.True(collection.MnemonicStrings.Count() >= 3 && collection.MnemonicStrings.Count() <= 10);
-            Assert.True(collection.MnemonicStrings.All(x => x.Length >= 20 && x.Length <= 25));
+            Assert.IsTrue(collection.MnemonicStrings.Count() >= 3 && collection.MnemonicStrings.Count() <= 10);
+            Assert.IsTrue(collection.MnemonicStrings.All(x => x.Length >= 20 && x.Length <= 25));
         }
 
-        [Fact]
+        [TestMethod]
         public void TestMnemonicStringPluginTest()
         {
             var filler = new Filler<CollectionizerPoco>();
@@ -56,14 +58,14 @@ namespace ObjectFiller.Test
 
             var collection = filler.Create();
 
-            Assert.NotNull(collection);
-            Assert.NotNull(collection.MnemonicStrings);
-            Assert.NotEmpty(collection.MnemonicStrings);
+            Assert.IsNotNull(collection);
+            Assert.IsNotNull(collection.MnemonicStrings);
+            Assert.IsTrue(collection.MnemonicStrings.Any());
 
             collection.MnemonicStrings.ToList().ForEach(s => Debug.WriteLine(s));
         }
 
-        [Fact]
+        [TestMethod]
         public void TestIntRangePlugin()
         {
             var filler = new Filler<CollectionizerPoco>();
@@ -73,8 +75,8 @@ namespace ObjectFiller.Test
                 .Use(new Collectionizer<int, IntRange>(new IntRange(10, 15), 3, 10));
 
             var collection = filler.Create();
-            Assert.True(collection.IntRange.Count >= 3 && collection.IntRange.Count() <= 10);
-            Assert.True(collection.IntRange.All(x => x >= 10 && x <= 15));
+            Assert.IsTrue(collection.IntRange.Count >= 3 && collection.IntRange.Count() <= 10);
+            Assert.IsTrue(collection.IntRange.All(x => x >= 10 && x <= 15));
         }
     }
 }

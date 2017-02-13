@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Tynamix.ObjectFiller")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("The Tynamix ObjectFiller.NET fills the properties of your objects with customized random data. Use it for unittests, prototyping and whereever you need some random testdata.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Tynamix.ObjectFiller")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright ©  2015-2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

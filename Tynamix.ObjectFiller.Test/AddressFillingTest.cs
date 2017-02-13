@@ -1,4 +1,4 @@
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
 
@@ -6,23 +6,23 @@ namespace ObjectFiller.Test
 {
     using System.Linq;
 
-
+    [TestClass]
     public class AddressFillingTest
     {
-        [Fact]
+        [TestMethod]
         public void FillAllAddressProperties()
         {
             Filler<Address> addressFiller = new Filler<Address>();
-                        Address a = addressFiller.Create();
+            Address a = addressFiller.Create();
 
-            Assert.NotNull(a.City);
-            Assert.NotNull(a.Country);
-            Assert.NotEqual(0, a.HouseNumber);
-            Assert.NotNull(a.PostalCode);
-            Assert.NotNull(a.Street);
+            Assert.IsNotNull(a.City);
+            Assert.IsNotNull(a.Country);
+            Assert.AreNotEqual(0, a.HouseNumber);
+            Assert.IsNotNull(a.PostalCode);
+            Assert.IsNotNull(a.Street);
         }
 
-        [Fact]
+        [TestMethod]
         public void IgnoreCountry()
         {
             Filler<Address> addressFiller = new Filler<Address>();
@@ -30,14 +30,14 @@ namespace ObjectFiller.Test
                     .OnProperty(x => x.Country).IgnoreIt();
             Address a = addressFiller.Create();
 
-            Assert.NotNull(a.City);
-            Assert.Null(a.Country);
-            Assert.NotEqual(0, a.HouseNumber);
-            Assert.NotNull(a.PostalCode);
-            Assert.NotNull(a.Street);
+            Assert.IsNotNull(a.City);
+            Assert.IsNull(a.Country);
+            Assert.AreNotEqual(0, a.HouseNumber);
+            Assert.IsNotNull(a.PostalCode);
+            Assert.IsNotNull(a.Street);
         }
 
-        [Fact]
+        [TestMethod]
         public void IgnoreCountryAndCity()
         {
             Filler<Address> addressFiller = new Filler<Address>();
@@ -45,14 +45,14 @@ namespace ObjectFiller.Test
                 .OnProperty(x => x.Country, x => x.City).IgnoreIt();
             Address a = addressFiller.Create();
 
-            Assert.Null(a.City);
-            Assert.Null(a.Country);
-            Assert.NotEqual(0, a.HouseNumber);
-            Assert.NotNull(a.PostalCode);
-            Assert.NotNull(a.Street);
+            Assert.IsNull(a.City);
+            Assert.IsNull(a.Country);
+            Assert.AreNotEqual(0, a.HouseNumber);
+            Assert.IsNotNull(a.PostalCode);
+            Assert.IsNotNull(a.Street);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetupCityPropertyWithConstantValue()
         {
             Filler<Address> addressFiller = new Filler<Address>();
@@ -60,14 +60,14 @@ namespace ObjectFiller.Test
                 .OnProperty(ad => ad.City).Use(() => "City");
             Address a = addressFiller.Create();
 
-            Assert.Equal("City", a.City);
-            Assert.NotNull(a.Country);
-            Assert.NotEqual(0, a.HouseNumber);
-            Assert.NotNull(a.PostalCode);
-            Assert.NotNull(a.Street);
+            Assert.AreEqual("City", a.City);
+            Assert.IsNotNull(a.Country);
+            Assert.AreNotEqual(0, a.HouseNumber);
+            Assert.IsNotNull(a.PostalCode);
+            Assert.IsNotNull(a.Street);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetupCityAndCountryPropertyWithConstantValue()
         {
             Filler<Address> addressFiller = new Filler<Address>();
@@ -75,14 +75,14 @@ namespace ObjectFiller.Test
                 .OnProperty(ad => ad.City, ad => ad.Country).Use(() => "CityCountry");
             Address a = addressFiller.Create();
 
-            Assert.Equal("CityCountry", a.City);
-            Assert.NotNull(a.Country);
-            Assert.NotEqual(0, a.HouseNumber);
-            Assert.NotNull(a.PostalCode);
-            Assert.NotNull(a.Street);
+            Assert.AreEqual("CityCountry", a.City);
+            Assert.IsNotNull(a.Country);
+            Assert.AreNotEqual(0, a.HouseNumber);
+            Assert.IsNotNull(a.PostalCode);
+            Assert.IsNotNull(a.Street);
         }
 
-        [Fact]
+        [TestMethod]
         public void SetupTheAdressWithStaticValues()
         {
             Filler<Address> addressFiller = new Filler<Address>();
@@ -93,13 +93,13 @@ namespace ObjectFiller.Test
                 .OnProperty(x => x.PostalCode).Use(() => "0011100");
 
             var address = addressFiller.Create();
-            Assert.Equal("Dresden", address.City);
-            Assert.Equal("Germany", address.Country);
-            Assert.Equal("0011100", address.PostalCode);
-            Assert.Equal(10, address.HouseNumber);
+            Assert.AreEqual("Dresden", address.City);
+            Assert.AreEqual("Germany", address.Country);
+            Assert.AreEqual("0011100", address.PostalCode);
+            Assert.AreEqual(10, address.HouseNumber);
         }
 
-        [Fact]
+        [TestMethod]
         public void RandomListPluginShallReturnDifferentValues()
         {
             Filler<Address> addressFiller = new Filler<Address>();
@@ -108,7 +108,7 @@ namespace ObjectFiller.Test
 
             var addresses = addressFiller.Create(1000);
 
-            Assert.True(addresses.Any(x => x.City == "Test2"));
+            Assert.IsTrue(addresses.Any(x => x.City == "Test2"));
 
             addressFiller = new Filler<Address>();
 
@@ -116,7 +116,7 @@ namespace ObjectFiller.Test
 
             addresses = addressFiller.Create(1000);
 
-            Assert.True(addresses.All(x => x.City == "Test1"));
+            Assert.IsTrue(addresses.All(x => x.City == "Test1"));
 
         }
 

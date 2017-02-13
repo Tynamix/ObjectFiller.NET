@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-    using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.ListTest;
 using Tynamix.ObjectFiller;
 
@@ -9,10 +9,10 @@ namespace ObjectFiller.Test
 {
     using ObjectFiller.Test.TestPoco;
 
-
+    [TestClass]
     public class ListFillingTest
     {
-        [Fact]
+        [TestMethod]
         public void TestFillAllListsExceptArray()
         {
             Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
@@ -21,16 +21,16 @@ namespace ObjectFiller.Test
 
             EntityCollection entity = eFiller.Create();
 
-            Assert.NotNull(entity);
-            Assert.NotNull(entity.EntityList);
-            Assert.NotNull(entity.EntityICollection);
-            Assert.NotNull(entity.EntityIEnumerable);
-            Assert.NotNull(entity.EntityIList);
-            Assert.NotNull(entity.EntityHashset);
+            Assert.IsNotNull(entity);
+            Assert.IsNotNull(entity.EntityList);
+            Assert.IsNotNull(entity.EntityICollection);
+            Assert.IsNotNull(entity.EntityIEnumerable);
+            Assert.IsNotNull(entity.EntityIList);
+            Assert.IsNotNull(entity.EntityHashset);
 
         }
 
-        [Fact]
+        [TestMethod]
         public void TestUseEnumerable()
         {
             Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
@@ -48,11 +48,11 @@ namespace ObjectFiller.Test
             for (int i = 0; i < ec.EntityList.Count; i++)
             {
                 int lastPowNum = (int)Math.Pow(2, i + 1);
-                Assert.Equal(lastPowNum, ec.EntityList[i].Id);
+                Assert.AreEqual(lastPowNum, ec.EntityList[i].Id);
             }
         }
 
-        [Fact]
+        [TestMethod]
         public void TestFillList()
         {
             Filler<EntityCollection> eFiller = new Filler<EntityCollection>();
@@ -60,91 +60,91 @@ namespace ObjectFiller.Test
                 .OnProperty(ec => ec.EntityArray).Use(GetArray);
             EntityCollection entity = eFiller.Create();
 
-            Assert.NotNull(entity);
-            Assert.NotNull(entity.EntityList);
-            Assert.NotNull(entity.EntityICollection);
-            Assert.NotNull(entity.EntityIEnumerable);
-            Assert.NotNull(entity.EntityIList);
-            Assert.NotNull(entity.EntityArray);
-            Assert.NotNull(entity.EntityHashset);
+            Assert.IsNotNull(entity);
+            Assert.IsNotNull(entity.EntityList);
+            Assert.IsNotNull(entity.EntityICollection);
+            Assert.IsNotNull(entity.EntityIEnumerable);
+            Assert.IsNotNull(entity.EntityIList);
+            Assert.IsNotNull(entity.EntityArray);
+            Assert.IsNotNull(entity.EntityHashset);
         }
 
-        [Fact]
+        [TestMethod]
         public void TestIgnoreAllUnknownTypesWithOutException()
         {
             Filler<EntityCollection> filler = new Filler<EntityCollection>();
             filler.Setup().IgnoreAllUnknownTypes();
             var entity = filler.Create();
-            Assert.Null(entity.EntityArray);
-            Assert.NotNull(entity);
-            Assert.NotNull(entity.EntityList);
-            Assert.NotNull(entity.EntityICollection);
-            Assert.NotNull(entity.EntityIEnumerable);
-            Assert.NotNull(entity.EntityIList);
-            Assert.NotNull(entity.EntityHashset);
+            Assert.IsNull(entity.EntityArray);
+            Assert.IsNotNull(entity);
+            Assert.IsNotNull(entity.EntityList);
+            Assert.IsNotNull(entity.EntityICollection);
+            Assert.IsNotNull(entity.EntityIEnumerable);
+            Assert.IsNotNull(entity.EntityIList);
+            Assert.IsNotNull(entity.EntityHashset);
         }
 
-        [Fact]
+        [TestMethod]
         public void TestIgnoreAllUnknownTypesWithException()
         {
             Filler<EntityCollection> filler = new Filler<EntityCollection>();
-            Assert.Throws<TypeInitializationException>(()=>filler.Create());
+            Assert.ThrowsException<TypeInitializationException>(()=>filler.Create());
         }
 
-        [Fact]
+        [TestMethod]
         public void GenerateTestDataForASortedList()
         {
             Filler<SortedList<int, string>> filler = new Filler<SortedList<int, string>>();
             filler.Setup().OnType<int>().Use(Enumerable.Range(1, 1000));
             var result = filler.Create(10).ToList();
 
-            Assert.Equal(10, result.Count);
+            Assert.AreEqual(10, result.Count);
             foreach (var sortedList in result)
             {
-                Assert.True(sortedList.Any());
+                Assert.IsTrue(sortedList.Any());
             }
         }
 
-        [Fact]
+        [TestMethod]
         public void GenerateTestDataForASimpleList()
         {
             Filler<IList<EntityCollection>> filler = new Filler<IList<EntityCollection>>();
             filler.Setup().IgnoreAllUnknownTypes();
             var createdList = filler.Create();
 
-            Assert.True(createdList.Any());
+            Assert.IsTrue(createdList.Any());
 
             foreach (EntityCollection entityCollection in createdList)
             {
-                Assert.True(entityCollection.EntityICollection.Any());
-                Assert.True(entityCollection.EntityIEnumerable.Any());
-                Assert.True(entityCollection.EntityIList.Any());
-                Assert.True(entityCollection.EntityList.Any());
-                Assert.NotNull(entityCollection.EntityHashset.Any());
+                Assert.IsTrue(entityCollection.EntityICollection.Any());
+                Assert.IsTrue(entityCollection.EntityIEnumerable.Any());
+                Assert.IsTrue(entityCollection.EntityIList.Any());
+                Assert.IsTrue(entityCollection.EntityList.Any());
+                Assert.IsNotNull(entityCollection.EntityHashset.Any());
             }
         }
 
-        [Fact]
+        [TestMethod]
         public void GenerateTestDataForADictionary()
         {
             Filler<Dictionary<int, string>> filler = new Filler<Dictionary<int, string>>();
             var result = filler.Create(10).ToList();
 
-            Assert.Equal(10, result.Count);
+            Assert.AreEqual(10, result.Count);
             foreach (var sortedList in result)
             {
-                Assert.True(sortedList.Any());
+                Assert.IsTrue(sortedList.Any());
             }
         }
 
-        [Fact]
+        [TestMethod]
         public void GenerateDictionaryWithEnumeration()
         {
             var amountOfEnumValues = Enum.GetValues(typeof(TestEnum)).Length;
             var filler = new Filler<Dictionary<TestEnum, string>>();
             var result = filler.Create();
 
-            Assert.Equal(amountOfEnumValues, result.Count);
+            Assert.AreEqual(amountOfEnumValues, result.Count);
         }
 
         private Entity[,] GetArray()
