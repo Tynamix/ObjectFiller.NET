@@ -9,10 +9,12 @@
     <AssemblyName>Tynamix.ObjectFiller</AssemblyName>
     <PackageId>Tynamix.ObjectFiller</PackageId>
     <PackageTags>objectfiller;tynamix;test;testdata;prototyp;prototyping;unittest;design;designviewmodel;generator;random;data;randomdata;testing;poco;lorem;ipsum;fakedata;fake;faker</PackageTags>
-    <PackageReleaseNotes>-1.5.2
+    <Summary>The Tynamix ObjectFiller.NET fills the properties of your objects with customized random data. Use it for unittests, prototyping and whereever you need some random testdata.</Summary>
+    <PackageReleaseNotes>-1.5.3
 * It is now possible to do an explicit setup (just fill properties which are configured in Filler Setup)
 * IpAddress string plugin added
 * Switched to .NET Core 1.0
+* Moved to VS 2017
 * Bug fixes
 
 -1.5.0
@@ -144,6 +146,11 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <AssemblyVersion>1.5.3.0</AssemblyVersion>
+    <FileVersion>1.5.3.0</FileVersion>
+    <Version>1.5.3</Version>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -174,6 +181,102 @@
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
     <DefineConstants>$(DefineConstants);NETSTD</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <DocumentationFile>bin\Debug\net40\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+    <DocumentationFile>bin\Release\net40\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DocumentationFile>bin\Debug\net45\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
+    <DocumentationFile>bin\Debug\net35\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net35|AnyCPU'">
+    <DocumentationFile>bin\Release\net35\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.0|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.0\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.0|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.0\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net35|x86'">
+    <DocumentationFile>bin\x86\Release\net35\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|x86'">
+    <DocumentationFile>bin\x86\Release\net40\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|x86'">
+    <DocumentationFile>bin\x86\Release\net45\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net35|x64'">
+    <DocumentationFile>bin\x64\Release\net35\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|x64'">
+    <DocumentationFile>bin\x64\Release\net45\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|x64'">
+    <DocumentationFile>bin\x64\Release\net40\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|x86'">
+    <DocumentationFile>bin\x86\Debug\net35\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|x86'">
+    <DocumentationFile>bin\x86\Debug\net40\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|x86'">
+    <DocumentationFile>bin\x86\Debug\net45\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|x64'">
+    <DocumentationFile>bin\x64\Debug\net35\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|x64'">
+    <DocumentationFile>bin\x64\Debug\net45\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|x64'">
+    <DocumentationFile>bin\x64\Debug\net40\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.0|x86'">
+    <DocumentationFile>bin\x86\Debug\netstandard1.0\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.0|x64'">
+    <DocumentationFile>bin\x64\Debug\netstandard1.0\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.0|x86'">
+    <DocumentationFile>bin\x86\Release\netstandard1.0\Tynamix.ObjectFiller.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.0|x64'">
+    <DocumentationFile>bin\x64\Release\netstandard1.0\Tynamix.ObjectFiller.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
