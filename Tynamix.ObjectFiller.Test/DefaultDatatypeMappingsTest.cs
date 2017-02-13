@@ -1,33 +1,33 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-    using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-
+    [TestClass]
     public class DefaultDatatypeMappingsTest
     {
-        [Fact]
+        [TestMethod]
         public void Ensure_that_double_does_not_return_infinity()
         {
             var filler = new Filler<MyClass>();
             var myClass = filler.Create();
-            Assert.False(double.IsInfinity(myClass._double));
+            Assert.IsFalse(double.IsInfinity(myClass._double));
 
-            Assert.False(float.IsInfinity(myClass._float));
+            Assert.IsFalse(float.IsInfinity(myClass._float));
         }
 
-        [Fact]
+        [TestMethod]
         public void Ensure_that_each_primitive_datatype_is_mapped_by_default()
         {
             var filler = new Filler<MyClass>();
             var myClasses = filler.Create(100).ToArray();
             foreach (var myClass in myClasses)
             {
-                Assert.NotEqual(default(Guid), myClass._Guid);
-                Assert.NotEqual(default(decimal), myClass._Decimal);
+                Assert.AreNotEqual(default(Guid), myClass._Guid);
+                Assert.AreNotEqual(default(decimal), myClass._Decimal);
             }
         }
 

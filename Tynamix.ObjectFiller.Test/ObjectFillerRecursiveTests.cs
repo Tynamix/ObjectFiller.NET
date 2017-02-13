@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-    using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-
+    [TestClass]
     public class ObjectFillerRecursiveTests
     {
 
@@ -61,68 +61,68 @@ namespace ObjectFiller.Test
 
         // ReSharper restore ClassNeverInstantiated.Local
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_RecursiveType_ThrowsException()
         {
             var filler = new Filler<TestParent>();
             filler.Setup().OnCircularReference().ThrowException();
-            Assert.Throws<InvalidOperationException>(() => filler.Create());
+            Assert.ThrowsException<InvalidOperationException>(() => filler.Create());
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_WithIgnoredProperties_Succeeds()
         {
             var filler = new Filler<TestParent>();
             filler.Setup().OnProperty(p => p.Child).IgnoreIt();
             var result = filler.Create();
 
-            Assert.NotNull(result);
+            Assert.IsNotNull(result);
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_WithFunc_Succeeds()
         {
             var filler = new Filler<TestParent>();
             filler.Setup().OnProperty(p => p.Child).Use(() => new TestChild());
             var result = filler.Create();
 
-            Assert.NotNull(result.Child);
+            Assert.IsNotNull(result.Child);
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_RecursiveType_Parent_First_Fails()
         {
             var filler = new Filler<TestParent>();
             filler.Setup().OnCircularReference().ThrowException();
-            Assert.Throws<InvalidOperationException>(() => filler.Create());
+            Assert.ThrowsException<InvalidOperationException>(() => filler.Create());
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_RecursiveType_Child_First_Fails()
         {
             var filler = new Filler<TestChild>();
             filler.Setup().OnCircularReference().ThrowException();
-            Assert.Throws<InvalidOperationException>(() => filler.Create());
+            Assert.ThrowsException<InvalidOperationException>(() => filler.Create());
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_DeepRecursiveType_Fails()
         {
             var filler = new Filler<TestGrandParent>();
             filler.Setup().OnCircularReference().ThrowException();
-            Assert.Throws<InvalidOperationException>(() => filler.Create());
+            Assert.ThrowsException<InvalidOperationException>(() => filler.Create());
 
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_SelfReferencing_Fails()
         {
             var filler = new Filler<TestSelf>();
             filler.Setup().OnCircularReference().ThrowException();
-            Assert.Throws<InvalidOperationException>(() => filler.Create());
+            Assert.ThrowsException<InvalidOperationException>(() => filler.Create());
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_DuplicateProperty_Succeeds()
         {
             // reason: a filler should not complain if it encounters the same type 
@@ -130,53 +130,53 @@ namespace ObjectFiller.Test
             var filler = new Filler<TestDuplicate>();
             var result = filler.Create();
 
-            Assert.NotNull(result);
+            Assert.IsNotNull(result);
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_RecursiveType_Parent_First_Succeeds()
         {
             var filler = new Filler<TestParent>();
             var r = filler.Create();
-            Assert.Null(r.Child.Parent.Child);
+            Assert.IsNull(r.Child.Parent.Child);
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_RecursiveType_Child_First_Succeeds()
         {
             var filler = new Filler<TestChild>();
             var r = filler.Create();
-            Assert.Null(r.Parent.Child.Parent);
+            Assert.IsNull(r.Parent.Child.Parent);
 
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_DeepRecursiveType_Succeeds()
         {
             var filler = new Filler<TestGrandParent>();
             var r = filler.Create();
-            Assert.Null(r.SubObject.Child.Parent);
+            Assert.IsNull(r.SubObject.Child.Parent);
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_SelfReferencing_Succeeds()
         {
             var filler = new Filler<TestSelf>();
             var r = filler.Create();
 
-            Assert.Null(r.Self.Self);
+            Assert.IsNull(r.Self.Self);
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_ParentList_Succeeds()
         {
             var filler = new Filler<Parent>();
             var r = filler.Create();
 
-            Assert.Null(r.Childrens[0].Parent.Childrens);
+            Assert.IsNull(r.Childrens[0].Parent.Childrens);
         }
 
-        [Fact]
+        [TestMethod]
         public void RecursiveFill_ParentDictionary_Succeeds()
         {
             var filler = new Filler<ParentDictionary>();

@@ -1,16 +1,18 @@
-﻿namespace ObjectFiller.Test
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace ObjectFiller.Test
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Xunit;
+    
     using Tynamix.ObjectFiller;
 
-
+    [TestClass]
     public class RandomAccessTest
     {
-        [Fact]
+        [TestMethod]
         public void GetRandomIntOnDifferentThreadsGetsDifferentResults()
         {
             var numberToGenerate = 1000;
@@ -40,7 +42,7 @@
             var results = Task.WhenAll(task1, task2).Result;
             var firstResults = results[0].Sum();
             var secondResults = results[1].Sum();
-            Assert.NotEqual(firstResults, secondResults);
+            Assert.AreNotEqual(firstResults, secondResults);
         }
     }
 }

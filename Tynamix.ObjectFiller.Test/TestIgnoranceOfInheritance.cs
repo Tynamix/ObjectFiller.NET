@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ObjectFiller.Test
 {
     using ObjectFiller.Test.TestPoco.Person;
 
-    using Xunit;
+    
     using Tynamix.ObjectFiller;
 
     public class Student : Person
@@ -15,20 +16,21 @@ namespace ObjectFiller.Test
         public string Class { get; set; }
     }
 
+    [TestClass]
     public class TestIgnoranceOfInheritance
     {
-        [Fact]
+        [TestMethod]
         public void IfIgnoreInheritanceIsSetToTrueTheNameOfTheStudentShouldBeNull()
         {
             Filler<Student> filler = new Filler<Student>();
             filler.Setup().IgnoreInheritance();
             var student = filler.Create();
 
-            Assert.Null(student.FirstName);
-            Assert.NotNull(student.Class);
+            Assert.IsNull(student.FirstName);
+            Assert.IsNotNull(student.Class);
         }
 
-        [Fact]
+        [TestMethod]
         public void IfIgnoreInheritanceIsSetToFalseTheNameOfTheStudentShouldNotBeNull()
         {
             Filler<Student> filler = new Filler<Student>();
@@ -36,8 +38,8 @@ namespace ObjectFiller.Test
                 .OnType<IAddress>().CreateInstanceOf<Address>();
             var student = filler.Create();
 
-            Assert.NotNull(student.FirstName);
-            Assert.NotNull(student.Class);
+            Assert.IsNotNull(student.FirstName);
+            Assert.IsNotNull(student.Class);
         }
     }
 }

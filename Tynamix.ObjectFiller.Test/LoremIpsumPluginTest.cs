@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Library;
 using Tynamix.ObjectFiller;
 
@@ -8,11 +8,11 @@ namespace ObjectFiller.Test
 {
     using System.Collections.Generic;
 
-
+    [TestClass]
     public class LoremIpsumPluginTest
     {
 
-        [Fact]
+        [TestMethod]
         public void Test_With_Many_MinWords_And_Many_MinSentences()
         {
             Filler<Book> book = new Filler<Book>();
@@ -21,10 +21,10 @@ namespace ObjectFiller.Test
 
             var b = book.Create();
 
-            Assert.NotNull(b);
+            Assert.IsNotNull(b);
         }
 
-        [Fact]
+        [TestMethod]
         public void Test_With_German_Default_Settings()
         {
             Filler<Book> book = new Filler<Book>();
@@ -33,10 +33,10 @@ namespace ObjectFiller.Test
 
             var b = book.Create();
 
-            Assert.NotNull(b);
+            Assert.IsNotNull(b);
         }
 
-        [Fact]
+        [TestMethod]
         public void Test_With_France_High_Values_Settings()
         {
             Filler<Book> book = new Filler<Book>();
@@ -45,10 +45,10 @@ namespace ObjectFiller.Test
 
             var b = book.Create();
 
-            Assert.NotNull(b);
+            Assert.IsNotNull(b);
         }
 
-        [Fact]
+        [TestMethod]
         public void Test_With_English_Min_Values_Settings()
         {
             Filler<Book> book = new Filler<Book>();
@@ -58,11 +58,11 @@ namespace ObjectFiller.Test
             var b = book.Create();
 
             b.ISBN = b.ISBN.Replace("\r\n\r\n", string.Empty);
-            Assert.NotNull(b);
-            Assert.Equal(1, b.ISBN.Split('\n').Length);
+            Assert.IsNotNull(b);
+            Assert.AreEqual(1, b.ISBN.Split('\n').Length);
         }
 
-        [Fact]
+        [TestMethod]
         public void Test_With_LoremIpsum_Seed_Settings()
         {
             Filler<Book> book = new Filler<Book>();
@@ -72,12 +72,12 @@ namespace ObjectFiller.Test
             var b = book.Create();
             var b1 = book.Create();
 
-            Assert.NotNull(b);
-            Assert.NotNull(b1);
-            Assert.Equal(b.ISBN, b1.ISBN);
+            Assert.IsNotNull(b);
+            Assert.IsNotNull(b1);
+            Assert.AreEqual(b.ISBN, b1.ISBN);
         }
 
-        [Fact]
+        [TestMethod]
         public void LoremIpsum_should_provide_different_data()
         {
             var alowedDelta = 2;
@@ -91,7 +91,7 @@ namespace ObjectFiller.Test
 
             var groupedResult = resultElements.GroupBy(x => x.Description);
 
-            Assert.Equal((double)100, groupedResult.Count(), alowedDelta);
+            Assert.AreEqual((double)100, groupedResult.Count(), alowedDelta);
         }
     }
 }

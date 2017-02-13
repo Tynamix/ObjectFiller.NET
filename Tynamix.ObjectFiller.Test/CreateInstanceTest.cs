@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
@@ -49,11 +49,11 @@ namespace ObjectFiller.Test
     }
 
 
-
+    [TestClass]
     public class CreateInstanceTest
     {
 
-        [Fact]
+        [TestMethod]
         public void TestCreateInstanceOfChildOne()
         {
             Filler<ParentOfParent> p = new Filler<ParentOfParent>();
@@ -64,12 +64,12 @@ namespace ObjectFiller.Test
 
             var pop = p.Create();
 
-            Assert.NotNull(pop);
-            Assert.NotNull(pop.Parents);
-            Assert.True(pop.Parents.All(x => x is ChildOne));
-            Assert.False(pop.Parents.Any(x => x is ChildTwo));
+            Assert.IsNotNull(pop);
+            Assert.IsNotNull(pop.Parents);
+            Assert.IsTrue(pop.Parents.All(x => x is ChildOne));
+            Assert.IsFalse(pop.Parents.Any(x => x is ChildTwo));
 
-            Assert.True(pop.Parents.Cast<ChildOne>().All(x => x.Name == "TEST"));
+            Assert.IsTrue(pop.Parents.Cast<ChildOne>().All(x => x.Name == "TEST"));
 
 
         }

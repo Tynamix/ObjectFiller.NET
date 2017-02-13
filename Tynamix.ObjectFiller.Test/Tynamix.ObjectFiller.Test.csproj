@@ -1,45 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>net46</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="BugfixTests\**" />
-    <EmbeddedResource Remove="BugfixTests\**" />
-    <None Remove="BugfixTests\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="CityNamesPluginTest.cs" />
-    <Compile Remove="CollectionizerTest.cs" />
-    <Compile Remove="CopyConstructorTest.cs" />
-    <Compile Remove="CountryNamesPlugin.cs" />
-    <Compile Remove="CreateInstanceTest.cs" />
-    <Compile Remove="DateTimeRangeTest.cs" />
-    <Compile Remove="DefaultDatatypeMappingsTest.cs" />
-    <Compile Remove="EmailAddressesPluginTest.cs" />
-    <Compile Remove="EnumTest.cs" />
-    <Compile Remove="HashStackTests.cs" />
-    <Compile Remove="IpAddressPluginTest.cs" />
-    <Compile Remove="LibraryFillingTest.cs" />
-    <Compile Remove="ListFillingTest.cs" />
-    <Compile Remove="LoremIpsumPluginTest.cs" />
-    <Compile Remove="ObjectFillerRecursiveTests.cs" />
-    <Compile Remove="ObjectFillerTest.cs" />
-    <Compile Remove="PatternGeneratorTest.cs" />
-    <Compile Remove="PersonFillingTest.cs" />
-    <Compile Remove="RandomAccessTest.cs" />
-    <Compile Remove="RandomizerPluginFake.cs" />
-    <Compile Remove="RandomizerTest.cs" />
-    <Compile Remove="RangePluginTest.cs" />
-    <Compile Remove="RealNamePluginTest.cs" />
-    <Compile Remove="SaveFillerSetupTest.cs" />
-    <Compile Remove="SequenceGeneratorTest.cs" />
-    <Compile Remove="SetupTests.cs" />
-    <Compile Remove="StreetNamesPluginTest.cs" />
-    <Compile Remove="TestIgnoranceOfInheritance.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170125-04" />

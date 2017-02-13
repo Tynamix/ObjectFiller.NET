@@ -1,10 +1,10 @@
 ﻿using System.Text.RegularExpressions;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-
+    [TestClass]
     public class EmailAddressesPluginTests
     {
         public string StandardAssertMessage = "Given value does not match e-mail address standard.";
@@ -16,34 +16,34 @@ namespace ObjectFiller.Test
         private static Regex RFC5322RegEx =
           new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", RegexOptions.IgnoreCase);
 
-        [Fact]
+        [TestMethod]
         public void DefaultModeShouldReturnValidEmailAdress()
         {
             var value = new EmailAddresses().GetValue();
-            Assert.True(RFC5322RegEx.IsMatch(value));
+            Assert.IsTrue(RFC5322RegEx.IsMatch(value));
         }
 
-        [Fact]
+        [TestMethod]
         public void TwoCallsCreateTwoDifferentEMailAddresses()
         {
             var sut = new EmailAddresses();
             var firstValue = sut.GetValue();
             var secondValue = sut.GetValue();
 
-            Assert.NotEqual(firstValue, secondValue);
+            Assert.AreNotEqual(firstValue, secondValue);
         }
 
-        [Fact]
+        [TestMethod]
         public void EMailAddressMustBeValidWithRealNames()
         {
             var sut = new EmailAddresses();
 
             var value = sut.GetValue();
 
-            Assert.True(RFC5322RegEx.IsMatch(value));
+            Assert.IsTrue(RFC5322RegEx.IsMatch(value));
         }
 
-        [Fact]
+        [TestMethod]
         public void DomainNamesAreUsedFromRandomData()
         {
             var referenceValue = "google.com";
@@ -53,11 +53,11 @@ namespace ObjectFiller.Test
 
             var result = sut.GetValue();
 
-            Assert.EndsWith(referenceValue, result);
-            Assert.True(RFC5322RegEx.IsMatch(result));
+            Assert.IsTrue(result.EndsWith(referenceValue));
+            Assert.IsTrue(RFC5322RegEx.IsMatch(result));
         }
 
-        [Fact]
+        [TestMethod]
         public void PluginMustEnsureValidAddressesEvenAnInvalidDomainNameIsProvided()
         {
             var referenceValue = "googlecom";
@@ -66,10 +66,10 @@ namespace ObjectFiller.Test
             var sut = new EmailAddresses(fake, fake);
 
             var result = sut.GetValue();
-            Assert.True(RFC5322RegEx.IsMatch(result));
+            Assert.IsTrue(RFC5322RegEx.IsMatch(result));
         }
 
-        [Fact]
+        [TestMethod]
         public void LocalPathMustBeUsedFromRandomData()
         {
             var referenceValue = "karl";
@@ -79,11 +79,11 @@ namespace ObjectFiller.Test
 
             var result = sut.GetValue();
 
-            Assert.StartsWith(referenceValue, result);
-            Assert.True(RFC5322RegEx.IsMatch(result));
+            Assert.IsTrue(result.StartsWith(referenceValue));
+            Assert.IsTrue(RFC5322RegEx.IsMatch(result));
         }
 
-        [Fact]
+        [TestMethod]
         public void PluginMustEnsureValidAddressesEvenAnInvalidLocalPartIsProvided()
         {
             var referenceValue = "ka rl";
@@ -93,10 +93,10 @@ namespace ObjectFiller.Test
 
             var result = sut.GetValue();
 
-            Assert.True(RFC5322RegEx.IsMatch(result));
+            Assert.IsTrue(RFC5322RegEx.IsMatch(result));
         }
 
-        [Fact]
+        [TestMethod]
         public void GivenDomainRootIsAttachedToGeneratedEmailAddress()
         {
             var domainRoot = ".de";
@@ -104,11 +104,11 @@ namespace ObjectFiller.Test
 
             var result = sut.GetValue();
 
-            Assert.EndsWith(domainRoot, result);
-            Assert.True(RFC5322RegEx.IsMatch(result));
+            Assert.IsTrue(result.EndsWith(domainRoot));
+            Assert.IsTrue(RFC5322RegEx.IsMatch(result));
         }
 
-        [Fact]
+        [TestMethod]
         public void EmailAddressesWorksInCombinationWithRealNamesPlugin()
         {
             var realNames = new RealNames(NameStyle.FirstNameLastName);
@@ -116,7 +116,7 @@ namespace ObjectFiller.Test
             var sut = new EmailAddresses(realNames);
             var result = sut.GetValue();
 
-            Assert.True(RFC5322RegEx.IsMatch(result));
+            Assert.IsTrue(RFC5322RegEx.IsMatch(result));
         }
     }
 }

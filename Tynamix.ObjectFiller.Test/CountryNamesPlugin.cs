@@ -1,19 +1,21 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace ObjectFiller.Test
 {
-        using Xunit;
+        
 
     using Tynamix.ObjectFiller;
 
-
+    [TestClass]
     public class CountryNamesPlugin
     {
-        [Fact]
+        [TestMethod]
         public void RandomNameIsReturned()
         {
             var sut = new CountryName();
             var value = sut.GetValue();
 
-            Assert.False(string.IsNullOrEmpty(value));
+            Assert.IsFalse(string.IsNullOrEmpty(value));
         }
     }
 }
