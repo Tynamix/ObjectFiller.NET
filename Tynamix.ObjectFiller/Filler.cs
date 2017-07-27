@@ -1085,20 +1085,9 @@ namespace Tynamix.ObjectFiller
             var propertiesWithoutOrder =
                 properties.Where(x => !this.ContainsProperty(currentSetupItem.PropertyOrder.Keys, x)).ToList();
 
-            foreach (var property in firstProperties)
-            {
-                propertyQueue.Enqueue(property);
-            }
-
-            foreach (var property in propertiesWithoutOrder)
-            {
-                propertyQueue.Enqueue(property);
-            }
-
-            foreach (var property in lastProperties)
-            {
-                propertyQueue.Enqueue(property);
-            }
+            firstProperties.ForEach(propertyQueue.Enqueue);
+            propertiesWithoutOrder.ForEach(propertyQueue.Enqueue);
+            lastProperties.ForEach(propertyQueue.Enqueue);
 
             return propertyQueue;
         }
