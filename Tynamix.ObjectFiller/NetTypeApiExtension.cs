@@ -9,125 +9,98 @@ namespace Tynamix.ObjectFiller
     {
         internal static bool IsEnum(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.IsEnum;
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().IsEnum;
+#else
+            return source.IsEnum;
 #endif
         }
 
         internal static PropertyInfo GetProperty(this Type source, string name)
         {
-#if (NET3X || NET4X)
-            return source.GetProperty(name);
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().GetDeclaredProperty(name);
+#else
+            return source.GetProperty(name);
 #endif
         }
 
         internal static IEnumerable<MethodInfo> GetMethods(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.GetMethods();
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().DeclaredMethods;
+#else
+            return source.GetMethods();
 #endif
         }
 
         internal static MethodInfo GetSetterMethod(this PropertyInfo source)
         {
-#if (NET3X || NET4X)
-            return source.GetSetMethod(true);
-#else
+#if NETSTANDARD1_0
             return source.SetMethod;
+#else
+            return source.GetSetMethod(true);
 #endif
         }
 
         internal static bool IsGenericType(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.IsGenericType;
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().IsGenericType;
+#else
+            return source.IsGenericType;
 #endif
         }
 
         internal static bool IsValueType(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.IsValueType;
-#endif
 
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().IsValueType;
+#else
+            return source.IsValueType;
 #endif
         }
 
         internal static bool IsClass(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.IsClass;
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().IsClass;
+#else
+            return source.IsClass;
 #endif
         }
 
         internal static bool IsInterface(this Type source)
         {
-#if (NET3X || NET4X)
+#if NETSTANDARD1_0
+                        return source.GetTypeInfo().IsInterface;
+#else
             return source.IsInterface;
-#endif
-
-#if (NETSTD)
-            return source.GetTypeInfo().IsInterface;
 #endif
         }
 
         internal static bool IsAbstract(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.IsAbstract;
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().IsAbstract;
+#else
+            return source.IsAbstract;
 #endif
         }
 
         internal static IEnumerable<Type> GetImplementedInterfaces(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.GetInterfaces();
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().ImplementedInterfaces;
+#else
+            return source.GetInterfaces();
 #endif
         }
 
         internal static IEnumerable<PropertyInfo> GetProperties(this Type source, bool ignoreInheritance)
         {
-#if (NET3X || NET4X)
-
-            if (ignoreInheritance)
-            {
-                return source.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
-            }
-
-            return source.GetProperties();
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
 
             var propertyInfos = source.GetTypeInfo().DeclaredProperties.ToList();
 
@@ -142,61 +115,62 @@ namespace Tynamix.ObjectFiller
                 }
             }
             return propertyInfos;
+#else
+
+            if (ignoreInheritance)
+            {
+                return source.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
+            }
+
+            return source.GetProperties();
 #endif
+
         }
 
         internal static Type[] GetGenericTypeArguments(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.GetGenericArguments();
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().GenericTypeArguments;
+#else
+            return source.GetGenericArguments();
 #endif
         }
 
         internal static IEnumerable<ConstructorInfo> GetConstructors(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.GetConstructors();
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().DeclaredConstructors;
+#else
+            return source.GetConstructors();
 #endif
         }
 
         internal static MethodInfo GetMethod(this Type source, string name)
         {
-#if (NET3X || NET4X)
-            return source.GetMethod(name);
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().GetDeclaredMethod(name);
+#else
+            return source.GetMethod(name);
 #endif
         }
 
         internal static string GetModuleName(this Type source)
         {
-#if (NET3X || NET4X)
-            return source.Module.ScopeName;
-#endif
-
-#if (NETSTD)
+#if NETSTANDARD1_0
             return source.GetTypeInfo().Module.Name;
+#else
+            return source.Module.ScopeName;
 #endif
         }
 
-#if (NET3X || NET4X)
+#if (NET35 || NET40 ||  NET45 || NET451 || NET452)
         internal static Type GetTypeInfo(this Type source)
         {
             return source;
         }
 #endif
 
-#if (NETSTD)
+#if NETSTANDARD1_0
         internal static void ForEach<T>(this IEnumerable<T> source, Action<T> eachItem)
         {
             foreach (T item in source)

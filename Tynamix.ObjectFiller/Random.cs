@@ -30,7 +30,7 @@ namespace Tynamix.ObjectFiller
             RandomSeed = Environment.TickCount;
         }
 
-#if NET3X
+#if NET35
         /// <summary>
         /// A instance of <see cref="Random"/>
         /// </summary>

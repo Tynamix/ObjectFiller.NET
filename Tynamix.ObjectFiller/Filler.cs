@@ -736,8 +736,8 @@ namespace Tynamix.ObjectFiller
 
             bool derivedType = !propertyType.GetGenericTypeArguments().Any();
 
-            Type keyType = !derivedType 
-                            ? propertyType.GetGenericTypeArguments()[0] 
+            Type keyType = !derivedType
+                            ? propertyType.GetGenericTypeArguments()[0]
                             : propertyType.GetTypeInfo().BaseType.GetGenericTypeArguments()[0];
 
             Type valueType = !derivedType
