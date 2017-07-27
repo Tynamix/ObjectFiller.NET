@@ -736,8 +736,8 @@ namespace Tynamix.ObjectFiller
 
             bool derivedType = !propertyType.GetGenericTypeArguments().Any();
 
-            Type keyType = !derivedType 
-                            ? propertyType.GetGenericTypeArguments()[0] 
+            Type keyType = !derivedType
+                            ? propertyType.GetGenericTypeArguments()[0]
                             : propertyType.GetTypeInfo().BaseType.GetGenericTypeArguments()[0];
 
             Type valueType = !derivedType
@@ -1085,9 +1085,20 @@ namespace Tynamix.ObjectFiller
             var propertiesWithoutOrder =
                 properties.Where(x => !this.ContainsProperty(currentSetupItem.PropertyOrder.Keys, x)).ToList();
 
-            firstProperties.ForEach(propertyQueue.Enqueue);
-            propertiesWithoutOrder.ForEach(propertyQueue.Enqueue);
-            lastProperties.ForEach(propertyQueue.Enqueue);
+            foreach (var property in firstProperties)
+            {
+                propertyQueue.Enqueue(property);
+            }
+
+            foreach (var property in propertiesWithoutOrder)
+            {
+                propertyQueue.Enqueue(property);
+            }
+
+            foreach (var property in lastProperties)
+            {
+                propertyQueue.Enqueue(property);
+            }
 
             return propertyQueue;
         }

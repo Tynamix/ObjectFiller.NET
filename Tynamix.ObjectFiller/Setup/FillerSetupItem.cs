@@ -154,7 +154,7 @@ namespace Tynamix.ObjectFiller
             this.TypeToRandomFunc[typeof(IntPtr?)] = () => default(IntPtr);
             this.TypeToRandomFunc[typeof(TimeSpan)] = () => new TimeSpan(Random.Next());
             this.TypeToRandomFunc[typeof(TimeSpan?)] = () => new TimeSpan(Random.Next());
-#if !NETSTD
+#if !NETSTANDARD1_0
             this.TypeToRandomFunc[typeof(ArrayList)] = () => ((IRandomizerPlugin<ArrayList>)new Collectionizer<string, MnemonicString>()).GetValue();
 #endif
         }
