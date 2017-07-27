@@ -1,12 +1,13 @@
-﻿    using Xunit;
+﻿    
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-
+    [TestClass]
     public class RealNamePluginTest
     {
-        [Fact]
+        [TestMethod]
         public void TestRealNameFirstNameOnly()
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
@@ -15,12 +16,12 @@ namespace ObjectFiller.Test
 
             LibraryFillingTest.Person p = filler.Create();
 
-            Assert.NotNull(p);
-            Assert.NotNull(p.Name);
-            Assert.False(p.Name.Contains(" "));
+            Assert.IsNotNull(p);
+            Assert.IsNotNull(p.Name);
+            Assert.IsFalse(p.Name.Contains(" "));
         }
 
-        [Fact]
+        [TestMethod]
         public void TestRealNameLastNameOnly()
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
@@ -29,12 +30,12 @@ namespace ObjectFiller.Test
 
             LibraryFillingTest.Person p = filler.Create();
 
-            Assert.NotNull(p);
-            Assert.NotNull(p.Name);
-            Assert.False(p.Name.Contains(" "));
+            Assert.IsNotNull(p);
+            Assert.IsNotNull(p.Name);
+            Assert.IsFalse(p.Name.Contains(" "));
         }
 
-        [Fact]
+        [TestMethod]
         public void TestRealNameFirstNameLastName()
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
@@ -43,13 +44,13 @@ namespace ObjectFiller.Test
 
             LibraryFillingTest.Person p = filler.Create();
 
-            Assert.NotNull(p);
-            Assert.NotNull(p.Name);
-            Assert.True(p.Name.Contains(" "));
-            Assert.Equal(2, p.Name.Split(' ').Length);
+            Assert.IsNotNull(p);
+            Assert.IsNotNull(p.Name);
+            Assert.IsTrue(p.Name.Contains(" "));
+            Assert.AreEqual(2, p.Name.Split(' ').Length);
         }
 
-        [Fact]
+        [TestMethod]
         public void TestRealNameLastNameFirstName()
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
@@ -58,10 +59,10 @@ namespace ObjectFiller.Test
 
             LibraryFillingTest.Person p = filler.Create();
 
-            Assert.NotNull(p);
-            Assert.NotNull(p.Name);
-            Assert.True(p.Name.Contains(" "));
-            Assert.Equal(2, p.Name.Split(' ').Length);
+            Assert.IsNotNull(p);
+            Assert.IsNotNull(p.Name);
+            Assert.IsTrue(p.Name.Contains(" "));
+            Assert.AreEqual(2, p.Name.Split(' ').Length);
         }
     }
 }

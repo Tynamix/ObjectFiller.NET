@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-    using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco.Person;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-
+    [TestClass]
     public class ObjectFillerTest
     {
-        [Fact]
+        [TestMethod]
         public void TestFillPerson()
         {
             Person p = new Person();
@@ -26,20 +26,20 @@ namespace ObjectFiller.Test
 
             Person pFilled = filler.Fill(p);
 
-            Assert.True(new List<string>() { "Maik", "Tom", "Anton" }.Contains(pFilled.LastName));
+            Assert.IsTrue(new List<string>() { "Maik", "Tom", "Anton" }.Contains(pFilled.LastName));
         }
 
 
 
 
-        [Fact]
+        [TestMethod]
         public void CreateMultipleInstances()
         {
             Filler<LibraryFillingTest.Person> filler = new Filler<LibraryFillingTest.Person>();
             IEnumerable<LibraryFillingTest.Person> pList = filler.Create(10);
 
-            Assert.NotNull(pList);
-            Assert.Equal(10, pList.Count());
+            Assert.IsNotNull(pList);
+            Assert.AreEqual(10, pList.Count());
         }
     }
 }

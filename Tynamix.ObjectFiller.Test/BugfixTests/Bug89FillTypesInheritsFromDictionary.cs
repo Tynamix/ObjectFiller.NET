@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ObjectFiller.Test.BugfixTests
 {
     using Tynamix.ObjectFiller;
 
-    using Xunit;
+
 
 
     public class Bug89FillTypesInheritsFromDictionary
@@ -28,16 +29,16 @@ namespace ObjectFiller.Test.BugfixTests
             public DateTime SomeDate { get; set; }
         }
 
-        [Fact]
+        [TestMethod]
         public void ADerivedDictionaryShallGetFilledAllProperties()
         {
             Filler<EntityA> filler = new Filler<EntityA>();
 
             var result = filler.Create();
 
-            Assert.NotNull(result.Bs);
-            Assert.InRange(result.Bs.SomeDate, DateTime.MinValue.AddSeconds(1), DateTime.MaxValue.AddSeconds(-1));
-            Assert.True(result.Bs.Any());
+            Assert.IsNotNull(result.Bs);
+            Assert.IsTrue(result.Bs.SomeDate > DateTime.MinValue.AddSeconds(1) && result.Bs.SomeDate < DateTime.MaxValue.AddSeconds(-1));
+            Assert.IsTrue(result.Bs.Any());
         }
     }
 }

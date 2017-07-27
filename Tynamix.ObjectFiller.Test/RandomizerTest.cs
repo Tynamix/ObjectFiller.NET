@@ -1,39 +1,41 @@
-﻿namespace ObjectFiller.Test
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace ObjectFiller.Test
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-        using Xunit;
+        
 
     using ObjectFiller.Test.TestPoco.Library;
     using ObjectFiller.Test.TestPoco.Person;
 
     using Tynamix.ObjectFiller;
 
-
+    [TestClass]
     public class RandomizerTest
     {
-        [Fact]
+        [TestMethod]
         public void GetRandomInt()
         {
             var number = Randomizer<int>.Create(new IntRange(1, 2));
 
-            Assert.True(number == 1 || number == 2);
+            Assert.IsTrue(number == 1 || number == 2);
         }
 
-        [Fact]
+        [TestMethod]
         public void FillAllAddressProperties()
         {
             var a = Randomizer<Address>.Create();
-            Assert.NotNull(a.City);
-            Assert.NotNull(a.Country);
-            Assert.NotEqual(0, a.HouseNumber);
-            Assert.NotNull(a.PostalCode);
-            Assert.NotNull(a.Street);
+            Assert.IsNotNull(a.City);
+            Assert.IsNotNull(a.Country);
+            Assert.AreNotEqual(0, a.HouseNumber);
+            Assert.IsNotNull(a.PostalCode);
+            Assert.IsNotNull(a.Street);
         }
 
-        [Fact]
+        [TestMethod]
         public void TryingToCreateAnObjectWithAnInterfaceShallFailAndHaveAnInnerexception()
         {
             try
@@ -42,47 +44,47 @@
             }
             catch (InvalidOperationException ex)
             {
-                Assert.NotNull(ex.InnerException);
+                Assert.IsNotNull(ex.InnerException);
                 return;
             }
 
             // Should not reach this!
-            Assert.False(true);
+            Assert.IsFalse(true);
         }
 
-        [Fact]
+        [TestMethod]
         public void RandomizerCreatesAListOfRandomItemsIfNeeded()
         {
             int amount = 5;
 
             IEnumerable<int> result = Randomizer<int>.Create(amount);
 
-            Assert.Equal(amount, result.Count());
+            Assert.AreEqual(amount, result.Count());
         }
 
-        [Fact]
+        [TestMethod]
         public void RandomizerCreatesAListOfRandomItemsWithAPlugin()
         {
             int amount = 5;
 
             IEnumerable<int> result = Randomizer<int>.Create(new IntRange(1,1), amount);
 
-            Assert.Equal(amount, result.Count());
-            Assert.True(result.Count(x => x == 1) == amount);
+            Assert.AreEqual(amount, result.Count());
+            Assert.IsTrue(result.Count(x => x == 1) == amount);
         }
 
-        [Fact]
+        [TestMethod]
         public void RandomizerCreatesAListOfItemBasedOnAFactory()
         {
             int amount = 5;
 
             IEnumerable<int> result = Randomizer<int>.Create(amount, () => 1);
 
-            Assert.Equal(amount, result.Count());
-            Assert.True(result.Count(x => x == 1) == amount);
+            Assert.AreEqual(amount, result.Count());
+            Assert.IsTrue(result.Count(x => x == 1) == amount);
         }
         
-        [Fact]
+        [TestMethod]
         public void RandomizerCreatesAListOfItemBasedOnASetup()
         {
             int amount = 5;
@@ -91,8 +93,8 @@
 
             IEnumerable<Address> result = Randomizer<Address>.Create(setup, amount);
 
-            Assert.Equal(amount, result.Count());
-            Assert.True(result.Count(x => x.HouseNumber == 1) == amount);
+            Assert.AreEqual(amount, result.Count());
+            Assert.IsTrue(result.Count(x => x.HouseNumber == 1) == amount);
         }
     }
 }

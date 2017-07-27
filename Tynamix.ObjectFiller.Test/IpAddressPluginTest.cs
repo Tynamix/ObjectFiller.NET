@@ -1,9 +1,10 @@
-﻿namespace ObjectFiller.Test
-{
-    using System.Security.Policy;
-    using Tynamix.ObjectFiller;
-    using Xunit;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+namespace ObjectFiller.Test
+{
+    using Tynamix.ObjectFiller;
+
+    [TestClass]
     public class IpAddressPluginTest
     {
 
@@ -12,7 +13,7 @@
             public string IpAddress { get; set; }
         }
 
-        [Fact]
+        [TestMethod]
         public void TestIpAddressGenerator()
         {
             Filler<IpAddressClass> filler = new Filler<IpAddressClass>();
@@ -24,14 +25,14 @@
 
             var ipAddresses = result.IpAddress.Split('.');
 
-            Assert.Collection(ipAddresses,
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 255),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 255),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 255),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 255));
+
+            Assert.IsTrue(int.Parse(ipAddresses[0]) > 0 && int.Parse(ipAddresses[0]) <= 255);
+            Assert.IsTrue(int.Parse(ipAddresses[1]) > 0 && int.Parse(ipAddresses[1]) <= 255);
+            Assert.IsTrue(int.Parse(ipAddresses[2]) > 0 && int.Parse(ipAddresses[2]) <= 255);
+            Assert.IsTrue(int.Parse(ipAddresses[3]) > 0 && int.Parse(ipAddresses[3]) <= 255);
         }
 
-        [Fact]
+        [TestMethod]
         public void TestIpAddressGeneratorWithWrongNumbersAndFirstSegmentMaximumOf10()
         {
             Filler<IpAddressClass> filler = new Filler<IpAddressClass>();
@@ -42,14 +43,13 @@
 
             var ipAddresses = result.IpAddress.Split('.');
 
-            Assert.Collection(ipAddresses,
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 10),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 255),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 255),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 255));
+            Assert.IsTrue(int.Parse(ipAddresses[0]) > 0 && int.Parse(ipAddresses[0]) <= 10);
+            Assert.IsTrue(int.Parse(ipAddresses[1]) > 0 && int.Parse(ipAddresses[1]) <= 255);
+            Assert.IsTrue(int.Parse(ipAddresses[2]) > 0 && int.Parse(ipAddresses[2]) <= 255);
+            Assert.IsTrue(int.Parse(ipAddresses[3]) > 0 && int.Parse(ipAddresses[3]) <= 255);
         }
 
-        [Fact]
+        [TestMethod]
         public void TestIpAddressGeneratorWithSegmentSetup()
         {
             Filler<IpAddressClass> filler = new Filler<IpAddressClass>();
@@ -60,14 +60,13 @@
 
             var ipAddresses = result.IpAddress.Split('.');
 
-            Assert.Collection(ipAddresses,
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 10),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 10),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 10),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 10));
+            Assert.IsTrue(int.Parse(ipAddresses[0]) > 0 && int.Parse(ipAddresses[0]) <= 10);
+            Assert.IsTrue(int.Parse(ipAddresses[1]) > 0 && int.Parse(ipAddresses[1]) <= 10);
+            Assert.IsTrue(int.Parse(ipAddresses[2]) > 0 && int.Parse(ipAddresses[2]) <= 10);
+            Assert.IsTrue(int.Parse(ipAddresses[3]) > 0 && int.Parse(ipAddresses[3]) <= 10);
         }
 
-        [Fact]
+        [TestMethod]
         public void TestIpAddressGeneratorWithFirstTwoSegmentSetup()
         {
             Filler<IpAddressClass> filler = new Filler<IpAddressClass>();
@@ -78,11 +77,10 @@
 
             var ipAddresses = result.IpAddress.Split('.');
 
-            Assert.Collection(ipAddresses,
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 10),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 10),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 255),
-                              (s) => Assert.True(int.Parse(s) > 0 && int.Parse(s) <= 255));
+            Assert.IsTrue(int.Parse(ipAddresses[0]) > 0 && int.Parse(ipAddresses[0]) <= 10);
+            Assert.IsTrue(int.Parse(ipAddresses[1]) > 0 && int.Parse(ipAddresses[1]) <= 10);
+            Assert.IsTrue(int.Parse(ipAddresses[2]) > 0 && int.Parse(ipAddresses[2]) <= 255);
+            Assert.IsTrue(int.Parse(ipAddresses[3]) > 0 && int.Parse(ipAddresses[3]) <= 255);
         }
     }
 }

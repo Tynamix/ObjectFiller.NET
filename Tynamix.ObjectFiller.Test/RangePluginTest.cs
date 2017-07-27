@@ -1,14 +1,14 @@
 using System.Linq;
-    using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ObjectFiller.Test.TestPoco;
 using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
-
+    [TestClass]
     public class RangePluginTest
     {
-        [Fact]
+        [TestMethod]
         public void TestIntRangeWithMaxValue()
         {
             int max = 100;
@@ -17,13 +17,13 @@ namespace ObjectFiller.Test
             filler.Setup().OnType<int>().Use(new IntRange(max));
             var sl = filler.Create();
 
-            Assert.NotNull(sl);
-            Assert.NotNull(sl.ChildList);
-            Assert.True(sl.ChildList.All(x => x < 100));
-            Assert.False(sl.ChildList.All(x => x == sl.ChildList[0]));
+            Assert.IsNotNull(sl);
+            Assert.IsNotNull(sl.ChildList);
+            Assert.IsTrue(sl.ChildList.All(x => x < 100));
+            Assert.IsFalse(sl.ChildList.All(x => x == sl.ChildList[0]));
         }
 
-        [Fact]
+        [TestMethod]
         public void TestIntRangeWithMinMaxValue()
         {
             int max = 100;
@@ -33,12 +33,12 @@ namespace ObjectFiller.Test
             filler.Setup().OnType<int>().Use(new IntRange(min, max));
             var sl = filler.Create();
 
-            Assert.NotNull(sl);
-            Assert.NotNull(sl.ChildList);
-            Assert.True(sl.ChildList.All(x => x >= min && x <= max));
+            Assert.IsNotNull(sl);
+            Assert.IsNotNull(sl.ChildList);
+            Assert.IsTrue(sl.ChildList.All(x => x >= min && x <= max));
         }
 
-        [Fact]
+        [TestMethod]
         public void TestFloateRangeWithMinMaxValue()
         {
             int max = 100;
@@ -48,9 +48,9 @@ namespace ObjectFiller.Test
             filler.Setup().OnType<float>().Use(new FloatRange(min, max));
             var sl = filler.Create();
 
-            Assert.NotNull(sl);
-            Assert.NotNull(sl.ChildList);
-            Assert.True(sl.ChildList.All(x => x >= min && x <= max));
+            Assert.IsNotNull(sl);
+            Assert.IsNotNull(sl.ChildList);
+            Assert.IsTrue(sl.ChildList.All(x => x >= min && x <= max));
         }
     }
 }
