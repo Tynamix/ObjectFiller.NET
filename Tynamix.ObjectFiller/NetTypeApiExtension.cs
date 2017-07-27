@@ -14,8 +14,6 @@ namespace Tynamix.ObjectFiller
 #else
             return source.IsEnum;
 #endif
-
-
         }
 
         internal static PropertyInfo GetProperty(this Type source, string name)
