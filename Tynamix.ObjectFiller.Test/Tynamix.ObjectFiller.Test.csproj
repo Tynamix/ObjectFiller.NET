@@ -81,6 +81,7 @@
     <Compile Include="SaveFillerSetupTest.cs" />
     <Compile Include="SequenceGeneratorTest.cs" />
     <Compile Include="SetupTests.cs" />
+    <Compile Include="SpecifyListCount.cs" />
     <Compile Include="StreetNamesPluginTest.cs" />
     <Compile Include="TestIgnoranceOfInheritance.cs" />
     <Compile Include="TestPoco\Library\Book.cs" />
