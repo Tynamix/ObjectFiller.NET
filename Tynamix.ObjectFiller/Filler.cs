@@ -962,7 +962,9 @@ namespace Tynamix.ObjectFiller
             IEnumerable<PropertyInfo> properties,
             PropertyInfo property)
         {
-            return properties.Where(x => x.Name == property.Name && x.Module.Equals(property.Module));
+            return properties.Where(x => x.Name == property.Name
+                                         && x.Module.Equals(property.Module)
+                                         && x.DeclaringType?.AssemblyQualifiedName == property.DeclaringType?.AssemblyQualifiedName);
         }
 
         /// <summary>
