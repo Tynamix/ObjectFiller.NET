@@ -8,7 +8,7 @@ namespace Tynamix.ObjectFiller
     /// </summary>
     /// <typeparam name="T">Typeparameter of of the target List</typeparam>
     /// <typeparam name="TRandomizer">Plugin which will be used to create the List</typeparam>
-    public class Collectionizer<T, TRandomizer> : IRandomizerPlugin<List<T>>
+    public class Collectionizer<T, TRandomizer> : IRandomizerPlugin<List<T>>, IRandomizerPlugin<T[]>
 #if !NETSTANDARD1_0
         , IRandomizerPlugin<ArrayList>
 #endif
@@ -110,6 +110,15 @@ namespace Tynamix.ObjectFiller
             return result;
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="T"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="T"/></returns>
+        T[] IRandomizerPlugin<T[]>.GetValue()
+        {
+            return this.GetValue().ToArray();
+        }
+
 #if !NETSTANDARD1_0
         /// <summary>
         /// Gets random data for type <see cref="T"/>
@@ -123,6 +132,7 @@ namespace Tynamix.ObjectFiller
             return arrayList;
         }
 #endif
+
     }
 
 }
