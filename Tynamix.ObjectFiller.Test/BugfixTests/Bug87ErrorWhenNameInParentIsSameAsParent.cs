@@ -8,8 +8,8 @@ namespace ObjectFiller.Test.BugfixTests
 {
     using Tynamix.ObjectFiller;
 
-    
 
+    [TestClass]
     public class Bug87ErrorWhenNameInParentIsSameAsParent
     {
         public class Parent
@@ -29,11 +29,16 @@ namespace ObjectFiller.Test.BugfixTests
         public void ParentShallGetFilledWithourError()
         {
             Filler<Parent> filler = new Filler<Parent>();
+            filler.Setup()
+                  .OnProperty(x => x.MakeTheError).Use(12345)
+                  .SetupFor<Child>()
+                  .OnProperty(x => x.MakeTheError).Use("TEST");
 
             var filledObject = filler.Create();
             Assert.IsNotNull(filledObject);
-            Assert.IsNotNull(filledObject.MakeTheError);
+            Assert.AreEqual(12345, filledObject.MakeTheError);
             Assert.IsFalse(string.IsNullOrWhiteSpace(filledObject.Child.MakeTheError));
+            Assert.AreEqual("TEST", filledObject.Child.MakeTheError);
         }
     }
 }
