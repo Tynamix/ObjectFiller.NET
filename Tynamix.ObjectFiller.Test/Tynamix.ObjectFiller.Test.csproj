@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tynamix.ObjectFiller.Test</RootNamespace>
     <AssemblyName>Tynamix.ObjectFiller.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
@@ -54,6 +54,7 @@
     <Compile Include="BugfixTests\Bug87ErrorWhenNameInParentIsSameAsParent.cs" />
     <Compile Include="BugfixTests\Bug89FillTypesInheritsFromDictionary.cs" />
     <Compile Include="BugfixTests\Bug89FillTypesInheritsFromList.cs" />
+    <Compile Include="BugfixTests\Bug91FailToCreateIReadOnlyCollection.cs" />
     <Compile Include="CityNamesPluginTest.cs" />
     <Compile Include="CollectionizerTest.cs" />
     <Compile Include="CopyConstructorTest.cs" />
