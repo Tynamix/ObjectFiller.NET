@@ -65,6 +65,7 @@ namespace Tynamix.ObjectFiller
         {
             T objectToFill;
             var hashStack = new HashStack<Type>();
+
             if (!TypeIsClrType(typeof(T)))
             {
                 objectToFill = (T)this.CreateInstanceOfType(typeof(T), this.setupManager.GetFor<T>(), hashStack);
@@ -310,7 +311,14 @@ namespace Tynamix.ObjectFiller
                    && type.IsGenericType()
                    && type.GetGenericTypeArguments().Length != 0
                    && (type.GetGenericTypeDefinition() == typeof(ICollection<>)
-                       || type.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)));
+#if (!NET35 && !NET40)
+                       || type.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>)
+#endif
+                       || type.GetImplementedInterfaces().Any(x => x.IsGenericType() && (
+#if (!NET35 && !NET40)
+                      x.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>) ||
+#endif
+                       x.GetGenericTypeDefinition() == typeof(ICollection<>))));
         }
 
         /// <summary>
@@ -886,12 +894,22 @@ namespace Tynamix.ObjectFiller
             IEnumerable target;
 
             if (!propertyType.IsInterface()
-                && propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
+                && propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)
+#if (!NET35 && !NET40)
+                || x.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>)
+#endif
+                ))
             {
                 target = (IEnumerable)Activator.CreateInstance(propertyType);
             }
-            else if (propertyType.IsGenericType() && propertyType.GetGenericTypeDefinition() == typeof(ICollection<>)
-                     || propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
+            else if (propertyType.IsGenericType() && 
+                        propertyType.GetGenericTypeDefinition() == typeof(ICollection<>)
+                     || propertyType.GetImplementedInterfaces().Any(x => x.IsGenericType() && x.GetGenericTypeDefinition() == typeof(ICollection<>))
+#if (!NET35 && !NET40)
+                     || propertyType.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>)
+                     || propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>))
+#endif
+                )
             {
                 Type openListType = typeof(List<>);
                 Type genericListType = openListType.MakeGenericType(genType);
@@ -1154,6 +1172,6 @@ namespace Tynamix.ObjectFiller
             return type.IsArray && type.GetArrayRank() == 1;
         }
 
-        #endregion
+#endregion
     }
 }
