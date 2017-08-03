@@ -15,6 +15,8 @@ namespace ObjectFiller.Test
         public List<int> IntRange { get; set; }
 
         public ArrayList ArrayList { get; set; }
+
+        public string[] StringArray { get; set; }
     }
 
     [TestClass]
@@ -25,9 +27,7 @@ namespace ObjectFiller.Test
         {
             var filler = new Filler<CollectionizerPoco>();
 
-            filler.Setup()
-                .OnProperty(x => x.ArrayList)
-                .Use(new Collectionizer<string, MnemonicString>(new MnemonicString(1, 20, 25), 3, 10));
+            filler.Setup().OnProperty(x => x.ArrayList).Use(new Collectionizer<string, MnemonicString>(new MnemonicString(1, 20, 25), 3, 10));
 
             var arrayList = filler.Create();
             Assert.IsTrue(arrayList.ArrayList.Count >= 3 && arrayList.ArrayList.Count <= 10);
@@ -40,12 +40,15 @@ namespace ObjectFiller.Test
             var filler = new Filler<CollectionizerPoco>();
 
             filler.Setup()
-                .OnProperty(x => x.MnemonicStrings)
-                .Use(new Collectionizer<string, MnemonicString>(new MnemonicString(1, 20, 25), 3, 10));
+                .OnProperty(x => x.MnemonicStrings).Use(new Collectionizer<string, MnemonicString>(new MnemonicString(1, 20, 25), 3, 10))
+                .OnProperty(x => x.StringArray).Use(new Collectionizer<string, MnemonicString>(new MnemonicString(1, 20, 25), 3, 10));
 
             var collection = filler.Create();
             Assert.IsTrue(collection.MnemonicStrings.Count() >= 3 && collection.MnemonicStrings.Count() <= 10);
             Assert.IsTrue(collection.MnemonicStrings.All(x => x.Length >= 20 && x.Length <= 25));
+            Assert.IsTrue(collection.StringArray.Count() >= 3 && collection.MnemonicStrings.Count() <= 10);
+            Assert.IsTrue(collection.StringArray.All(x => x.Length >= 20 && x.Length <= 25));
+
         }
 
         [TestMethod]
