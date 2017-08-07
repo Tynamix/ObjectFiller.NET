@@ -17,7 +17,7 @@ namespace Tynamix.ObjectFiller
     public interface IInterfaceMocker
     {
         /// <summary>
-        /// Creates a mock of the interface with type <see cref="T"/>
+        /// Creates a mock of the interface with type <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">Type of the interface</typeparam>
         /// <returns>Mock of the interface</returns>

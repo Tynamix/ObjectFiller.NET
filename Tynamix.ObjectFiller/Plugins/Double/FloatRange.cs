@@ -2,6 +2,9 @@ namespace Tynamix.ObjectFiller
 {
     using System;
 
+    /// <summary>
+    /// Randomizer for type <see cref="float"/>
+    /// </summary>
     public class FloatRange : IRandomizerPlugin<float>, IRandomizerPlugin<float?>
     {
         private readonly float _minValue;
@@ -37,6 +40,10 @@ namespace Tynamix.ObjectFiller
 
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="float"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="float"/></returns>
         public float GetValue()
         {
             var value = Random.NextDouble();
@@ -44,6 +51,10 @@ namespace Tynamix.ObjectFiller
             return Convert.ToSingle(value) * (this._maxValue - this._minValue) + this._minValue;
         }
 
+        /// <summary>
+        /// Gets random data for type <see cref="Nullable{Float}"/>
+        /// </summary>
+        /// <returns>Random data for type <see cref="Nullable{Float}"/></returns>
         float? IRandomizerPlugin<float?>.GetValue()
         {
             return this.GetValue();

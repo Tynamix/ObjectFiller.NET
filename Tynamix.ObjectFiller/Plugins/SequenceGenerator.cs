@@ -14,6 +14,7 @@ using System;
 namespace Tynamix.ObjectFiller
 {
     #region SequenceGeneratorSByte
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
     public class SequenceGeneratorSByte : IRandomizerPlugin<SByte>
     {
@@ -696,4 +697,5 @@ namespace Tynamix.ObjectFiller
     }
 
     #endregion
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

@@ -73,7 +73,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Starts to configure a property of the <see cref="TTargetObject"/> for object filler.
+        /// Starts to configure a property of the <typeparamref name="TTargetObject"/> for object filler.
         /// So you can setup a custom randomizer to a specific property within a class.
         /// </summary>
         /// <typeparam name="TTargetType">
@@ -159,7 +159,7 @@ namespace Tynamix.ObjectFiller
 
         /// <summary>
         /// Setup the minimum and maximum item count for lists. The ObjectFiller will not generate more or less list items then this limits.
-        /// The default value for <see cref="minCount"/> is 1. The default value for <see cref="maxCount"/> is 25.
+        /// The default value for <paramref name="minCount"/> is 1. The default value for <paramref name="maxCount"/> is 25.
         /// </summary>
         /// <param name="minCount">
         /// Minimum item in a list. Default: 1
@@ -195,7 +195,7 @@ namespace Tynamix.ObjectFiller
 
         /// <summary>
         /// Setup the minimum and maximum count of keys in dictionaries. The ObjectFiller will not generate more or less list items then this limits.
-        /// The default value for <see cref="minCount"/> is 1. The default value for <see cref="maxCount"/> is 25.
+        /// The default value for <paramref name="minCount"/> is 1. The default value for <paramref name="maxCount"/> is 25.
         /// </summary>
         /// <param name="minCount">
         /// Minimum items count of keys in a dictionary. Default: 1
@@ -214,7 +214,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Register a IInterfaceMocker which will Mock your interfaces which are not registered with the <see cref="IFluentFillerApi{TTargetObject}.RegisterInterface{TInterface,TImplementation}"/> method.
+        /// Register a IInterfaceMocker which will Mock your interfaces which are not registered with the IFluentFillerApi{TTargetObject}.RegisterInterface{TInterface,TImplementation} method.
         /// To use a Mocker like MOQ or RhinoMocks, it is necessary to implement the <see cref="IInterfaceMocker"/> for this mocking framework.
         /// </summary>
         /// <param name="mocker">Mocker which will be used to mock interfaces</param>

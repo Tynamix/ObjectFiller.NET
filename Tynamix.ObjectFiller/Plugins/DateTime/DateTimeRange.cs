@@ -64,9 +64,9 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <see cref="DateTime"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <see cref="DateTime"/></returns>
         public DateTime GetValue()
         {
             var timeSpan = this.latestDate.Subtract(this.earliestDate);
@@ -77,9 +77,9 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <see cref="Nullable{DateTime}"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <see cref="Nullable{DateTime}"/></returns>
         DateTime? IRandomizerPlugin<DateTime?>.GetValue()
         {
             return this.GetValue();
