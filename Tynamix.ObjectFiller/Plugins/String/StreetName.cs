@@ -100,9 +100,9 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <see cref="string"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <see cref="string"/></returns>
         public string GetValue()
         {
             var index = Random.Next(this.AllStreetNames.Count - 1);

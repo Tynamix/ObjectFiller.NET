@@ -56,9 +56,9 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <typeparamref name="T"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <typeparamref name="T"/></returns>
         public T GetValue()
         {
             int rndmListIndex = Random.Next(0, this.allAvailableValues.Length);

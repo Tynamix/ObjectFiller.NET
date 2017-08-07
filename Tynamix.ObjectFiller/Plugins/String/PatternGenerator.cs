@@ -165,6 +165,10 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         public interface IExpressionGenerator
         {
+            /// <summary>
+            /// Appends the given <paramref name="sb"/>
+            /// </summary>
+            /// <param name="sb">StringBuilder to append</param>
             void AppendNextValue(StringBuilder sb);
         }
 

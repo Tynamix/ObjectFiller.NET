@@ -73,13 +73,13 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Returns a nonnegative number less than specified <see cref="maxValue"/>
+        /// Returns a nonnegative number less than specified <paramref name="maxValue"/>
         /// </summary>
         /// <param name="maxValue">
         /// The maximum value.
         /// </param>
         /// <returns>
-        /// A nonnegative number less than specified <see cref="maxValue"/>
+        /// A nonnegative number less than specified <paramref name="maxValue"/>
         /// </returns>
         internal static int Next(int maxValue)
         {
@@ -130,7 +130,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <param name="min">Min long value</param>
         /// <param name="max">Max long value</param>
-        /// <returns>A Long between <see cref="min"/> and <see cref="max"/></returns>
+        /// <returns>A Long between <paramref name="min"/> and <paramref name="max"/></returns>
         internal static long NextLong(long min, long max)
         {
             long longRand = NextLong();
@@ -140,9 +140,6 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Gets a random value between to source long values
         /// </summary>
-        /// <param name="min">Min long value</param>
-        /// <param name="max">Max long value</param>
-        /// <returns>A Long between <see cref="min"/> and <see cref="max"/></returns>
         internal static long NextLong()
         {
             byte[] buf = new byte[8];

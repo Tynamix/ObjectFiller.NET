@@ -33,9 +33,9 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Creates a random value of type <see cref="T"/>.
+        /// Creates a random value of type <typeparamref name="T"/>.
         /// </summary>
-        /// <returns>A value of type <see cref="T"/></returns>
+        /// <returns>A value of type <typeparamref name="T"/></returns>
         public static T Create()
         {
             return Create(null as FillerSetup);
@@ -94,7 +94,7 @@ namespace Tynamix.ObjectFiller
         /// Creates a random value of the target type. It will use a <see cref="IRandomizerPlugin{T}"/> for that
         /// </summary>
         /// <param name="randomizerPlugin"><see cref="IRandomizerPlugin{T}"/> to use</param>
-        /// <returns>A random value of type <see cref="T"/></returns>
+        /// <returns>A random value of type <typeparamref name="T"/></returns>
         public static T Create(IRandomizerPlugin<T> randomizerPlugin)
         {
             Setup.TypeToRandomFunc[typeof(T)] = () => randomizerPlugin.GetValue();
