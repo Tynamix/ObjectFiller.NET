@@ -83,8 +83,9 @@ namespace Tynamix.ObjectFiller
 
             if (minCount > maxCount)
             {
+                var temp = maxCount;
                 maxCount = minCount;
-                minCount = maxCount;
+                minCount = temp;
             }
 
             this.randomizerToUse = randomizerToUse;
