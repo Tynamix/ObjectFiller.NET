@@ -3,6 +3,9 @@ os: Visual Studio 2017
 install:
 - dotnet restore
 
+before_build:
+  - nuget restore
+
 build:
   verbosity: minimal
   
