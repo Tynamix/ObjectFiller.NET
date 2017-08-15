@@ -21,7 +21,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) as 
 
 
 ### Quick Start
-<img src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/objectfiller-quickstart.gif" alt="Quickstart" />
+<img src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/objectfiller-quickstart.gif" alt="ObjectFiller.NET Quickstart" />
 
 ----------
 
