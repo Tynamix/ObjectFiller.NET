@@ -101,6 +101,7 @@
     <Compile Include="TestPoco\SimpleList.cs" />
     <Compile Include="TestPoco\TestEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UriTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
