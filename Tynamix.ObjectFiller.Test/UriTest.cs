@@ -42,7 +42,7 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void Returns_Configured_Domain_When_Set()
         {
-            var sut = new RandomUri(RandomUri.SchemeType.Https, new[] {"net"});
+            var sut = new RandomUri(RandomUri.SchemeType.Https, "net");
             var value = sut.GetValue();
             Assert.IsNotNull(value);
 
@@ -56,7 +56,7 @@ namespace ObjectFiller.Test
         }
 
         [TestMethod]
-        public void TestUriGenerator()
+        public void Set_Value_With_Filler_With_Setup()
         {
             Filler<UriTestClass> filler = new Filler<UriTestClass>();
 
@@ -68,6 +68,19 @@ namespace ObjectFiller.Test
             var url = result.RemoteUri.ToString();
 
             Assert.IsFalse(string.IsNullOrEmpty(url));           
+        }
+
+
+        [TestMethod]
+        public void Set_Value_With_Filler_Without_Setup()
+        {
+            Filler<UriTestClass> filler = new Filler<UriTestClass>();
+           
+            var result = filler.Create();
+
+            var url = result.RemoteUri.ToString();
+
+            Assert.IsFalse(string.IsNullOrEmpty(url));
         }
     }
 }

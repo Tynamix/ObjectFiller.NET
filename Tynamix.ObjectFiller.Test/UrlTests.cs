@@ -46,7 +46,7 @@ namespace ObjectFiller.Test
         [TestMethod]
         public void Returns_Configured_Domain_When_Set()
         {
-            var sut = new RandomUrl(RandomUri.SchemeType.Https, new[] { "net" });
+            var sut = new RandomUrl(RandomUri.SchemeType.Https, "net");
             var value = sut.GetValue();
             Assert.IsNotNull(value);
 
@@ -61,7 +61,7 @@ namespace ObjectFiller.Test
         }
 
         [TestMethod]
-        public void TestUrlGenerator()
+        public void Set_Value_With_Filler_With_Setup()
         {
             Filler<UriTestClass> filler = new Filler<UriTestClass>();
 

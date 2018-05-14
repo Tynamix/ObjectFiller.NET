@@ -34,7 +34,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <param name="schemeType">Type of the scheme.</param>
         /// <param name="domainNames">The possible domain names.</param>
-        public RandomUrl(SchemeType schemeType, IEnumerable<string> domainNames)
+        public RandomUrl(SchemeType schemeType, params string[] domainNames)
         {
             _uri = new RandomUri(schemeType, domainNames);
         }

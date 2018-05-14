@@ -55,10 +55,10 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <param name="schemeType">Type of the scheme.</param>
         /// <param name="domainNames">The possible domain names.</param>
-        public RandomUri(SchemeType schemeType, IEnumerable<string> domainNames)
+        public RandomUri(SchemeType schemeType, params string[] domainNames)
             :this(schemeType)
         {
-            _domainNames = domainNames.ToArray();
+            _domainNames = domainNames;
         }
 
         /// <summary>
