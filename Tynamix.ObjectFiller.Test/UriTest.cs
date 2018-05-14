@@ -56,7 +56,7 @@ namespace ObjectFiller.Test
         }
 
         [TestMethod]
-        public void TestIpAddressGenerator()
+        public void TestUriGenerator()
         {
             Filler<UriTestClass> filler = new Filler<UriTestClass>();
 
