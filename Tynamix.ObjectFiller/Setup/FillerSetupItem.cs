@@ -121,6 +121,7 @@ namespace Tynamix.ObjectFiller
             var mnemonic = new MnemonicString(1);
             var doublePlugin = new DoubleRange();
             var dateTimeRandomizer = new DateTimeRange(new DateTime(1970, 1, 1));
+            var uriRandomizer = new RandomUri();
             this.TypeToRandomFunc[typeof(string)] = mnemonic.GetValue;
             this.TypeToRandomFunc[typeof(bool)] = () => Random.Next(0, 2) == 1;
             this.TypeToRandomFunc[typeof(bool?)] = () => new RandomListItem<bool?>(true, false, null).GetValue();
@@ -154,6 +155,7 @@ namespace Tynamix.ObjectFiller
             this.TypeToRandomFunc[typeof(IntPtr?)] = () => default(IntPtr);
             this.TypeToRandomFunc[typeof(TimeSpan)] = () => new TimeSpan(Random.Next());
             this.TypeToRandomFunc[typeof(TimeSpan?)] = () => new TimeSpan(Random.Next());
+            this.TypeToRandomFunc[typeof(Uri)] = () => uriRandomizer.GetValue();
 #if !NETSTANDARD1_0
             this.TypeToRandomFunc[typeof(ArrayList)] = () => ((IRandomizerPlugin<ArrayList>)new Collectionizer<string, MnemonicString>()).GetValue();
 #endif
