@@ -9,7 +9,13 @@
     <PackageLicenseUrl>https://github.com/Tynamix/ObjectFiller.NET/blob/master/LICENSE.txt</PackageLicenseUrl>
     <PackageProjectUrl>http://objectfiller.net/</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/gokTyBalD/ObjectFiller.NET/master/logo.png</PackageIconUrl>
-    <PackageReleaseNotes>-1.5.4.1
+    <PackageReleaseNotes>
+      -1.5.5
+      * SetRandomSeed added to generate always the same random data
+      * URI Plugin implemented (Thx to twenzel)
+      * Bugfixing (thx to lichtel, jiaxuyang)
+
+      -1.5.4.1
       * Bugfixing
       * Collectionizer supports now also Arrays
 
@@ -151,8 +157,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Copyright></Copyright>
     <DocumentationFile>bin\Debug\Tynamix.ObjectFiller.xml</DocumentationFile>
-    <AssemblyVersion>1.5.4.1</AssemblyVersion>
-    <FileVersion>1.5.4.1</FileVersion>
+    <AssemblyVersion>1.5.5</AssemblyVersion>
+    <FileVersion>1.5.5</FileVersion>
   </PropertyGroup>
 
 </Project>
