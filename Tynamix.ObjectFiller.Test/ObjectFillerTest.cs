@@ -36,5 +36,23 @@ namespace Tynamix.ObjectFiller.Test
             Assert.IsNotNull(pList);
             Assert.AreEqual(10, pList.Count());
         }
+
+        [TestMethod]
+        public void SetRandomSeedShallGenerateSameData()
+        {
+            var filler = new Filler<Address>();
+
+            var address1 = filler.SetRandomSeed(1234).Create();
+
+            var filler2 = new Filler<Address>();
+
+            var address2 = filler.SetRandomSeed(1234).Create();
+
+            Assert.AreEqual(address1.City, address2.City);
+            Assert.AreEqual(address1.Country, address2.Country);
+            Assert.AreEqual(address1.HouseNumber, address2.HouseNumber);
+            Assert.AreEqual(address1.PostalCode, address2.PostalCode);
+            Assert.AreEqual(address1.Street, address2.Street);
+        }
     }
 }
