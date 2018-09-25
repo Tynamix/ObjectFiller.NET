@@ -1,4 +1,5 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/3sk25qg31wsamaa5/branch/master?svg=true)](https://ci.appveyor.com/project/HerrLoesch/objectfiller-net/branch/master) [![Join the chat at https://gitter.im/Tynamix/ObjectFiller.NET](https://badges.gitter.im/Tynamix/ObjectFiller.NET.svg)](https://gitter.im/Tynamix/ObjectFiller.NET?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build status](https://ci.appveyor.com/api/projects/status/pa49pti5v13iux3i?svg=true)](https://ci.appveyor.com/project/Tynamix/objectfiller-net)
+ [![Join the chat at https://gitter.im/Tynamix/ObjectFiller.NET](https://badges.gitter.im/Tynamix/ObjectFiller.NET.svg)](https://gitter.im/Tynamix/ObjectFiller.NET?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 #ObjectFiller.NET
@@ -12,15 +13,16 @@ You can also fill properties which are derived by an interface.
 The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) as well as Dictionaries.
 
 
-### Get it on [NuGet](https://www.nuget.org/packages/Tynamix.ObjectFiller)!
+### Get it on 
+[NuGet](https://www.nuget.org/packages/Tynamix.ObjectFiller)!
 
-### [https://www.nuget.org/packages/Tynamix.ObjectFiller](https://www.nuget.org/packages/Tynamix.ObjectFiller)
+[https://www.nuget.org/packages/Tynamix.ObjectFiller](https://www.nuget.org/packages/Tynamix.ObjectFiller)
 
 ----------
 
 
 ### Quick Start
-<img src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/objectfiller-quickstart.gif" alt="Quickstart" />
+<img src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/objectfiller-quickstart.gif" alt="ObjectFiller.NET Quickstart" />
 
 ----------
 

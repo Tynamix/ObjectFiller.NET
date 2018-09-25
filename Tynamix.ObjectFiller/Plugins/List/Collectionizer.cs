@@ -83,8 +83,9 @@ namespace Tynamix.ObjectFiller
 
             if (minCount > maxCount)
             {
+                var temp = maxCount;
                 maxCount = minCount;
-                minCount = maxCount;
+                minCount = temp;
             }
 
             this.randomizerToUse = randomizerToUse;
@@ -94,9 +95,9 @@ namespace Tynamix.ObjectFiller
 
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <typeparamref name="T"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <typeparamref name="T"/></returns>
         public List<T> GetValue()
         {
             var count = Randomizer<int>.Create(new IntRange(this.minCount, this.maxCount));
@@ -111,9 +112,9 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <typeparamref name="T"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <typeparamref name="T"/></returns>
         T[] IRandomizerPlugin<T[]>.GetValue()
         {
             return this.GetValue().ToArray();
@@ -121,9 +122,9 @@ namespace Tynamix.ObjectFiller
 
 #if !NETSTANDARD1_0
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <typeparamref name="T"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <typeparamref name="T"/></returns>
         ArrayList IRandomizerPlugin<ArrayList>.GetValue()
         {
             ArrayList arrayList = new ArrayList();

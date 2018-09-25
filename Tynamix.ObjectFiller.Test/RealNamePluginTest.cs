@@ -1,8 +1,6 @@
-﻿    
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tynamix.ObjectFiller;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
     [TestClass]
     public class RealNamePluginTest

@@ -52,21 +52,22 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <see cref="int"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <see cref="int"/></returns>
         public int GetValue()
         {
             return Random.Next(this.min, this.max);
         }
 
+
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <see cref="Nullable{Int32}"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <see cref="Nullable{Int32}"/></returns>
         int? IRandomizerPlugin<int?>.GetValue()
         {
-            return GetValue();
+            return this.GetValue();
         }
     }
 }

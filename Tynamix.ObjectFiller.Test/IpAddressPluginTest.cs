@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
-    using Tynamix.ObjectFiller;
-
     [TestClass]
     public class IpAddressPluginTest
     {

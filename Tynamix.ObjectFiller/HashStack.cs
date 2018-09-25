@@ -72,7 +72,7 @@ namespace Tynamix.ObjectFiller
         /// Removes and returns the last added element.
         /// </summary>
         /// <returns>
-        /// The item of type <see cref="T"/>
+        /// The item of type <typeparamref name="T"/>
         /// </returns>
         internal T Pop()
         {
@@ -91,7 +91,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if the <see cref="HashStack{T}"/> contains the <see cref="item"/>
+        /// Checks if the <see cref="HashStack{T}"/> contains the <paramref name="item"/>
         /// </summary>
         /// <param name="item">
         /// The item.

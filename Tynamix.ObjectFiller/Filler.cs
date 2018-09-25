@@ -59,12 +59,13 @@ namespace Tynamix.ObjectFiller
         /// to create a new object. If you want to use a existing instance use the <see cref="Fill(T)"/> method.
         /// </summary>
         /// <returns>
-        /// A created and filled instance of dictionaryType <see cref="T"/>
+        /// A created and filled instance of dictionaryType <typeparamref name="T"/>
         /// </returns>
         public T Create()
         {
             T objectToFill;
             var hashStack = new HashStack<Type>();
+
             if (!TypeIsClrType(typeof(T)))
             {
                 objectToFill = (T)this.CreateInstanceOfType(typeof(T), this.setupManager.GetFor<T>(), hashStack);
@@ -86,7 +87,7 @@ namespace Tynamix.ObjectFiller
         /// Count of instances to create
         /// </param>
         /// <returns>
-        /// <see cref="IEnumerable{T}"/> with created and filled instances of dictionaryType <see cref="T"/>
+        /// <see cref="IEnumerable{T}"/> with created and filled instances of dictionaryType <typeparamref name="T"/>
         /// </returns>
         public IEnumerable<T> Create(int count)
         {
@@ -106,7 +107,7 @@ namespace Tynamix.ObjectFiller
         /// The instance To fill.
         /// </param>
         /// <returns>
-        /// The filled instance of dictionaryType <see cref="T"/>.
+        /// The filled instance of dictionaryType <typeparamref name="T"/>.
         /// </returns>
         public T Fill(T instanceToFill)
         {
@@ -171,6 +172,17 @@ namespace Tynamix.ObjectFiller
             return new FluentFillerApi<T>(this.setupManager);
         }
 
+        /// <summary>
+        /// Set a random seed to generate always the same data for the same seed.
+        /// </summary>
+        /// <param name="seed">Number for the data generation</param>
+        /// <returns>This ObjectFiller instance</returns>
+        public Filler<T> SetRandomSeed(int seed)
+        {
+            Random.SetSeed(seed);
+            return this;
+        }
+
         #endregion
 
         #region Methods
@@ -202,13 +214,13 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Creates a default value for the given <see cref="propertyType"/>
+        /// Creates a default value for the given <paramref name="propertyType"/>
         /// </summary>
         /// <param name="propertyType">
         /// The property dictionaryType.
         /// </param>
         /// <returns>
-        /// Default value for the given <see cref="propertyType"/>
+        /// Default value for the given <paramref name="propertyType"/>
         /// </returns>
         private static object GetDefaultValueOfType(Type propertyType)
         {
@@ -221,7 +233,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if there is a random function for the given <see cref="type"/>
+        /// Checks if there is a random function for the given <see cref="Type"/>
         /// </summary>
         /// <param name="type">
         /// The dictionaryType.
@@ -230,7 +242,7 @@ namespace Tynamix.ObjectFiller
         /// The current setup item.
         /// </param>
         /// <returns>
-        /// True if there is a random function in the <see cref="currentSetupItem"/> for the given <see cref="type"/>
+        /// True if there is a random function in the <paramref name="currentSetupItem"/> for the given <see cref="Type"/>
         /// </returns>
         private static bool HasTypeARandomFunc(Type type, FillerSetupItem currentSetupItem)
         {
@@ -262,13 +274,13 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if the given <see cref="type"/> is a dictionary
+        /// Checks if the given <see cref="Type"/> is a dictionary
         /// </summary>
         /// <param name="type">
         /// The type to check
         /// </param>
         /// <returns>
-        /// True if the target <see cref="type"/>  is a dictionary
+        /// True if the target <see cref="Type"/>  is a dictionary
         /// </returns>
         private static bool TypeIsDictionary(Type type)
         {
@@ -276,13 +288,13 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if the given <see cref="type"/> is a list
+        /// Checks if the given <see cref="Type"/> is a list
         /// </summary>
         /// <param name="type">
         /// The type to check
         /// </param>
         /// <returns>
-        /// True if the target <see cref="type"/>  is a list
+        /// True if the target <see cref="Type"/>  is a list
         /// </returns>
         private static bool TypeIsList(Type type)
         {
@@ -296,13 +308,13 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if the given <see cref="type"/> is a list
+        /// Checks if the given <see cref="Type"/> is a list
         /// </summary>
         /// <param name="type">
         /// The type to check
         /// </param>
         /// <returns>
-        /// True if the target <see cref="type"/>  is a list
+        /// True if the target <see cref="Type"/>  is a list
         /// </returns>
         private static bool TypeIsCollection(Type type)
         {
@@ -310,17 +322,24 @@ namespace Tynamix.ObjectFiller
                    && type.IsGenericType()
                    && type.GetGenericTypeArguments().Length != 0
                    && (type.GetGenericTypeDefinition() == typeof(ICollection<>)
-                       || type.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)));
+#if (!NET35 && !NET40)
+                       || type.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>)
+#endif
+                       || type.GetImplementedInterfaces().Any(x => x.IsGenericType() && (
+#if (!NET35 && !NET40)
+                      x.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>) ||
+#endif
+                       x.GetGenericTypeDefinition() == typeof(ICollection<>))));
         }
 
         /// <summary>
-        /// Checks if the given <see cref="type"/> is a plain old class object
+        /// Checks if the given <see cref="Type"/> is a plain old class object
         /// </summary>
         /// <param name="type">
         /// The type to check
         /// </param>
         /// <returns>
-        /// True if the target <see cref="type"/> is a plain old class object
+        /// True if the target <see cref="Type"/> is a plain old class object
         /// </returns>
         private static bool TypeIsPoco(Type type)
         {
@@ -341,7 +360,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if the given <see cref="type"/> can be used by the object filler
+        /// Checks if the given <see cref="Type"/> can be used by the object filler
         /// </summary>
         /// <param name="type">
         /// The dictionaryType which will be checked
@@ -350,7 +369,7 @@ namespace Tynamix.ObjectFiller
         /// The current setup item.
         /// </param>
         /// <returns>
-        /// True when the <see cref="type"/> can be used with object filler
+        /// True when the <see cref="Type"/> can be used with object filler
         /// </returns>
         private static bool TypeIsValidForObjectFiller(Type type, FillerSetupItem currentSetupItem)
         {
@@ -408,16 +427,16 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if a <see cref="property"/> exists in the given list of <see cref="properties"/>
+        /// Checks if a <paramref name="property"/> exists in the given list of <paramref name="properties"/>
         /// </summary>
         /// <param name="properties">
-        /// Source properties where to check if the <see cref="property"/> is contained
+        /// Source properties where to check if the <paramref name="property"/> is contained
         /// </param>
         /// <param name="property">
         /// The property which will be checked
         /// </param>
         /// <returns>
-        /// True if the <see cref="property"/> is in the list of <see cref="properties"/>
+        /// True if the <paramref name="property"/> is in the list of <paramref name="properties"/>
         /// </returns>
         private bool ContainsProperty(IEnumerable<PropertyInfo> properties, PropertyInfo property)
         {
@@ -425,7 +444,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Creates a object of the target <see cref="type"/> and fills it up with data according to the given <see cref="currentSetupItem"/>
+        /// Creates a object of the target <see cref="Type"/> and fills it up with data according to the given <paramref name="currentSetupItem"/>
         /// </summary>
         /// <param name="type">
         /// The target dictionaryType to create and fill
@@ -437,7 +456,7 @@ namespace Tynamix.ObjectFiller
         /// The dictionaryType tracker to find circular dependencies
         /// </param>
         /// <returns>
-        /// The created and filled object of the given <see cref="type"/>
+        /// The created and filled object of the given <see cref="Type"/>
         /// </returns>
         private object CreateAndFillObject(
             Type type,
@@ -531,10 +550,10 @@ namespace Tynamix.ObjectFiller
         /// The type tracker to find circular dependencies
         /// </param>
         /// <returns>
-        /// The created and filled instance of the <see cref="interfaceType"/>
+        /// The created and filled instance of the <paramref name="interfaceType"/>
         /// </returns>
         /// <exception cref="InvalidOperationException">
-        /// Throws Exception if no dictionaryType was registered for the given <see cref="interfaceType"/>
+        /// Throws Exception if no dictionaryType was registered for the given <paramref name="interfaceType"/>
         /// </exception>
         private object CreateInstanceOfInterfaceOrAbstractClass(
             Type interfaceType,
@@ -573,7 +592,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Creates a instance of the given <see cref="type"/>
+        /// Creates a instance of the given <see cref="Type"/>
         /// </summary>
         /// <param name="type">
         /// The dictionaryType to create
@@ -628,7 +647,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Fills the given <see cref="objectToFill"/> with random data
+        /// Fills the given <paramref name="objectToFill"/> with random data
         /// </summary>
         /// <param name="objectToFill">
         /// The object to fill.
@@ -657,10 +676,10 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// This method will fill the given <see cref="properties"/> of the given <see cref="objectToFill"/>
+        /// This method will fill the given <paramref name="properties"/> of the given <paramref name="objectToFill"/>
         /// </summary>
         /// <param name="objectToFill">The object to fill</param>
-        /// <param name="properties">The properties of the <see cref="objectToFill"/> which shall get filled</param>
+        /// <param name="properties">The properties of the <paramref name="objectToFill"/> which shall get filled</param>
         /// <param name="currentSetup">
         /// The setup for the current object 
         /// </param>
@@ -710,7 +729,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Creates and fills a dictionary of the target <see cref="propertyType"/>
+        /// Creates and fills a dictionary of the target <paramref name="propertyType"/>
         /// </summary>
         /// <param name="propertyType">
         /// The dictionaryType of the dictionary
@@ -796,7 +815,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Creates and fills a list of the given <see cref="propertyType"/>
+        /// Creates and fills a list of the given <paramref name="propertyType"/>
         /// </summary>
         /// <param name="propertyType">
         /// Type of the list
@@ -808,7 +827,7 @@ namespace Tynamix.ObjectFiller
         /// The dictionaryType tracker to find circular dependencies
         /// </param>
         /// <returns>
-        /// Created and filled list of the given <see cref="propertyType"/>
+        /// Created and filled list of the given <paramref name="propertyType"/>
         /// </returns>
         private IList GetFilledList(Type propertyType, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
@@ -860,7 +879,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Creates and fills a list of the given <see cref="propertyType"/>
+        /// Creates and fills a list of the given <paramref name="propertyType"/>
         /// </summary>
         /// <param name="propertyType">
         /// Type of the list
@@ -872,7 +891,7 @@ namespace Tynamix.ObjectFiller
         /// The dictionaryType tracker to find circular dependencies
         /// </param>
         /// <returns>
-        /// Created and filled list of the given <see cref="propertyType"/>
+        /// Created and filled list of the given <paramref name="propertyType"/>
         /// </returns>
         private IEnumerable GetFilledCollection(Type propertyType, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
@@ -886,12 +905,22 @@ namespace Tynamix.ObjectFiller
             IEnumerable target;
 
             if (!propertyType.IsInterface()
-                && propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
+                && propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)
+#if (!NET35 && !NET40)
+                || x.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>)
+#endif
+                ))
             {
                 target = (IEnumerable)Activator.CreateInstance(propertyType);
             }
-            else if (propertyType.IsGenericType() && propertyType.GetGenericTypeDefinition() == typeof(ICollection<>)
-                     || propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(ICollection<>)))
+            else if (propertyType.IsGenericType() && 
+                        propertyType.GetGenericTypeDefinition() == typeof(ICollection<>)
+                     || propertyType.GetImplementedInterfaces().Any(x => x.IsGenericType() && x.GetGenericTypeDefinition() == typeof(ICollection<>))
+#if (!NET35 && !NET40)
+                     || propertyType.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>)
+                     || propertyType.GetImplementedInterfaces().Any(x => x.GetGenericTypeDefinition() == typeof(IReadOnlyCollection<>))
+#endif
+                )
             {
                 Type openListType = typeof(List<>);
                 Type genericListType = openListType.MakeGenericType(genType);
@@ -947,16 +976,16 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Selects the given <see cref="property"/> from the given list of <see cref="properties"/>
+        /// Selects the given <paramref name="property"/> from the given list of <paramref name="properties"/>
         /// </summary>
         /// <param name="properties">
-        /// All properties where the target <see cref="property"/> will be searched in
+        /// All properties where the target <paramref name="property"/> will be searched in
         /// </param>
         /// <param name="property">
         /// The target property.
         /// </param>
         /// <returns>
-        /// All properties from <see cref="properties"/> which are the same as the target <see cref="property"/>
+        /// All properties from <paramref name="properties"/> which are the same as the target <paramref name="property"/>
         /// </returns>
         private IEnumerable<PropertyInfo> GetPropertyFromProperties(
             IEnumerable<PropertyInfo> properties,
@@ -993,7 +1022,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Gets a random value of the given <see cref="propertyType"/>
+        /// Gets a random value of the given <paramref name="propertyType"/>
         /// </summary>
         /// <param name="propertyType">
         /// The property dictionaryType.
@@ -1002,7 +1031,7 @@ namespace Tynamix.ObjectFiller
         /// The setup item.
         /// </param>
         /// <returns>
-        /// A random value of the given <see cref="propertyType"/>
+        /// A random value of the given <paramref name="propertyType"/>
         /// </returns>
         /// <exception cref="TypeInitializationException">
         /// Throws exception if object filler was not able to create random data
@@ -1024,7 +1053,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Gets the setter of a <see cref="propInfo"/>
+        /// Gets the setter of a <paramref name="propInfo"/>
         /// </summary>
         /// <param name="propInfo">
         /// The <see cref="PropertyInfo"/> for which the setter method will be found
@@ -1045,7 +1074,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if a property is ignored by the <see cref="currentSetupItem"/>
+        /// Checks if a property is ignored by the <paramref name="currentSetupItem"/>
         /// </summary>
         /// <param name="property">
         /// The property to check for ignorance
@@ -1054,7 +1083,7 @@ namespace Tynamix.ObjectFiller
         /// The current setup item.
         /// </param>
         /// <returns>
-        /// True if the <see cref="property"/> should be ignored
+        /// True if the <paramref name="property"/> should be ignored
         /// </returns>
         private bool IgnoreProperty(PropertyInfo property, FillerSetupItem currentSetupItem)
         {
@@ -1062,7 +1091,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Sorts the properties like the <see cref="currentSetupItem"/> wants to have it
+        /// Sorts the properties like the <paramref name="currentSetupItem"/> wants to have it
         /// </summary>
         /// <param name="currentSetupItem">
         /// The current setup item.
@@ -1095,7 +1124,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Sets the given <see cref="value"/> on the given <see cref="property"/> for the given <see cref="objectToFill"/> 
+        /// Sets the given <paramref name="value"/> on the given <paramref name="property"/> for the given <paramref name="objectToFill"/> 
         /// </summary>
         /// <param name="property">
         /// The property to set
@@ -1104,7 +1133,7 @@ namespace Tynamix.ObjectFiller
         /// The object to fill.
         /// </param>
         /// <param name="value">
-        /// The value for the <see cref="property"/>
+        /// The value for the <paramref name="property"/>
         /// </param>
         private void SetPropertyValue(PropertyInfo property, object objectToFill, object value)
         {
@@ -1120,13 +1149,13 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if the given <see cref="type"/> is a enumeration
+        /// Checks if the given <see cref="Type"/> is a enumeration
         /// </summary>
         /// <param name="type">
         /// The type to check
         /// </param>
         /// <returns>
-        /// True if the target <see cref="type"/>  is a enumeration
+        /// True if the target <see cref="Type"/>  is a enumeration
         /// </returns>
         private static bool TypeIsEnum(Type type)
         {
@@ -1134,7 +1163,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if the given <see cref="type"/> is a nullable enum
+        /// Checks if the given <see cref="Type"/> is a nullable enum
         /// </summary>
         /// <param name="type">Type to check</param>
         /// <returns>True if the type is a nullable enum</returns>
@@ -1145,7 +1174,7 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Checks if the given <see cref="type"/> is a supported array
+        /// Checks if the given <see cref="Type"/> is a supported array
         /// </summary>
         /// <param name="type">Type to check</param>
         /// <returns>True if the type is a array</returns>
@@ -1154,6 +1183,6 @@ namespace Tynamix.ObjectFiller
             return type.IsArray && type.GetArrayRank() == 1;
         }
 
-        #endregion
+#endregion
     }
 }

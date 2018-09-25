@@ -13,8 +13,8 @@
 //   </list>
 //   The character patterns can refer to these character classes: <para />
 //   <list type="bullet">
-//   <item><description>a: lower-case ascii character, range is 'a' to 'a'</description></item>
-//   <item><description>A: upper-case ascii character, range is 'a' to 'a'</description></item>
+//   <item><description>a: lower-case ASCII character, range is 'a' to 'z'</description></item>
+//   <item><description>A: upper-case ASCII character, range is 'A' to 'Z'</description></item>
 //   <item><description>N: numbers from '0' to '9'</description></item>
 //   <item><description>X: hexadecimal digit from '0' to 'F'</description></item>
 //   </list>
@@ -47,8 +47,8 @@ namespace Tynamix.ObjectFiller
     /// </list>
     /// The character patterns can refer to these character classes: <para/>
     /// <list type="bullet">
-    /// <item><description>a: lower-case ascii character, range is 'a' to 'a'</description></item>
-    /// <item><description>A: upper-case ascii character, range is 'a' to 'a'</description></item>
+    /// <item><description>a: lower-case ASCII character, range is 'a' to 'z'</description></item>
+    /// <item><description>A: upper-case ASCII character, range is 'A' to 'Z'</description></item>
     /// <item><description>N: numbers from '0' to '9'</description></item>
     /// <item><description>X: hexadecimal digit from '0' to 'F'</description></item>
     /// </list>
@@ -165,6 +165,10 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         public interface IExpressionGenerator
         {
+            /// <summary>
+            /// Appends the given <paramref name="sb"/>
+            /// </summary>
+            /// <param name="sb">StringBuilder to append</param>
             void AppendNextValue(StringBuilder sb);
         }
 

@@ -1,4 +1,4 @@
-﻿namespace ObjectFiller.Test.TestPoco.ListTest
+﻿namespace Tynamix.ObjectFiller.Test.TestPoco.ListTest
 {
     public class Entity
     {

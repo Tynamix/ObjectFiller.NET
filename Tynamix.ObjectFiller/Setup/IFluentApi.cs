@@ -22,23 +22,23 @@ namespace Tynamix.ObjectFiller
     internal interface IFluentApi<TTargetObject, TTargetType> where TTargetObject : class
     {
         /// <summary>
-        /// Defines which static value will be used for the given <see cref="TTargetType"/>
+        /// Defines which static value will be used for the given <typeparamref name="TTargetType"/>
         /// </summary>
         /// <param name="valueToUse">Value which will be used</param>
         /// <returns>Main FluentFiller API</returns>
         FluentFillerApi<TTargetObject> Use(TTargetType valueToUse);
 
         /// <summary>
-        /// Defines which <see cref="Func{TResult}"/> will be used to generate a value for the given <see cref="TTargetType"/>
+        /// Defines which <see cref="Func{TResult}"/> will be used to generate a value for the given <typeparamref name="TTargetType"/>
         /// </summary>
-        /// <param name="randomizerFunc"><see cref="Func{TTargetType}"/> which will be used to generate a value of the <see cref="TTargetType"/></param>
+        /// <param name="randomizerFunc"><see cref="Func{TTargetType}"/> which will be used to generate a value of the <typeparamref name="TTargetType"/></param>
         /// <returns>Main FluentFiller API</returns>
         FluentFillerApi<TTargetObject> Use(Func<TTargetType> randomizerFunc);
 
         /// <summary>
-        /// Defines which implementation of the <see cref="IRandomizerPlugin{T}"/> interface will be used to generate a value for the given <see cref="TTargetType"/>
+        /// Defines which implementation of the <see cref="IRandomizerPlugin{T}"/> interface will be used to generate a value for the given <typeparamref name="TTargetType"/>
         /// </summary>
-        /// <param name="randomizerPlugin">A <see cref="IRandomizerPlugin{TTargetType}"/> which will be used to generate a value of the <see cref="TTargetType"/></param>
+        /// <param name="randomizerPlugin">A <see cref="IRandomizerPlugin{TTargetType}"/> which will be used to generate a value of the <typeparamref name="TTargetType"/></param>
         /// <returns>Main FluentFiller API</returns>
         FluentFillerApi<TTargetObject> Use(IRandomizerPlugin<TTargetType> randomizerPlugin);
 
@@ -47,7 +47,7 @@ namespace Tynamix.ObjectFiller
         /// With that you can generate random data in a specific order, with include, exclude and all the other stuff
         /// what is possible with <see cref="IEnumerable{T}"/> and LINQ
         /// </summary>
-        /// <param name="enumerable">An <see cref="IEnumerable{TTargetType}"/> with items of type <typeparam name="TTargetObject"/> which will be used to fill the data.</param>
+        /// <param name="enumerable">An <see cref="IEnumerable{TTargetType}"/> with items of type <typeparamref name="TTargetObject"/> which will be used to fill the data.</param>
         /// <returns>Main FluentFiller API</returns>
         FluentFillerApi<TTargetObject> Use(IEnumerable<TTargetType> enumerable);
 

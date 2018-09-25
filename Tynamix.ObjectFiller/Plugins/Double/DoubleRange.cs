@@ -58,39 +58,39 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <see cref="double"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <see cref="double"/></returns>
         public double GetValue()
         {
             return Random.NextDouble() * Math.Abs(this.maxValue - this.minValue) + this.minValue;
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <see cref="Nullable{Double}"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <see cref="Nullable{Double}"/></returns>
         double? IRandomizerPlugin<double?>.GetValue()
         {
             return this.GetValue();
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <see cref="decimal"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <see cref="decimal"/></returns>
         decimal IRandomizerPlugin<decimal>.GetValue()
         {
-            return (decimal)GetValue();
+            return (decimal)this.GetValue();
         }
 
         /// <summary>
-        /// Gets random data for type <see cref="T"/>
+        /// Gets random data for type <see cref="Nullable{Decimal}"/>
         /// </summary>
-        /// <returns>Random data for type <see cref="T"/></returns>
+        /// <returns>Random data for type <see cref="Nullable{Decimal}"/></returns>
         decimal? IRandomizerPlugin<decimal?>.GetValue()
         {
-            return (decimal)GetValue();
+            return (decimal)this.GetValue();
         }
     }
 }

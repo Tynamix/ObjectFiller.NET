@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace ObjectFiller.Test.TestPoco.Library
+﻿namespace Tynamix.ObjectFiller.Test.TestPoco.Library
 {
     public class Book : IBook
     {

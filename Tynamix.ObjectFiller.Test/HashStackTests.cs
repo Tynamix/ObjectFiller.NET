@@ -1,8 +1,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tynamix.ObjectFiller;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
     [TestClass]
     public class HashStackTests

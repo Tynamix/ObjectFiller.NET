@@ -1,14 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
-    using System;
-    using System.Linq;
-
-    
-
-    using Tynamix.ObjectFiller;
-
     public class DateRangeTestClass
     {
         public DateTime Date { get; set; }

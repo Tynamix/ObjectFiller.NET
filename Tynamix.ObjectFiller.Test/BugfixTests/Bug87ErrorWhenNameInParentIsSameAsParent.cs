@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ObjectFiller.Test.BugfixTests
+namespace Tynamix.ObjectFiller.Test.BugfixTests
 {
-    using Tynamix.ObjectFiller;
-
-
     [TestClass]
     public class Bug87ErrorWhenNameInParentIsSameAsParent
     {

@@ -19,8 +19,8 @@ namespace Tynamix.ObjectFiller
     /// </summary>
     internal static class Random
     {
-
         private static int RandomSeed;
+
         /// <summary>
         /// Initializes static members of the <see cref="Random"/> class.
         /// A instance of <see cref="Random"/>
@@ -28,6 +28,17 @@ namespace Tynamix.ObjectFiller
         static Random()
         {
             RandomSeed = Environment.TickCount;
+        }
+
+        /// <summary>
+        /// Set the seed for the <see cref="System.Random"/> class
+        /// and resets the <see cref="RndStorage"/> to generate a new one after seed is set
+        /// </summary>
+        /// <param name="seed">Seed to set</param>
+        internal static void SetSeed(int seed)
+        {
+            RandomSeed = seed;
+            RndStorage = null;
         }
 
 #if NET35
@@ -49,15 +60,23 @@ namespace Tynamix.ObjectFiller
             }
         }
 #else
-        private static readonly ThreadLocal<System.Random> RndStorage = new ThreadLocal<System.Random>(() =>
-            new System.Random(Interlocked.Increment(ref RandomSeed)));
-
+        private static ThreadLocal<System.Random> RndStorage;
+        
         /// <summary>
         /// A instance of <see cref="Random"/>
         /// </summary>
         private static System.Random Rnd
         {
-            get { return RndStorage.Value; }
+            get
+            {
+                if (RndStorage == null)
+                {
+                    RndStorage = new ThreadLocal<System.Random>(() =>
+                        new System.Random(Interlocked.Increment(ref RandomSeed)));
+                }
+
+                return RndStorage.Value;
+            }
         }
 #endif
 
@@ -73,13 +92,13 @@ namespace Tynamix.ObjectFiller
         }
 
         /// <summary>
-        /// Returns a nonnegative number less than specified <see cref="maxValue"/>
+        /// Returns a nonnegative number less than specified <paramref name="maxValue"/>
         /// </summary>
         /// <param name="maxValue">
         /// The maximum value.
         /// </param>
         /// <returns>
-        /// A nonnegative number less than specified <see cref="maxValue"/>
+        /// A nonnegative number less than specified <paramref name="maxValue"/>
         /// </returns>
         internal static int Next(int maxValue)
         {
@@ -130,7 +149,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <param name="min">Min long value</param>
         /// <param name="max">Max long value</param>
-        /// <returns>A Long between <see cref="min"/> and <see cref="max"/></returns>
+        /// <returns>A Long between <paramref name="min"/> and <paramref name="max"/></returns>
         internal static long NextLong(long min, long max)
         {
             long longRand = NextLong();
@@ -140,9 +159,6 @@ namespace Tynamix.ObjectFiller
         /// <summary>
         /// Gets a random value between to source long values
         /// </summary>
-        /// <param name="min">Min long value</param>
-        /// <param name="max">Max long value</param>
-        /// <returns>A Long between <see cref="min"/> and <see cref="max"/></returns>
         internal static long NextLong()
         {
             byte[] buf = new byte[8];
