@@ -1,11 +1,9 @@
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ObjectFiller.Test.TestPoco.Person;
-using Tynamix.ObjectFiller;
+using Tynamix.ObjectFiller.Test.TestPoco.Person;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
-    using System.Linq;
-
     [TestClass]
     public class AddressFillingTest
     {

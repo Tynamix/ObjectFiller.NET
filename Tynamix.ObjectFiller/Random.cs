@@ -19,8 +19,8 @@ namespace Tynamix.ObjectFiller
     /// </summary>
     internal static class Random
     {
-
         private static int RandomSeed;
+
         /// <summary>
         /// Initializes static members of the <see cref="Random"/> class.
         /// A instance of <see cref="Random"/>
@@ -28,6 +28,17 @@ namespace Tynamix.ObjectFiller
         static Random()
         {
             RandomSeed = Environment.TickCount;
+        }
+
+        /// <summary>
+        /// Set the seed for the <see cref="System.Random"/> class
+        /// and resets the <see cref="RndStorage"/> to generate a new one after seed is set
+        /// </summary>
+        /// <param name="seed">Seed to set</param>
+        internal static void SetSeed(int seed)
+        {
+            RandomSeed = seed;
+            RndStorage = null;
         }
 
 #if NET35
@@ -49,15 +60,23 @@ namespace Tynamix.ObjectFiller
             }
         }
 #else
-        private static readonly ThreadLocal<System.Random> RndStorage = new ThreadLocal<System.Random>(() =>
-            new System.Random(Interlocked.Increment(ref RandomSeed)));
-
+        private static ThreadLocal<System.Random> RndStorage;
+        
         /// <summary>
         /// A instance of <see cref="Random"/>
         /// </summary>
         private static System.Random Rnd
         {
-            get { return RndStorage.Value; }
+            get
+            {
+                if (RndStorage == null)
+                {
+                    RndStorage = new ThreadLocal<System.Random>(() =>
+                        new System.Random(Interlocked.Increment(ref RandomSeed)));
+                }
+
+                return RndStorage.Value;
+            }
         }
 #endif
 

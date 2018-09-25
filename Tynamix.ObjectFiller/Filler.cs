@@ -172,6 +172,17 @@ namespace Tynamix.ObjectFiller
             return new FluentFillerApi<T>(this.setupManager);
         }
 
+        /// <summary>
+        /// Set a random seed to generate always the same data for the same seed.
+        /// </summary>
+        /// <param name="seed">Number for the data generation</param>
+        /// <returns>This ObjectFiller instance</returns>
+        public Filler<T> SetRandomSeed(int seed)
+        {
+            Random.SetSeed(seed);
+            return this;
+        }
+
         #endregion
 
         #region Methods

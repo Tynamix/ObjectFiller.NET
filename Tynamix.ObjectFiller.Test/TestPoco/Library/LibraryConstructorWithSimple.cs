@@ -1,4 +1,4 @@
-﻿namespace ObjectFiller.Test.TestPoco.Library
+﻿namespace Tynamix.ObjectFiller.Test.TestPoco.Library
 {
     public class LibraryConstructorWithSimple : Library
     {

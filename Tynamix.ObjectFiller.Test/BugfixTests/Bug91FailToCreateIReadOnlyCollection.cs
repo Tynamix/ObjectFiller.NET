@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tynamix.ObjectFiller.Test.TestPoco.Library;
 
 namespace Tynamix.ObjectFiller.Test.BugfixTests
 {
     using System.Collections;
-
-    using global::ObjectFiller.Test.TestPoco.Library;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     public class OrderWithObject
