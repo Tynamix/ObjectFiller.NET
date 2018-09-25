@@ -1,10 +1,9 @@
 using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ObjectFiller.Test.TestPoco.Library;
-using Tynamix.ObjectFiller;
+using Tynamix.ObjectFiller.Test.TestPoco.Library;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
     [TestClass]
     public class LibraryFillingTest

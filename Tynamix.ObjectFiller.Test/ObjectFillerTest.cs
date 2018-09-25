@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ObjectFiller.Test.TestPoco.Person;
-using Tynamix.ObjectFiller;
+using Tynamix.ObjectFiller.Test.TestPoco.Person;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
     [TestClass]
     public class ObjectFillerTest
@@ -28,9 +26,6 @@ namespace ObjectFiller.Test
 
             Assert.IsTrue(new List<string>() { "Maik", "Tom", "Anton" }.Contains(pFilled.LastName));
         }
-
-
-
 
         [TestMethod]
         public void CreateMultipleInstances()

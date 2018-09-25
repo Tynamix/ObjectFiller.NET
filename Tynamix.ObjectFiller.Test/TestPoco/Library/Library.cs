@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace ObjectFiller.Test.TestPoco.Library
+namespace Tynamix.ObjectFiller.Test.TestPoco.Library
 {
     public abstract class Library
     {

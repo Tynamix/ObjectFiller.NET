@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tynamix.ObjectFiller;
+
 // ReSharper disable RedundantCast
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
     [TestClass]
     public class SequenceGeneratorTest

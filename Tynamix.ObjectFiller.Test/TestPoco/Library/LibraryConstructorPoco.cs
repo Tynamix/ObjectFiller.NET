@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ObjectFiller.Test.TestPoco.Library
+namespace Tynamix.ObjectFiller.Test.TestPoco.Library
 {
     public class LibraryConstructorPoco : Library
     {

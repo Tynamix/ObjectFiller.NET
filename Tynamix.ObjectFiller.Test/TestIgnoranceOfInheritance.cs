@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tynamix.ObjectFiller.Test.TestPoco.Person;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
-    using ObjectFiller.Test.TestPoco.Person;
-
-    
-    using Tynamix.ObjectFiller;
-
     public class Student : Person
     {
         public string Class { get; set; }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ObjectFiller.Test.TestPoco
+namespace Tynamix.ObjectFiller.Test.TestPoco
 {
     public class SimpleList<T>
     {

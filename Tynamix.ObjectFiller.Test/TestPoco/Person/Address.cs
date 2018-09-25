@@ -1,4 +1,4 @@
-﻿namespace ObjectFiller.Test.TestPoco.Person
+﻿namespace Tynamix.ObjectFiller.Test.TestPoco.Person
 {
     public class Address : IAddress
     {

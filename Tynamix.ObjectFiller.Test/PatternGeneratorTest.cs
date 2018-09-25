@@ -1,13 +1,9 @@
-using System;
-using System.Reflection.Emit;
-
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ObjectFiller.Test.TestPoco.Person;
-using Tynamix.ObjectFiller;
+using Tynamix.ObjectFiller.Test.TestPoco.Person;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
     [TestClass]
     public class PatternGeneratorTest

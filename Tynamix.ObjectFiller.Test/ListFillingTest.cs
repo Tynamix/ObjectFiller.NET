@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ObjectFiller.Test.TestPoco.ListTest;
-using Tynamix.ObjectFiller;
+using Tynamix.ObjectFiller.Test.TestPoco;
+using Tynamix.ObjectFiller.Test.TestPoco.ListTest;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
-    using ObjectFiller.Test.TestPoco;
-
     [TestClass]
     public class ListFillingTest
     {

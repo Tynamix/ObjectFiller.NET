@@ -1,18 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tynamix.ObjectFiller.Test.TestPoco.Library;
+using Tynamix.ObjectFiller.Test.TestPoco.Person;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-        
-
-    using ObjectFiller.Test.TestPoco.Library;
-    using ObjectFiller.Test.TestPoco.Person;
-
-    using Tynamix.ObjectFiller;
-
     [TestClass]
     public class RandomizerTest
     {

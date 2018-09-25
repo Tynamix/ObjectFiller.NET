@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Tynamix.ObjectFiller;
 
-
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
     public class CollectionizerPoco
     {

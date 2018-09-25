@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ObjectFiller.Test.TestPoco.Person;
-using Tynamix.ObjectFiller;
+using Tynamix.ObjectFiller.Test.TestPoco.Person;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
     [TestClass]
     public class SaveFillerSetupTest

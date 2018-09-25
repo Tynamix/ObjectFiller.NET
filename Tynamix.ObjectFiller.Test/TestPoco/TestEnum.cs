@@ -1,7 +1,7 @@
-namespace ObjectFiller.Test.TestPoco
-{
-    using System;
+using System;
 
+namespace Tynamix.ObjectFiller.Test.TestPoco
+{
     [Flags]
     public enum TestEnum
     {

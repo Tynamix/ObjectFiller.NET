@@ -1,7 +1,6 @@
 ﻿using System;
-using Tynamix.ObjectFiller;
 
-namespace ObjectFiller.Test
+namespace Tynamix.ObjectFiller.Test
 {
     public class FakeRandomizerPlugin<T> : IRandomizerPlugin<T>
     {
