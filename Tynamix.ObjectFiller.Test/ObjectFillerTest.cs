@@ -46,7 +46,7 @@ namespace Tynamix.ObjectFiller.Test
 
             var filler2 = new Filler<Address>();
 
-            var address2 = filler.SetRandomSeed(1234).Create();
+            var address2 = filler2.SetRandomSeed(1234).Create();
 
             Assert.AreEqual(address1.City, address2.City);
             Assert.AreEqual(address1.Country, address2.Country);
