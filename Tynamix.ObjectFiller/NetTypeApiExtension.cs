@@ -9,7 +9,7 @@ namespace Tynamix.ObjectFiller
     {
         internal static bool IsEnum(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().IsEnum;
 #else
             return source.IsEnum;
@@ -18,7 +18,7 @@ namespace Tynamix.ObjectFiller
 
         internal static PropertyInfo GetProperty(this Type source, string name)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().GetDeclaredProperty(name);
 #else
             return source.GetProperty(name);
@@ -27,7 +27,7 @@ namespace Tynamix.ObjectFiller
 
         internal static IEnumerable<MethodInfo> GetMethods(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().DeclaredMethods;
 #else
             return source.GetMethods();
@@ -36,7 +36,7 @@ namespace Tynamix.ObjectFiller
 
         internal static MethodInfo GetSetterMethod(this PropertyInfo source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.SetMethod;
 #else
             return source.GetSetMethod(true);
@@ -45,7 +45,7 @@ namespace Tynamix.ObjectFiller
 
         internal static bool IsGenericType(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().IsGenericType;
 #else
             return source.IsGenericType;
@@ -55,7 +55,7 @@ namespace Tynamix.ObjectFiller
         internal static bool IsValueType(this Type source)
         {
 
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().IsValueType;
 #else
             return source.IsValueType;
@@ -64,7 +64,7 @@ namespace Tynamix.ObjectFiller
 
         internal static bool IsClass(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().IsClass;
 #else
             return source.IsClass;
@@ -73,7 +73,7 @@ namespace Tynamix.ObjectFiller
 
         internal static bool IsInterface(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
                         return source.GetTypeInfo().IsInterface;
 #else
             return source.IsInterface;
@@ -82,7 +82,7 @@ namespace Tynamix.ObjectFiller
 
         internal static bool IsAbstract(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().IsAbstract;
 #else
             return source.IsAbstract;
@@ -91,7 +91,7 @@ namespace Tynamix.ObjectFiller
 
         internal static IEnumerable<Type> GetImplementedInterfaces(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().ImplementedInterfaces;
 #else
             return source.GetInterfaces();
@@ -100,7 +100,7 @@ namespace Tynamix.ObjectFiller
 
         internal static IEnumerable<PropertyInfo> GetProperties(this Type source, bool ignoreInheritance)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
 
             var propertyInfos = source.GetTypeInfo().DeclaredProperties.ToList();
 
@@ -129,7 +129,7 @@ namespace Tynamix.ObjectFiller
 
         internal static Type[] GetGenericTypeArguments(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().GenericTypeArguments;
 #else
             return source.GetGenericArguments();
@@ -138,7 +138,7 @@ namespace Tynamix.ObjectFiller
 
         internal static IEnumerable<ConstructorInfo> GetConstructors(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().DeclaredConstructors;
 #else
             return source.GetConstructors();
@@ -147,7 +147,7 @@ namespace Tynamix.ObjectFiller
 
         internal static MethodInfo GetMethod(this Type source, string name)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().GetDeclaredMethod(name);
 #else
             return source.GetMethod(name);
@@ -156,7 +156,7 @@ namespace Tynamix.ObjectFiller
 
         internal static string GetModuleName(this Type source)
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD
             return source.GetTypeInfo().Module.Name;
 #else
             return source.Module.ScopeName;
@@ -170,7 +170,7 @@ namespace Tynamix.ObjectFiller
         }
 #endif
 
-#if NETSTANDARD1_0
+#if NETSTANDARD
         internal static void ForEach<T>(this IEnumerable<T> source, Action<T> eachItem)
         {
             foreach (T item in source)

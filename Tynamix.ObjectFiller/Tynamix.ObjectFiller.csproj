@@ -1,164 +1,179 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;net35;net40;net45;net451;net452</TargetFrameworks>
-    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Version>1.5.4.1</Version>
-    <Authors>Roman Köhler, Hendrik L., Christian Harlass, GothikX</Authors>
-    <Company>Tynamix</Company>
-    <PackageLicenseUrl>https://github.com/Tynamix/ObjectFiller.NET/blob/master/LICENSE.txt</PackageLicenseUrl>
-    <PackageProjectUrl>http://objectfiller.net/</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/gokTyBalD/ObjectFiller.NET/master/logo.png</PackageIconUrl>
-    <PackageReleaseNotes>
-      -1.5.5
-      * SetRandomSeed added to generate always the same random data
-      * URI Plugin implemented (Thx to twenzel)
-      * Bugfixing (thx to lichtel, jiaxuyang)
+	<PropertyGroup>
+		<TargetFrameworks>netstandard1.0;netstandard1.3;netstandard2.0;net35;net40;net45;net451;net452;</TargetFrameworks>
+		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<Version>1.5.6</Version>
+		<Authors>Roman Lautner, Hendrik L., Christian Harlass, GothikX</Authors>
+		<Company>Tynamix</Company>
+		<PackageLicenseUrl></PackageLicenseUrl>
+		<PackageProjectUrl>http://objectfiller.net/</PackageProjectUrl>
+		<PackageIconUrl></PackageIconUrl>
+		<PackageReleaseNotes>-1.5.6
+* Added target framework nertstandard1.3, netstandard2.0 to improve easier usage with .NET 5
+* Added Long Range plugin (thx to weitzhandler) 
 
-      -1.5.4.1
-      * Bugfixing
-      * Collectionizer supports now also Arrays
+-1.5.5
+* SetRandomSeed added to generate always the same random data
+* URI Plugin implemented (Thx to twenzel)
+* Bugfixing (thx to lichtel, jiaxuyang)
 
-      -1.5.4
-      * Removed unecessary references for netstandard library
+-1.5.4.1
+* Bugfixing
+* Collectionizer supports now also Arrays
 
-      -1.5.3
-      * It is now possible to do an explicit setup (just fill properties which are configured in Filler Setup)
-      * IpAddress string plugin added
-      * Switched to .NET Core 1.0
-      * Moved to VS 2017
-      * Bug fixes
+-1.5.4
+* Removed unecessary references for netstandard library
 
-      -1.5.0
-      * Collectionizer plugin implemented to use IRandomizer plugins in Collections
-      * Support for ArrayLists
-      * Ignore inheritance added to ignore base types of a POCO
-      * Optimizations in the Randomizer (thx to HerrLoesch)
-      * FloatRange plugin implemented (thx to HerrLoesch)
-      * Optimization of some Plugins
-      * Bug fixing
+-1.5.3
+* It is now possible to do an explicit setup (just fill properties which are configured in Filler Setup)
+* IpAddress string plugin added
+* Switched to .NET Core 1.0
+* Moved to VS 2017
+* Bug fixes
 
-      -1.4.1
-      * Fixing Bug with Multi Threaded Random Access (Thanks to blmeyers)
+-1.5.0
+* Collectionizer plugin implemented to use IRandomizer plugins in Collections
+* Support for ArrayLists
+* Ignore inheritance added to ignore base types of a POCO
+* Optimizations in the Randomizer (thx to HerrLoesch)
+* FloatRange plugin implemented (thx to HerrLoesch)
+* Optimization of some Plugins
+* Bug fixing
 
-      -1.4.0
-      * Updated to .NET Core. Now you can use ObjectFiller.NET in your .NET Core (DNX) and Windows 10 (UWP) environment!
-      * FillerSetup can now be used for dedicated properties or types
-      * Bugfixes
+-1.4.1
+* Fixing Bug with Multi Threaded Random Access (Thanks to blmeyers)
 
-      -1.3.9
-      * Bug fixed when creating types with a copy constructor
+-1.4.0
+* Updated to .NET Core. Now you can use ObjectFiller.NET in your .NET Core (DNX) and Windows 10 (UWP) environment!
+* FillerSetup can now be used for dedicated properties or types
+* Bugfixes
 
-      -1.3.8
-      * Support for Arrays and Nullable Enumerations
-      * Bugfixes (thx to Hendrik L.)
+-1.3.9
+* Bug fixed when creating types with a copy constructor
 
-      -1.3.6
-      * Added Randomizer&amp;lt;T&amp;gt; class to easy generate data for simple types like int, double, string
-      * Support for complex standalone CLR types like List&amp;lt;T&amp;gt;
-      * CityName plugin (Thx to Hendrik L.)
-      * E-Mail-Address plugin (Thx to Hendrik L.)
-      * StreetName plugin (Thx to Hendrik L.)
-      * CountryName plugin
-      * Code cleanup
-      * Bugfixes
+-1.3.8
+* Support for Arrays and Nullable Enumerations
+* Bugfixes (thx to Hendrik L.)
 
-      -1.3.2
-      * Bugfixes
+-1.3.6
+* Added Randomizer&amp;lt;T&amp;gt; class to easy generate data for simple types like int, double, string
+* Support for complex standalone CLR types like List&amp;lt;T&amp;gt;
+* CityName plugin (Thx to Hendrik L.)
+* E-Mail-Address plugin (Thx to Hendrik L.)
+* StreetName plugin (Thx to Hendrik L.)
+* CountryName plugin
+* Code cleanup
+* Bugfixes
 
-      -1.3.1
-      * Easier usage of static values in the "Use" API
-      * Added missing type mappings
-      * Some bugfixes and improvements
+-1.3.2
+* Bugfixes
 
-      -1.3.0
-      * Circular Reference Detection (thx to GothikX)
-      * Export the ObjectFiller setup and reuse it somewhere else
-      * Improved LoremIpsum Plugin (thx to GothikX)
-      * Many bugfixes and improvements
+-1.3.1
+* Easier usage of static values in the "Use" API
+* Added missing type mappings
+* Some bugfixes and improvements
 
-      -1.2.8
-      * IgnoreAllUnknownTypes added
-      * Usage of RandomList-Plugin improved
-      * IntRange-Plugin handles now also nullable int!
+-1.3.0
+* Circular Reference Detection (thx to GothikX)
+* Export the ObjectFiller setup and reuse it somewhere else
+* Improved LoremIpsum Plugin (thx to GothikX)
+* Many bugfixes and improvements
 
-      -1.2.4
-      * Create multiple instances
-      * Some bugfixes and improvements
+-1.2.8
+* IgnoreAllUnknownTypes added
+* Usage of RandomList-Plugin improved
+* IntRange-Plugin handles now also nullable int!
 
-      -1.2.3
-      * Use enumerables to fill objects (thx to charlass)
-      * Its now possible to fill enum properties (thx to charlass)
-      * Implemented SequenceGenerator (thx to charlass)
+-1.2.4
+* Create multiple instances
+* Some bugfixes and improvements
 
-      -1.2.1
-      * Complete refactoring of the FluentAPI. Read the documentation on objectfiller.net for more information!
-      * Properties with private setter are able to write.
-      * Renamed ObjectFiller to Filler to avoid NameSpace conflicts
-      * Order properties implemented
-      * IntRange Plugin implemented
-      * ...some more improvements and bugfixes
+-1.2.3
+* Use enumerables to fill objects (thx to charlass)
+* Its now possible to fill enum properties (thx to charlass)
+* Implemented SequenceGenerator (thx to charlass)
 
-      -1.1.8
-      * Bugfix in RandomizerForProperty
+-1.2.1
+* Complete refactoring of the FluentAPI. Read the documentation on objectfiller.net for more information!
+* Properties with private setter are able to write.
+* Renamed ObjectFiller to Filler to avoid NameSpace conflicts
+* Order properties implemented
+* IntRange Plugin implemented
+* ...some more improvements and bugfixes
 
-      -1.1.7
-      * Implemented a Lorem Ipsum string plugin
+-1.1.8
+* Bugfix in RandomizerForProperty
 
-      -1.1.6
-      * new fantastic PatternGenerator-Plugin. Thanks to charlass for this!
-      * Adjust namespaces from ObjectFiller to Tynamix.ObjectFiller
+-1.1.7
+* Implemented a Lorem Ipsum string plugin
 
-      -1.1.4
-      * IgnoreAllOfType added.
-      * Little changes to the main API
+-1.1.6
+* new fantastic PatternGenerator-Plugin. Thanks to charlass for this!
+* Adjust namespaces from ObjectFiller to Tynamix.ObjectFiller
 
-      -1.1.2
-      * moved to github
+-1.1.4
+* IgnoreAllOfType added.
+* Little changes to the main API
 
-      -1.1.0
-      * Changed the fluent API to make it even easier than before to use.
+-1.1.2
+* moved to github
 
-      -1.0.22
-      * Bugfix when handling lists
+-1.1.0
+* Changed the fluent API to make it even easier than before to use.
 
-      -1.0.21
-      * Constructors with parameters are now possible as long as the types of parameters are configured in the ObjectFiller.NET setup!
+-1.0.22
+* Bugfix when handling lists
 
-      -1.0.16
-      * RandomListItem-Plugin
+-1.0.21
+* Constructors with parameters are now possible as long as the types of parameters are configured in the ObjectFiller.NET setup!
 
-      -1.0.15
-      * Major Bugfix
+-1.0.16
+* RandomListItem-Plugin
 
-      -1.0.14
-      * Bugfixes
+-1.0.15
+* Major Bugfix
 
-      -1.0.12
-      * RealNameListString Plugin
-      * DoubleMinMax plugin
+-1.0.14
+* Bugfixes
 
-      -1.0.10
-      * Its now possible to ignore properties.
-      * Fluent API documented.
-      * Better ExceptionMessages
-      * Bugfixes
+-1.0.12
+* RealNameListString Plugin
+* DoubleMinMax plugin
 
-      -1.0.6
-      * Its now possible to setup a randomizer to a specific property!
+-1.0.10
+* Its now possible to ignore properties.
+* Fluent API documented.
+* Better ExceptionMessages
+* Bugfixes
 
-      -1.0.0
-      * Initial release
-</PackageReleaseNotes>
-    <PackageTags>objectfiller tynamix test testdata prototyp prototyping unittest design designviewmodel generator random data randomdata testing poco lorem ipsum fakedata fake faker</PackageTags>
-    <Description>The Tynamix ObjectFiller.NET fills the properties of your objects with random data. Use it for unittest, prototyping and whereever you need some random testdata. It has a fluent API and is highly customizable. It supports also IEnumerables and Dictionaries and constructors WITH parameters. It is also possible to fill instances and to write private properties.</Description>
-    <RepositoryUrl>https://github.com/Tynamix/ObjectFiller.NET</RepositoryUrl>
-    <RepositoryType>GitHub</RepositoryType>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Copyright></Copyright>
-    <DocumentationFile>bin\Debug\Tynamix.ObjectFiller.xml</DocumentationFile>
-    <AssemblyVersion>1.5.5</AssemblyVersion>
-    <FileVersion>1.5.5</FileVersion>
-  </PropertyGroup>
+-1.0.6
+* Its now possible to setup a randomizer to a specific property!
+
+-1.0.0
+* Initial release</PackageReleaseNotes>
+		<PackageTags>objectfiller tynamix test testdata prototyp prototyping unittest design designviewmodel generator random data randomdata testing poco lorem ipsum fakedata fake faker</PackageTags>
+		<Description>The Tynamix ObjectFiller.NET fills the properties of your objects with random data. Use it for unittest, prototyping and whereever you need some random testdata. It has a fluent API and is highly customizable. It supports also IEnumerables and Dictionaries and constructors WITH parameters. It is also possible to fill instances and to write private properties.</Description>
+		<RepositoryUrl>https://github.com/Tynamix/ObjectFiller.NET</RepositoryUrl>
+		<RepositoryType>GitHub</RepositoryType>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Copyright>Copyright ©Roman Lautner 2021</Copyright>
+		<DocumentationFile>bin\Debug\Tynamix.ObjectFiller.xml</DocumentationFile>
+		<AssemblyVersion>1.5.6</AssemblyVersion>
+		<FileVersion>1.5.6</FileVersion>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.0' OR '$(TargetFramework)' == 'netstandard1.3' OR '$(TargetFramework)' == 'netstandard2.0'">
+		<DefineConstants>NETSTANDARD</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\logo.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
+	</ItemGroup>
 
 </Project>
