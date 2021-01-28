@@ -1,10 +1,9 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/pa49pti5v13iux3i?svg=true)](https://ci.appveyor.com/project/Tynamix/objectfiller-net)
  [![Join the chat at https://gitter.im/Tynamix/ObjectFiller.NET](https://badges.gitter.im/Tynamix/ObjectFiller.NET.svg)](https://gitter.im/Tynamix/ObjectFiller.NET?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+# ObjectFiller.NET
+![ObjectFiller NET Logo](https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/logo.png) 
 
-#ObjectFiller.NET
-
-<img align="left" src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/logo.png" alt="Logo" />
 The **.NET ObjectFiller** fills the properties of your .NET objects with random data!
 It has a very comfortable Fluent API.
 You are able to fill object instances or you just let them create for you. 
@@ -22,7 +21,7 @@ The **.NET ObjectFiller** also supports IEnumerable<T> (and all derivations) as 
 
 
 ### Quick Start
-<img src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/objectfiller-quickstart.gif" alt="ObjectFiller.NET Quickstart" />
+![ObjectFiller.NET Quickstart](https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/objectfiller-quickstart.gif)
 
 ----------
 
