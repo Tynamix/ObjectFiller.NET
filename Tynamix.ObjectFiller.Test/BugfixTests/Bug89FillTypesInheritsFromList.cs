@@ -5,6 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tynamix.ObjectFiller.Test.BugfixTests
 {
+
+    [TestClass]
     public class Bug89FillTypesInheritsFromList
     {
         public class EntityA
