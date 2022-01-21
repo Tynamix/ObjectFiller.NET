@@ -102,19 +102,12 @@ namespace Tynamix.ObjectFiller
         {
 #if NETSTANDARD
 
-            var propertyInfos = source.GetTypeInfo().DeclaredProperties.ToList();
-
-            if (ignoreInheritance == false && source.GetTypeInfo().BaseType != null)
+            if (ignoreInheritance)
             {
-                foreach (var property in source.GetTypeInfo().BaseType.GetTypeInfo().DeclaredProperties)
-                {
-                    if (!propertyInfos.Any(x => x.Name == property.Name))
-                    {
-                        propertyInfos.Add(property);
-                    }
-                }
+                return source.GetTypeInfo().DeclaredProperties.ToList();
             }
-            return propertyInfos;
+
+            return GetDeclaredPropertyInfosRecursive(new List<PropertyInfo>(), source.GetTypeInfo());
 #else
 
             if (ignoreInheritance)
@@ -126,6 +119,30 @@ namespace Tynamix.ObjectFiller
 #endif
 
         }
+
+#if NETSTANDARD
+
+        internal static List<PropertyInfo> GetDeclaredPropertyInfosRecursive(List<PropertyInfo> propertyInfos, TypeInfo typeInfo)
+        {
+            foreach (var property in typeInfo.DeclaredProperties)
+            {
+                if (!propertyInfos.Any(x => x.Name == property.Name))
+                {
+                    propertyInfos.Add(property);
+                }
+            }
+
+            if(typeInfo.BaseType != null)
+            {
+                return GetDeclaredPropertyInfosRecursive(propertyInfos, typeInfo.BaseType.GetTypeInfo());
+            }
+
+            return propertyInfos;
+        }
+
+#endif
+
+
 
         internal static Type[] GetGenericTypeArguments(this Type source)
         {

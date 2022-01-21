@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard1.0;netstandard1.3;netstandard2.0;net35;net40;net45;net451;net452;</TargetFrameworks>
+		<TargetFrameworks>netstandard1.0;netstandard1.3;netstandard2.0;net35;net452;</TargetFrameworks>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<Version>1.5.6</Version>
 		<Authors>Roman Lautner, Hendrik L., Christian Harlass, GothikX</Authors>
@@ -9,8 +9,11 @@
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageProjectUrl>http://objectfiller.net/</PackageProjectUrl>
 		<PackageIconUrl></PackageIconUrl>
-		<PackageReleaseNotes>-1.5.6
-* Added target framework nertstandard1.3, netstandard2.0 to improve easier usage with .NET 5
+		<PackageReleaseNotes>-1.5.7
+* Fix multi inheritance bug on .NET Standard
+			
+-1.5.6
+* Added target framework netstandard1.3, netstandard2.0 to improve easier usage with .NET 5
 * Added Long Range plugin (thx to weitzhandler) 
 
 -1.5.5
@@ -153,14 +156,19 @@
 -1.0.0
 * Initial release</PackageReleaseNotes>
 		<PackageTags>objectfiller tynamix test testdata prototyp prototyping unittest design designviewmodel generator random data randomdata testing poco lorem ipsum fakedata fake faker</PackageTags>
-		<Description>The Tynamix ObjectFiller.NET fills the properties of your objects with random data. Use it for unittest, prototyping and whereever you need some random testdata. It has a fluent API and is highly customizable. It supports also IEnumerables and Dictionaries and constructors WITH parameters. It is also possible to fill instances and to write private properties.</Description>
+		<Description>The Tynamix ObjectFiller.NET fills the properties of your objects with random data. 
+Use it for unittest, prototyping and whereever you need some random testdata. 
+
+It has a fluent API and is highly customizable.
+It supports also IEnumerables and Dictionaries and constructors WITH parameters. 
+It is also possible to fill instances and to write private properties.</Description>
 		<RepositoryUrl>https://github.com/Tynamix/ObjectFiller.NET</RepositoryUrl>
 		<RepositoryType>GitHub</RepositoryType>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Copyright>Copyright ©Roman Lautner 2021</Copyright>
+		<Copyright>Copyright ©Roman Lautner 2022</Copyright>
 		<DocumentationFile>bin\Debug\Tynamix.ObjectFiller.xml</DocumentationFile>
-		<AssemblyVersion>1.5.6</AssemblyVersion>
-		<FileVersion>1.5.6</FileVersion>
+		<AssemblyVersion>1.5.7</AssemblyVersion>
+		<FileVersion>1.5.7</FileVersion>
 		<PackageIcon>logo.png</PackageIcon>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
