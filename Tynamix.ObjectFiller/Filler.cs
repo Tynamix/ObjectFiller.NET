@@ -284,7 +284,19 @@ namespace Tynamix.ObjectFiller
         /// </returns>
         private static bool TypeIsDictionary(Type type)
         {
-            return type.GetImplementedInterfaces().Any(x => x == typeof(IDictionary));
+            Type interfaceType = typeof(IDictionary);
+            Type genericType = typeof(IDictionary<,>);
+
+            if (type.IsInterface())
+            {
+                return type.IsGenericType() && 
+                    (
+                        type.GetGenericTypeDefinition() == genericType || 
+                        type.GetImplementedInterfaces().Any(x => x.IsGenericType() &&  x.GetGenericTypeDefinition() == typeof(IDictionary<,>))
+                    );
+            }
+         
+            return type.GetImplementedInterfaces().Any(x => x == interfaceType);
         }
 
         /// <summary>
@@ -751,7 +763,6 @@ namespace Tynamix.ObjectFiller
             FillerSetupItem currentSetupItem,
             HashStack<Type> typeTracker)
         {
-            IDictionary dictionary = (IDictionary)Activator.CreateInstance(propertyType);
 
             bool derivedType = !propertyType.GetGenericTypeArguments().Any();
 
@@ -762,6 +773,24 @@ namespace Tynamix.ObjectFiller
             Type valueType = !derivedType
                             ? propertyType.GetGenericTypeArguments()[1]
                             : propertyType.GetTypeInfo().BaseType.GetGenericTypeArguments()[1];
+
+            IDictionary dictionary;
+            if (!propertyType.IsInterface()
+                && propertyType.GetImplementedInterfaces().Any(x => x == typeof(IDictionary)))
+            {
+                dictionary = (IDictionary)Activator.CreateInstance(propertyType);
+            }
+            else if (propertyType.IsGenericType() && propertyType.GetGenericTypeDefinition() == typeof(IDictionary<,>)
+                     || propertyType.GetImplementedInterfaces().Any(x => x.IsGenericType() && x.GetGenericTypeDefinition() == typeof(IDictionary<,>)))
+            {
+                Type openDictionaryType = typeof(Dictionary<,>);
+                Type genericDictionaryType = openDictionaryType.MakeGenericType(keyType, valueType);
+                dictionary = (IDictionary)Activator.CreateInstance(genericDictionaryType);
+            }
+            else
+            {
+                dictionary = (IDictionary)Activator.CreateInstance(propertyType);
+            }
 
             int maxDictionaryItems = 0;
 
