@@ -21,6 +21,7 @@ namespace Tynamix.ObjectFiller
         /// Initializes a new instance of the <see cref="DateTimeRange"/> class.
         /// </summary>
         public DateTimeRange()
+            : this(DateTime.MinValue)
         {
         }
 
@@ -73,7 +74,8 @@ namespace Tynamix.ObjectFiller
 
             var diff = Random.NextLong(0, timeSpan.Ticks);
 
-            return this.latestDate.AddTicks(diff * -1);
+            var generatedDate = this.latestDate.AddTicks(diff * -1);
+            return TimeZoneInfo.Utc.IsInvalidTime(generatedDate) ? GetValue() : generatedDate;
         }
 
         /// <summary>
