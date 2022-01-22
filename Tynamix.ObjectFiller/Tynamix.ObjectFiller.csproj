@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard1.0;netstandard1.3;netstandard2.0;net35;net452;</TargetFrameworks>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-		<Version>1.5.6</Version>
+		<Version>1.5.7</Version>
 		<Authors>Roman Lautner, Hendrik L., Christian Harlass, GothikX</Authors>
 		<Company>Tynamix</Company>
 		<PackageLicenseUrl></PackageLicenseUrl>
