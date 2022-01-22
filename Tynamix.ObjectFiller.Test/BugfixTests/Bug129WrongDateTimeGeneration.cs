@@ -21,7 +21,7 @@ namespace Tynamix.ObjectFiller.Test.BugfixTests
             for (int i = 0; i < 1000; i++)
             {
                 var result = filler.Create();
-                Assert.IsFalse(timeZoneInfo.IsInvalidTime(result.Date));
+                Assert.IsFalse(timeZoneInfo.IsInvalidTime(result.Date), $"{result.Date} is invalid");
             }
 
             filler = new Filler<TestEntity>();
@@ -30,7 +30,7 @@ namespace Tynamix.ObjectFiller.Test.BugfixTests
             for (int i = 0; i < 1000; i++)
             {
                 var result = filler.Create();
-                Assert.IsFalse(TimeZoneInfo.Local.IsInvalidTime(result.Date));
+                Assert.IsFalse(TimeZoneInfo.Local.IsInvalidTime(result.Date), $"{result.Date} is invalid");
             }
         }
     }
