@@ -9,58 +9,61 @@
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageProjectUrl>http://objectfiller.net/</PackageProjectUrl>
 		<PackageIconUrl></PackageIconUrl>
-		<PackageReleaseNotes>-1.5.7
-* Fix multi inheritance bug on .NET Standard
-			
--1.5.6
-* Added target framework netstandard1.3, netstandard2.0 to improve easier usage with .NET 5
-* Added Long Range plugin (thx to weitzhandler) 
+		<PackageReleaseNotes>
+      -1.5.7
+      * Fix multi inheritance bug on .NET Standard
+      * Add support for IDictionary (thx to wztech0192)
+      * Bug fixing
 
--1.5.5
-* SetRandomSeed added to generate always the same random data
-* URI Plugin implemented (Thx to twenzel)
-* Bugfixing (thx to lichtel, jiaxuyang)
+      -1.5.6
+      * Added target framework netstandard1.3, netstandard2.0 to improve easier usage with .NET 5
+      * Added Long Range plugin (thx to weitzhandler)
 
--1.5.4.1
-* Bugfixing
-* Collectionizer supports now also Arrays
+      -1.5.5
+      * SetRandomSeed added to generate always the same random data
+      * URI Plugin implemented (Thx to twenzel)
+      * Bugfixing (thx to lichtel, jiaxuyang)
 
--1.5.4
-* Removed unecessary references for netstandard library
+      -1.5.4.1
+      * Bugfixing
+      * Collectionizer supports now also Arrays
 
--1.5.3
-* It is now possible to do an explicit setup (just fill properties which are configured in Filler Setup)
-* IpAddress string plugin added
-* Switched to .NET Core 1.0
-* Moved to VS 2017
-* Bug fixes
+      -1.5.4
+      * Removed unecessary references for netstandard library
 
--1.5.0
-* Collectionizer plugin implemented to use IRandomizer plugins in Collections
-* Support for ArrayLists
-* Ignore inheritance added to ignore base types of a POCO
-* Optimizations in the Randomizer (thx to HerrLoesch)
-* FloatRange plugin implemented (thx to HerrLoesch)
-* Optimization of some Plugins
-* Bug fixing
+      -1.5.3
+      * It is now possible to do an explicit setup (just fill properties which are configured in Filler Setup)
+      * IpAddress string plugin added
+      * Switched to .NET Core 1.0
+      * Moved to VS 2017
+      * Bug fixes
 
--1.4.1
-* Fixing Bug with Multi Threaded Random Access (Thanks to blmeyers)
+      -1.5.0
+      * Collectionizer plugin implemented to use IRandomizer plugins in Collections
+      * Support for ArrayLists
+      * Ignore inheritance added to ignore base types of a POCO
+      * Optimizations in the Randomizer (thx to HerrLoesch)
+      * FloatRange plugin implemented (thx to HerrLoesch)
+      * Optimization of some Plugins
+      * Bug fixing
 
--1.4.0
-* Updated to .NET Core. Now you can use ObjectFiller.NET in your .NET Core (DNX) and Windows 10 (UWP) environment!
-* FillerSetup can now be used for dedicated properties or types
-* Bugfixes
+      -1.4.1
+      * Fixing Bug with Multi Threaded Random Access (Thanks to blmeyers)
 
--1.3.9
-* Bug fixed when creating types with a copy constructor
+      -1.4.0
+      * Updated to .NET Core. Now you can use ObjectFiller.NET in your .NET Core (DNX) and Windows 10 (UWP) environment!
+      * FillerSetup can now be used for dedicated properties or types
+      * Bugfixes
 
--1.3.8
-* Support for Arrays and Nullable Enumerations
-* Bugfixes (thx to Hendrik L.)
+      -1.3.9
+      * Bug fixed when creating types with a copy constructor
 
--1.3.6
-* Added Randomizer&amp;lt;T&amp;gt; class to easy generate data for simple types like int, double, string
+      -1.3.8
+      * Support for Arrays and Nullable Enumerations
+      * Bugfixes (thx to Hendrik L.)
+
+      -1.3.6
+      * Added Randomizer&amp;lt;T&amp;gt; class to easy generate data for simple types like int, double, string
 * Support for complex standalone CLR types like List&amp;lt;T&amp;gt;
 * CityName plugin (Thx to Hendrik L.)
 * E-Mail-Address plugin (Thx to Hendrik L.)
