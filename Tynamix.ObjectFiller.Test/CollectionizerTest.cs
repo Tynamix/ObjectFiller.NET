@@ -12,14 +12,16 @@ namespace Tynamix.ObjectFiller.Test
 
         public List<int> IntRange { get; set; }
 
+#if !NET6
         public ArrayList ArrayList { get; set; }
-
+#endif
         public string[] StringArray { get; set; }
     }
 
     [TestClass]
     public class CollectionizerTest
     {
+#if !NET6
         [TestMethod]
         public void TestCityNames()
         {
@@ -31,6 +33,7 @@ namespace Tynamix.ObjectFiller.Test
             Assert.IsTrue(arrayList.ArrayList.Count >= 3 && arrayList.ArrayList.Count <= 10);
             Assert.IsTrue(arrayList.ArrayList.ToArray().Cast<string>().All(x => x.Length >= 20 && x.Length <= 25));
         }
+#endif
 
         [TestMethod]
         public void TestMnemonicStringPlugin()

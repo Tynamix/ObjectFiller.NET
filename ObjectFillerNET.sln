@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0EC5FD26-A565-4D47-A192-0FC142C3B7F0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tynamix.ObjectFiller", "Tynamix.ObjectFiller\Tynamix.ObjectFiller.csproj", "{7F8E176C-12A7-45B7-886E-5A4923B2F252}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tynamix.ObjectFiller.Test", "Tynamix.ObjectFiller.Test\Tynamix.ObjectFiller.Test.csproj", "{F2BFBBDC-E8A0-4263-AD9A-DDC87C4CD4DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tynamix.ObjectFiller.Test", "Tynamix.ObjectFiller.Test\Tynamix.ObjectFiller.Test.csproj", "{F2BFBBDC-E8A0-4263-AD9A-DDC87C4CD4DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49C4194A-811F-47D8-A814-46F89C1B897E}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = ObjectFillerNET.vsmdi

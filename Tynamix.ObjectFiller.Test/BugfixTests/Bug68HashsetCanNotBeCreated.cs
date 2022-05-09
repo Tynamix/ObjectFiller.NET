@@ -4,6 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tynamix.ObjectFiller.Test.BugfixTests
 {
+
+    [TestClass]
     public class Bug68HashsetCanNotBeCreated
     {
         [TestMethod]

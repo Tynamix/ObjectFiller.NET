@@ -8,6 +8,7 @@ namespace Tynamix.ObjectFiller.Test.BugfixTests
     using System.Collections;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+
     public class OrderWithObject
     {
         public IReadOnlyCollection<Book> OrderLines { get; set; }

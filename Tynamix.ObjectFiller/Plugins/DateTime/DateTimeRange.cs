@@ -18,9 +18,26 @@ namespace Tynamix.ObjectFiller
         private readonly DateTime latestDate;
 
         /// <summary>
+        /// The target timezone to generate only valid date times
+        /// </summary>
+        private readonly TimeZoneInfo timeZoneInfo;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DateTimeRange"/> class.
         /// </summary>
         public DateTimeRange()
+            : this(TimeZoneInfo.Local)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DateTimeRange"/> class.
+        /// </summary>
+        /// <param name="timeZoneInfo">
+        /// The target timezone to generate only valid date times
+        /// </param>
+        public DateTimeRange(TimeZoneInfo timeZoneInfo)
+            : this(DateTime.MinValue, timeZoneInfo)
         {
         }
 
@@ -31,9 +48,25 @@ namespace Tynamix.ObjectFiller
         /// The earliest date.
         /// </param>
         public DateTimeRange(DateTime earliestDate)
-            : this(earliestDate, DateTime.Now)
+            : this(earliestDate, TimeZoneInfo.Local)
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DateTimeRange"/> class.
+        /// </summary>
+        /// <param name="earliestDate">
+        /// The earliest date.
+        /// </param>
+        /// <param name="timeZoneInfo">
+        /// The target timezone to generate only valid date times
+        /// </param>
+        public DateTimeRange(DateTime earliestDate, TimeZoneInfo timeZoneInfo)
+            : this(earliestDate, DateTime.Now, timeZoneInfo)
+        {
+
+        }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimeRange"/> class.
@@ -45,7 +78,26 @@ namespace Tynamix.ObjectFiller
         /// The latest date.
         /// </param>
         public DateTimeRange(DateTime earliestDate, DateTime latestDate)
+             : this(earliestDate, latestDate, TimeZoneInfo.Local)
         {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DateTimeRange"/> class.
+        /// </summary>
+        /// <param name="earliestDate">
+        /// The earliest date.
+        /// </param>
+        /// <param name="latestDate">
+        /// The latest date.
+        /// </param>
+        /// <param name="timeZoneInfo">
+        /// The target timezone to generate only valid date times
+        /// </param>
+        public DateTimeRange(DateTime earliestDate, DateTime latestDate, TimeZoneInfo timeZoneInfo)
+        {
+            this.timeZoneInfo = timeZoneInfo;
             if (earliestDate > latestDate)
             {
                 this.latestDate = earliestDate;
@@ -73,7 +125,10 @@ namespace Tynamix.ObjectFiller
 
             var diff = Random.NextLong(0, timeSpan.Ticks);
 
-            return this.latestDate.AddTicks(diff * -1);
+            var generatedDate = this.latestDate.AddTicks(diff * -1);
+            return this.timeZoneInfo.IsInvalidTime(generatedDate) 
+                ? GetValue() 
+                : generatedDate;
         }
 
         /// <summary>
