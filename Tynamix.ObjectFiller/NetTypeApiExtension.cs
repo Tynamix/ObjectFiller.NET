@@ -37,7 +37,7 @@ namespace Tynamix.ObjectFiller
         internal static MethodInfo GetSetterMethod(this PropertyInfo source)
         {
 #if NETSTANDARD
-            return source.SetMethod;
+            return source?.SetMethod;
 #else
             return source.GetSetMethod(true);
 #endif
