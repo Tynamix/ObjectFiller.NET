@@ -680,7 +680,10 @@ namespace Tynamix.ObjectFiller
                 return;
             }
 
-            var properties = targetType.GetProperties(currentSetup.IgnoreInheritance)
+            var flags = BindingFlags.Public | BindingFlags.Instance;
+            if (currentSetup.IgnoreInheritance)
+                flags = flags | BindingFlags.DeclaredOnly;
+            var properties = targetType.GetProperties(flags)
                                        .Where(prop => this.GetSetMethodOnDeclaringType(prop) != null)
                                        .ToArray();
 
