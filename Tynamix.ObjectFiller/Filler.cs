@@ -61,7 +61,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>
         /// A created and filled instance of dictionaryType <typeparamref name="T"/>
         /// </returns>
-        public T Create()
+        public virtual T Create()
         {
             T objectToFill;
             var hashStack = new HashStack<Type>();
@@ -89,7 +89,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>
         /// <see cref="IEnumerable{T}"/> with created and filled instances of dictionaryType <typeparamref name="T"/>
         /// </returns>
-        public IEnumerable<T> Create(int count)
+        public virtual IEnumerable<T> Create(int count)
         {
             IList<T> items = new List<T>();
             for (int n = 0; n < count; n++)
@@ -109,7 +109,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>
         /// The filled instance of dictionaryType <typeparamref name="T"/>.
         /// </returns>
-        public T Fill(T instanceToFill)
+        public virtual T Fill(T instanceToFill)
         {
             this.FillInternal(instanceToFill);
 
@@ -120,7 +120,7 @@ namespace Tynamix.ObjectFiller
         /// Call this to start the setup for the <see cref="Filler{T}"/>
         /// </summary>
         /// <returns>Fluent API setup</returns>
-        public FluentFillerApi<T> Setup()
+        public virtual FluentFillerApi<T> Setup()
         {
             return this.Setup(false);
         }
@@ -130,7 +130,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <param name="explicitSetup">True if just properties shall get filled which configured in filler setup.</param>
         /// <returns>Fluent API setup</returns>
-        public FluentFillerApi<T> Setup(bool explicitSetup)
+        public virtual FluentFillerApi<T> Setup(bool explicitSetup)
         {
             return this.Setup(null, explicitSetup);
         }
@@ -145,7 +145,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>
         /// Fluent API Setup
         /// </returns>
-        public FluentFillerApi<T> Setup(FillerSetup fillerSetupToUse)
+        public virtual FluentFillerApi<T> Setup(FillerSetup fillerSetupToUse)
         {
             return this.Setup(fillerSetupToUse, false);
         }
@@ -161,7 +161,7 @@ namespace Tynamix.ObjectFiller
         /// <returns>
         /// Fluent API Setup
         /// </returns>
-        public FluentFillerApi<T> Setup(FillerSetup fillerSetupToUse, bool explicitSetup)
+        public virtual FluentFillerApi<T> Setup(FillerSetup fillerSetupToUse, bool explicitSetup)
         {
             if (fillerSetupToUse != null)
             {
