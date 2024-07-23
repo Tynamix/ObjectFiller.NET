@@ -38,7 +38,7 @@ jobs:
         run: dotnet restore
 
       - name: Restore dependencies .NET 4.8
-        if: matrix.dotnet-version == '4.8.x'
+        if: matrix.dotnet-version == '4.8'
         run: nuget restore ObjectFillerNET.sln
 
       - name: Build .NET 8
@@ -46,7 +46,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Build .NET 4.8
-        if: matrix.dotnet-version == '4.8.x'
+        if: matrix.dotnet-version == '4.8'
         run: msbuild /p:Configuration=Release
 
       - name: Test .NET 8
@@ -54,6 +54,6 @@ jobs:
         run: dotnet test --configuration Release --no-build --verbosity normal
 
       - name: Test .NET 4.8
-        if: matrix.dotnet-version == '4.8.x'
+        if: matrix.dotnet-version == '4.8'
         run: |
           vstest.console.exe Tynamix.ObjectFiller.Test\bin\Release\net461\Tynamix.ObjectFiller.Test.dll
