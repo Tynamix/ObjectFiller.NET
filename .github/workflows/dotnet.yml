@@ -22,17 +22,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup .NET
+      - name: Setup .NET 8
+        if: matrix.dotnet-version == '8.0.x'
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Setup .NET Framework 4.8
+        if: matrix.dotnet-version == '4.8'
+        run: echo "Using pre-installed .NET Framework 4.8"
 
       - name: Restore dependencies .NET 8
         if: matrix.dotnet-version == '8.0.x'
         run: dotnet restore
 
       - name: Restore dependencies .NET 4.8
-        if: matrix.dotnet-version == '4.8.x'
+        if: matrix.dotnet-version == '4.8'
         run: nuget restore ObjectFillerNET.sln
 
       - name: Build .NET 8
@@ -40,14 +45,15 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Build .NET 4.8
-        if: matrix.dotnet-version == '4.8.x'
-        run: msbuild /p:Configuration=Release
+        if: matrix.dotnet-version == '4.8'
+        run: |
+          &"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\bin\MSBuild.exe" ObjectFillerNET.sln /p:Configuration=Release
 
       - name: Test .NET 8
         if: matrix.dotnet-version == '8.0.x'
         run: dotnet test --configuration Release --no-build --verbosity normal
 
       - name: Test .NET 4.8
-        if: matrix.dotnet-version == '4.8.x'
+        if: matrix.dotnet-version == '4.8'
         run: |
-          vstest.console.exe Tynamix.ObjectFiller.Test\bin\Release\net461\Tynamix.ObjectFiller.Test.dll
+          &"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" Tynamix.ObjectFiller.Test\bin\Release\net48\Tynamix.ObjectFiller.Test.dll
