@@ -47,7 +47,7 @@ jobs:
 
       - name: Build .NET 4.8
         if: matrix.dotnet-version == '4.8'
-        run: "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe" /p:Configuration=Release
+        run: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\MSBuild\\Current\\Bin\MSBuild.exe" /p:Configuration=Release
 
       - name: Test .NET 8
         if: matrix.dotnet-version == '8.0.x'
@@ -56,4 +56,4 @@ jobs:
       - name: Test .NET 4.8
         if: matrix.dotnet-version == '4.8'
         run: |
-          ""C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" Tynamix.ObjectFiller.Test\bin\Release\net461\Tynamix.ObjectFiller.Test.dll
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\TestWindow\\vstest.console.exe" Tynamix.ObjectFiller.Test\bin\Release\net461\Tynamix.ObjectFiller.Test.dll
