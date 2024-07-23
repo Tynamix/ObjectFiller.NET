@@ -56,4 +56,4 @@ jobs:
       - name: Test .NET 4.8
         if: matrix.dotnet-version == '4.8'
         run: |
-          &"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" Tynamix.ObjectFiller.Test\bin\Release\net461\Tynamix.ObjectFiller.Test.dll
+          &"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" Tynamix.ObjectFiller.Test\bin\Release\net48\Tynamix.ObjectFiller.Test.dll
