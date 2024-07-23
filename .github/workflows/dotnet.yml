@@ -1,0 +1,53 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build_and_test:
+    name: Build and Test .NET Libraries
+    runs-on: windows-2019
+
+    strategy:
+      matrix:
+        dotnet-version: [8.0.x, 4.8.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Restore dependencies .NET 8
+        if: matrix.dotnet-version == '8.0.x'
+        run: dotnet restore
+
+      - name: Restore dependencies .NET 4.8
+        if: matrix.dotnet-version == '4.8.x'
+        run: nuget restore ObjectFillerNET.sln
+
+      - name: Build .NET 8
+        if: matrix.dotnet-version == '8.0.x'
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Build .NET 4.8
+        if: matrix.dotnet-version == '4.8.x'
+        run: msbuild /p:Configuration=Release
+
+      - name: Test .NET 8
+        if: matrix.dotnet-version == '8.0.x'
+        run: dotnet test --configuration Release --no-build --verbosity normal
+
+      - name: Test .NET 4.8
+        if: matrix.dotnet-version == '4.8.x'
+        run: |
+          vstest.console.exe Tynamix.ObjectFiller.Test\bin\Release\net461\Tynamix.ObjectFiller.Test.dll
