@@ -88,6 +88,25 @@ namespace Tynamix.ObjectFiller
             return source.IsAbstract;
 #endif
         }
+        
+        internal static bool IsAbstract(this PropertyInfo source)
+        {
+#if NETSTANDARD
+            return source.GetMethod.IsAbstract;
+#else
+            var methodInfo = source.GetGetMethod() ?? source.GetSetMethod();
+            return methodInfo != null && methodInfo.IsAbstract;
+#endif
+        }
+        
+        internal static Type GetBaseType(this Type source)
+        {
+#if NETSTANDARD
+            return source.GetTypeInfo().BaseType;
+#else
+            return source.BaseType;
+#endif
+        }
 
         internal static IEnumerable<Type> GetImplementedInterfaces(this Type source)
         {
@@ -100,49 +119,51 @@ namespace Tynamix.ObjectFiller
 
         internal static IEnumerable<PropertyInfo> GetProperties(this Type source, bool ignoreInheritance)
         {
-#if NETSTANDARD
-
             if (ignoreInheritance)
             {
-                return source.GetTypeInfo().DeclaredProperties.ToList();
+                return GetOwnProperties(source);
             }
 
-            return GetDeclaredPropertyInfosRecursive(new List<PropertyInfo>(), source.GetTypeInfo());
-#else
-
-            if (ignoreInheritance)
-            {
-                return source.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
-            }
-
-            return source.GetProperties();
-#endif
-
+            return GetPropertiesRecursively(source, new List<PropertyInfo>());
         }
 
-#if NETSTANDARD
-
-        internal static List<PropertyInfo> GetDeclaredPropertyInfosRecursive(List<PropertyInfo> propertyInfos, TypeInfo typeInfo)
+        private static PropertyInfo[] GetOwnProperties(Type source)
         {
-            foreach (var property in typeInfo.DeclaredProperties)
+#if NETSTANDARD
+            return source.GetTypeInfo().DeclaredProperties.ToArray();
+#else
+            return source.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
+#endif
+        }
+        
+        private static IEnumerable<PropertyInfo> GetPropertiesRecursively(Type source, List<PropertyInfo> propertyInfos)
+        {
+            foreach (var property in GetOwnProperties(source))
             {
-                if (!propertyInfos.Any(x => x.Name == property.Name))
+                var existingProperty = propertyInfos.FirstOrDefault(p => p.Name == property.Name);
+                if (existingProperty != null)
+                {
+                    if (IsAbstract(property))
+                    {
+                        // abstract properties take precedence over their concrete declaration counterpart
+                        propertyInfos.Remove(existingProperty);
+                        propertyInfos.Add(property);
+                    }
+                }
+                else
                 {
                     propertyInfos.Add(property);
                 }
             }
 
-            if(typeInfo.BaseType != null)
+            Type baseType = GetBaseType(source);
+            if(baseType != null)
             {
-                return GetDeclaredPropertyInfosRecursive(propertyInfos, typeInfo.BaseType.GetTypeInfo());
+                return GetPropertiesRecursively(baseType, propertyInfos);
             }
 
             return propertyInfos;
         }
-
-#endif
-
-
 
         internal static Type[] GetGenericTypeArguments(this Type source)
         {
