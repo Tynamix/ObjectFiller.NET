@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+    <Deterministic>true</Deterministic>
 		<TargetFrameworks>netstandard1.0;netstandard1.3;netstandard2.0;net35;net452;</TargetFrameworks>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<Version>1.5.9</Version>
@@ -10,6 +11,11 @@
 		<PackageProjectUrl>http://objectfiller.net/</PackageProjectUrl>
 		<PackageIconUrl></PackageIconUrl>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 		<PackageReleaseNotes>
     -1.5.9
     * Support filling inherited abstract properties (thx to cguyonnet)
@@ -204,4 +210,8 @@ It is also possible to fill instances and to write private properties.</Descript
 	<PropertyGroup>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+  </ItemGroup>
+
 </Project>
