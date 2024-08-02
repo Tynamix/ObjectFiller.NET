@@ -196,12 +196,12 @@ It is also possible to fill instances and to write private properties.</Descript
     <EnablePackageValidation>true</EnablePackageValidation>
   </PropertyGroup>
 
-    <ItemGroup>
+  <ItemGroup>
     <!-- Add a README.md next to the csproj -->
     <None Include="..\README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
 	<PropertyGroup>
-		<PackageReadmeFile>..\README.md</PackageReadmeFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 </Project>
