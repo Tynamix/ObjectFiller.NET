@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/Tynamix/ObjectFiller.NET/actions/workflows/build-and-test.yml/badge.svg?branch=master&event=push)](https://github.com/Tynamix/ObjectFiller.NET/actions/workflows/build-and-test.yml)
+[![Build Status](https://github.com/Tynamix/ObjectFiller.NET/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/Tynamix/ObjectFiller.NET/actions/workflows/build-and-test.yml)
  [![Join the chat at https://gitter.im/Tynamix/ObjectFiller.NET](https://badges.gitter.im/Tynamix/ObjectFiller.NET.svg)](https://gitter.im/Tynamix/ObjectFiller.NET?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # ObjectFiller.NET
