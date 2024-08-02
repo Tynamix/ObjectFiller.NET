@@ -18,7 +18,7 @@ defaults:
 
 jobs:
   create_nuget:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - name: checkout
       uses: actions/checkout@v3
@@ -39,7 +39,7 @@ jobs:
         path: ${{ env.NuGetDirectory }}/*.nupkg
 
   validate_nuget:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [ create_nuget ]
     steps:
       # Install the .NET SDK indicated in the global.json file
@@ -63,7 +63,7 @@ jobs:
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
 
   run_test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -72,7 +72,7 @@ jobs:
       run: dotnet test --configuration Release
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [ validate_nuget, run_test ]
     steps:
       # Download the NuGet package created in the previous job
