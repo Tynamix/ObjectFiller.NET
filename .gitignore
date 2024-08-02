@@ -180,3 +180,4 @@ ObjectFiller.Test/ObjectFiller.Test.v2.ncrunchproject
 .vs/config/applicationhost.config
 Output-Build.txt
 .vs/
+.idea/
