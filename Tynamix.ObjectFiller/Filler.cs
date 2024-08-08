@@ -390,6 +390,7 @@ namespace Tynamix.ObjectFiller
                    || (TypeIsDictionary(type) && DictionaryParamTypesAreValid(type, currentSetupItem))
                    || TypeIsPoco(type)
                    || TypeIsEnum(type)
+                   || TypeIsArray(type)
                    || (type.IsInterface() && currentSetupItem.InterfaceToImplementation.ContainsKey(type)
                        || currentSetupItem.InterfaceMocker != null);
 
@@ -1207,7 +1208,7 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         /// <param name="type">Type to check</param>
         /// <returns>True if the type is a array</returns>
-        private bool TypeIsArray(Type type)
+        private static bool TypeIsArray(Type type)
         {
             return type.IsArray && type.GetArrayRank() == 1;
         }
