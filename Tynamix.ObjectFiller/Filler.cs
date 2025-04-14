@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Filler.cs" company="Tynamix">
-//   © 2015 by Roman Köhler
+//   Â© 2015 by Roman KÃ¶hler
 // </copyright>
 // <summary>
 //   The ObjectFiller.NET fills the public properties of your .NET object
@@ -389,7 +389,7 @@ namespace Tynamix.ObjectFiller
                    || (TypeIsList(type) && ListParamTypeIsValid(type, currentSetupItem))
                    || (TypeIsDictionary(type) && DictionaryParamTypesAreValid(type, currentSetupItem))
                    || TypeIsPoco(type)
-                   || TypeIsEnum(type)
+                   || TypeIsEnum(type) || TypeIsNullableEnum(type) 
                    || (type.IsInterface() && currentSetupItem.InterfaceToImplementation.ContainsKey(type)
                        || currentSetupItem.InterfaceMocker != null);
 
